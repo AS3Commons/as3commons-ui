@@ -1,0 +1,41 @@
+h2. AS3Commons UI - UI Related Algorihms and Managers
+
+Algorithms and managers to serve common UI releated tasks such as layouting, focus and keyboard management, popup handling, drag and drop control and so on. The project is an attempt to liberate such core functionality from the jaws of the big known frameworks. The library supports the development of user interfaces in pure ActionScript projects.
+
+The first version of UI comes already with a nifty layout package containing several layout algorithms: HGroup and VGroup (single line), HLayout and VLayout (multiline) as well as two table layouts.
+
+h3. References
+
+*Downloads*
+
+* "Downloads":https://github.com/AS3Commons/as3commons-ui/downloads (ZIP, SWC)
+
+*Documentation*
+
+* "Layouts documentation":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/
+* "Layouts showcase":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/showcase/
+* "Project Homepage":http://sibirjak.com/osflash/projects/as3commons-ui/ (Overview, Features, Documentation, Examples)
+* "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
+* "Wiki":https://github.com/AS3Commons/as3commons-ui/wiki
+
+*Other resources*
+
+* "AS3Commons Project":http://as3commons.org/
+* "Google Code":http://code.google.com/p/as3-commons/ (SVN branch and revsion history up to 0.1.2)
+
+h3. Team
+
+* "Jens Struwe":https://github.com/kakenbok
+* Contribution is highly welcome.
+
+h3. Common Features
+
+* Support of native Flash display objects
+* No interface implementations required
+
+h3. Coming functionality
+
+* PopUpManager - Creating and removing popups
+* FocusManager - Control mouse and keyboard focus
+* DragManager - Drag and drop management
+* CursorManager - Creating custom cursors
