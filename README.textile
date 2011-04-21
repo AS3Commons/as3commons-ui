@@ -1,4 +1,4 @@
-h2. AS3Commons UI - UI Related Algorihms and Managers
+h2. AS3Commons UI - UI Related Algorithms and Managers
 
 Algorithms and managers to serve common UI releated tasks such as layouting, focus and keyboard management, popup handling, drag and drop control and so on. The project is an attempt to liberate such core functionality from the jaws of the big known frameworks. The library supports the development of user interfaces in pure ActionScript projects.
 
