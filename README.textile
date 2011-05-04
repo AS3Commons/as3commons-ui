@@ -18,6 +18,10 @@ h3. References
 * "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
 * "Wiki":https://github.com/AS3Commons/as3commons-ui/wiki
 
+*Examples Source Code*
+
+Checkout the examples branch for the source code: https://github.com/AS3Commons/as3commons-ui/tree/examples
+
 *Other resources*
 
 * "AS3Commons Project":http://as3commons.org/
