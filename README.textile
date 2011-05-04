@@ -20,7 +20,7 @@ h3. References
 
 *Examples Source Code*
 
-Checkout the examples branch for the source code: https://github.com/AS3Commons/as3commons-ui/tree/examples
+Checkout the "examples branch":https://github.com/AS3Commons/as3commons-ui/tree/examples for the source code.
 
 *Other resources*
 
