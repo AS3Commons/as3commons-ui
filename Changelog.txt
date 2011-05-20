@@ -1,0 +1,29 @@
+Version 0.1.3
+----------------------------------------------------------
+
+- [Project] Update to AS3Commons Collections 1.3.0
+
+
+
+Version 0.1.2
+----------------------------------------------------------
+
+- [Layouts][Dev] Added numItems info to ILayout
+
+- [Layouts][Bug] Small failure in AbstractLayout.add() with empty items in an array argument.
+
+
+
+Version 0.1.1
+----------------------------------------------------------
+
+- [Layouts][Bug] Cells in DynTable could not be aligned.
+
+- [Layouts][Bug] Naming a method "drawRect" causes troubles when also used the scope statement: with (graphics) ... drawRect(...) with Flex 3.5
+
+
+
+Version 0.1.0
+----------------------------------------------------------
+
+Initial release
