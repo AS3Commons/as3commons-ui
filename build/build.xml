@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="AS3Commons UI" default="APIDoc" basedir="../" >
 
-	<property name="FLEX_HOME" value="c:\FDT\plugins\com.powerflasher.fdt.shippedFlexSDK_3.5.0.12683a_1000\\flex" />
+	<property file="build/build.env" />
+
 	<property name="ASDOC" value="${FLEX_HOME}\bin\asdoc.exe" />
 
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.1.3" />
+	<property name="VERSION" value="0.1.4" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
@@ -28,7 +29,7 @@
 
 			<!-- Libs -->
 			<external-library-path dir="${LIBS}" includes="*" />
-			<external-library-path dir="${FLEX_HOME}/frameworks/libs/player/9" includes="*" />
+			<external-library-path dir="${FLASH_PLAYER_LIBS}" includes="*" />
 		</compc>
 	</target>
 
