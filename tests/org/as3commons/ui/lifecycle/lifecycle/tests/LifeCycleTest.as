@@ -123,7 +123,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		}
 
 		[Test(async)]
-		public function testClear():void {
+		public function testUnregisterAllComponents():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : SimpleAdapter = new SimpleAdapter();
 			_lc.registerComponent(s, adapter);
@@ -139,7 +139,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			assertNotNull(errorThrown);
 			assertTrue(String(errorThrown.message).indexOf("register") > - 1);
 			
-			_lc.clear();
+			_lc.unregisterAllComponents();
 
 			errorThrown = null;
 			try {

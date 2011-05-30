@@ -12,6 +12,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		private static var _prepareUpdateCalls : Array = new Array();
 		private static var _invalidProperties : Array = new Array();
 		private static var _updateKinds : Array = new Array();
+		private static var _cleanUpCalls : Array = new Array();
 		
 		public static function init(displayObject : DisplayObject) : void {
 			_initCalls.push(displayObject);
@@ -25,6 +26,10 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		public static function prepareUpdate(displayObject : DisplayObject, invalidProperties : Array) : void {
 			_prepareUpdateCalls.push(displayObject);
 			_invalidProperties = _invalidProperties.concat(invalidProperties);
+		}
+		
+		public static function cleanUp(displayObject : DisplayObject) : void {
+			_cleanUpCalls.push(displayObject);
 		}
 		
 		public static function get initCalls() : Array {
@@ -47,10 +52,15 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			return _updateKinds;
 		}
 
+		public static function get cleanUpCalls() : Array {
+			return _cleanUpCalls;
+		}
+
 		public static function clearCalls() : void {
 			_initCalls = new Array();
 			_updateCalls = new Array();
 			_prepareUpdateCalls = new Array();
+			_cleanUpCalls = new Array();
 		}
 
 		public static function clearProperties() : void {

@@ -16,26 +16,54 @@ package org.as3commons.ui.lifecycle.i10n {
 	import flash.events.Event;
 
 	/**
+	 * The <code>Invalidation</code> system.
+	 * 
 	 * @author Jens Struwe 23.05.2011
 	 */
 	public class Invalidation implements IInvalidation {
 		
+		/**
+		 * Constant for the virtual invalidation property "all properties".
+		 */
 		public static const ALL_PROPERTIES : String = "Invalidation_ALL_PROPERTIES";
 		
-		private var _selectors : IOrderedMap;
-		private var _queue : IOrderedMap;
-		private var _stage : Stage;
+		/**
+		 * The mappings of selectors to adapters.
+		 */
+		protected var _selectors : IOrderedMap;
+
+		/**
+		 * The validation queue.
+		 */
+		protected var _queue : IOrderedMap;
+
+		/**
+		 * List of items to be validated but not on the stage.
+		 */
+		protected var _schedule : IOrderedMap;
+
+		/**
+		 * Temporary <code>Stage</code> instance to listen to the <code>Event.EXIT_FRAME</code> event. 
+		 */
+		protected var _stage : Stage;
 		
+		/**
+		 * <code>Invalidation</code> constructor.
+		 */
 		public function Invalidation() {
 			_selectors = new LinkedMap();
 			_queue = new LinkedMap();
+			_schedule = new LinkedMap();
 		}
 		
 		/*
-		 * IRenderManager
+		 * IInvalidation
 		 */
 		
-		public function register(selector : II10NSelector, adapter : II10NApapter) : void {
+		/**
+		 * @inheritDoc
+		 */
+		public function registerAdapter(selector : II10NSelector, adapter : II10NApapter) : void {
 			var adapters : IOrderedSet = _selectors.itemFor(selector);
 			if (!adapters) {
 				adapters = new LinkedSet();
@@ -44,33 +72,10 @@ package org.as3commons.ui.lifecycle.i10n {
 			adapters.add(adapter);
 		}
 		
-		public function invalidate(displayObject : DisplayObject, property : String = null) : void {
-			if (!property) property = ALL_PROPERTIES;
-			
-			// display object not in display list
-			if (!displayObject.stage) return;
-			
-			addToQueue(displayObject, property);
-
-			// add if no stage listener present
-			if (!_stage) {
-				_stage = displayObject.stage;
-				_stage.addEventListener(Event.EXIT_FRAME, stageExitFrame);
-			}
-		}
-
 		/**
-		 * <p>Validate only items that are scheduled.</p>
+		 * @inheritDoc
 		 */
-		public function validateNow(displayObject : DisplayObject) : void {
-//			trace ("----validateNow", displayObject, __queue.keysToArray(), _queue.keysToArray());
-
-			if (!_queue.hasKey(displayObject)) return;
-			
-			processValidation(_queue.itemFor(displayObject));
-		}
-		
-		public function unregister(selector : II10NSelector, adapter : II10NApapter) : void {
+		public function unregisterAdapter(selector : II10NSelector, adapter : II10NApapter) : void {
 			var adapters : IOrderedSet = _selectors.itemFor(selector);
 			if (adapters) {
 				adapters.remove(adapter);
@@ -80,14 +85,70 @@ package org.as3commons.ui.lifecycle.i10n {
 			}
 		}
 
-		public function clear() : void {
+		/**
+		 * @inheritDoc
+		 */
+		public function invalidate(displayObject : DisplayObject, property : String = null) : void {
+			if (!property) property = ALL_PROPERTIES;
+			
+			// display object in display list
+			if (displayObject.stage) {
+				addToQueue(_queue, displayObject, property);
+				displayObject.addEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+	
+				// add if no stage listener present
+				if (!_stage) {
+					_stage = displayObject.stage;
+					_stage.addEventListener(Event.EXIT_FRAME, stageExitFrame);
+				}
+
+			// display object not in display list
+			} else {
+				addToQueue(_schedule, displayObject, property);
+				displayObject.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+				return;
+			}
+			
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function validateNow(displayObject : DisplayObject) : void {
+			if (!_queue.hasKey(displayObject)) return;
+			
+			processValidation(_queue.itemFor(displayObject));
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function stopValidation(displayObject : DisplayObject) : void {
+			displayObject.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			_queue.removeKey(displayObject);
+			_schedule.removeKey(displayObject);
+			
+			if (!_queue.size && _stage) {
+				_stage.removeEventListener(Event.EXIT_FRAME, stageExitFrame);
+			}
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function stopAllValidations() : void {
 			if (_stage) _stage.removeEventListener(Event.EXIT_FRAME, stageExitFrame);
 			_stage = null;
 			_queue.clear();
+			_schedule.clear();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function cleanUp() : void {
-			clear();
+			stopAllValidations();
 			_selectors.clear();
 		}
 
@@ -95,13 +156,52 @@ package org.as3commons.ui.lifecycle.i10n {
 		 * Private
 		 */
 		
-		private function addToQueue(displayObject : DisplayObject, property : String) : QueueItem {
-			var queueItem : QueueItem = _queue.itemFor(displayObject);
+		/**
+		 * Handler for the component's <code>Event.ADDED_TO_STAGE</code> event.
+		 * 
+		 * <p>The particular component will be removed from the schedule and added
+		 * to the validation queue.</p>
+		 */
+		private function addedToStageHandler(event : Event) : void {
+			var displayObject : DisplayObject = event.currentTarget as DisplayObject;
+			displayObject.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			displayObject.addEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			
+			var queueItem : QueueItem = _schedule.removeKey(displayObject);
+			_queue.add(displayObject, queueItem);
+
+			// add if no stage listener present
+			if (!_stage) {
+				_stage = displayObject.stage;
+				_stage.addEventListener(Event.EXIT_FRAME, stageExitFrame);
+			}
+		}
+
+		/**
+		 * Handler for the component's <code>Event.REMOVED_FROM_STAGE</code> event.
+		 * 
+		 * <p>The particular component will be removed from the validation queue and
+		 * added to the schedule.</p>
+		 */
+		private function removedFromStageHandler(event : Event) : void {
+			var displayObject : DisplayObject = event.currentTarget as DisplayObject;
+			displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			displayObject.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+
+			var queueItem : QueueItem = _queue.removeKey(displayObject);
+			_schedule.add(displayObject, queueItem);
+		}
+
+		/**
+		 * Adds an item to the specified queue.
+		 */
+		private function addToQueue(queue : IOrderedMap, displayObject : DisplayObject, property : String) : QueueItem {
+			var queueItem : QueueItem = queue.itemFor(displayObject);
 			
 			// item not queued yet
 			if (!queueItem) {
 				queueItem = new QueueItem(displayObject);
-				_queue.add(displayObject, queueItem);
+				queue.add(displayObject, queueItem);
 			}
 
 			// add property
@@ -110,6 +210,9 @@ package org.as3commons.ui.lifecycle.i10n {
 			return queueItem;
 		}
 
+		/**
+		 * Handler for the stage's <code>Event.EXIT_FRAME</code> event.
+		 */
 		private function stageExitFrame(event : Event) : void {
 			_stage.removeEventListener(Event.EXIT_FRAME, stageExitFrame);
 			_stage = null;
@@ -119,6 +222,9 @@ package org.as3commons.ui.lifecycle.i10n {
 			}
 		}
 		
+		/**
+		 * Executes the validation process for the given queue item.
+		 */
 		private function processValidation(queueItem : QueueItem) : void {
 			var adapters : IOrderedSet = getAdapters(queueItem.displayObject);
 
@@ -137,6 +243,9 @@ package org.as3commons.ui.lifecycle.i10n {
 			}
 		}
 
+		/**
+		 * Invokes all adapters that have been found for a particular component.
+		 */
 		private function invokeAdapters(adapters : IOrderedSet, callback : Function) : void {
 			var iterator : IIterator = adapters.iterator();
 			while (iterator.hasNext()) {
@@ -145,6 +254,9 @@ package org.as3commons.ui.lifecycle.i10n {
 			}
 		}
 
+		/**
+		 * Generates a list of adapters applicable for the given component.
+		 */
 		private function getAdapters(displayObject : DisplayObject) : IOrderedSet {
 			var uniqueAdapters : IOrderedSet = new LinkedSet();
 			var iterator : IMapIterator = _selectors.iterator() as IMapIterator;

@@ -15,20 +15,20 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			_updateFunction = updateFunction;
 		}
 
-		override protected function init() : void {
-			super.init();
+		override protected function onInit() : void {
+			super.onInit();
 			
 			if (_initFunction != null) _initFunction();
 		}
 
-		override protected function prepareUpdate() : void {
-			super.prepareUpdate();
+		override protected function onPrepareUpdate() : void {
+			super.onPrepareUpdate();
 			
 			if (_prepareUpdateFunction != null) _prepareUpdateFunction();
 		}
 
-		override protected function update() : void {
-			super.update();
+		override protected function onUpdate() : void {
+			super.onUpdate();
 			
 			if (_updateFunction != null) _updateFunction();
 		}

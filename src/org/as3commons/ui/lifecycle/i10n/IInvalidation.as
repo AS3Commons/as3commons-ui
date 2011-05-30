@@ -3,20 +3,77 @@ package org.as3commons.ui.lifecycle.i10n {
 	import flash.display.DisplayObject;
 
 	/**
+	 * <code>Invalidation</code> system definition.
+	 * 
 	 * @author Jens Struwe 23.05.2011
 	 */
 	public interface IInvalidation {
 		
-		function register(selector : II10NSelector, adapter : II10NApapter) : void;
+		/**
+		 * Registers an <code>adapter</code> together with a <code>selector</code> in the <code>Invalidation</code> system.
+		 * 
+		 * @param selector The selector to decide for what items the adapter should be considered.
+		 * @param adapter The adapter defining custom validation methods.
+		 */
+		function registerAdapter(selector : II10NSelector, adapter : II10NApapter) : void;
 		
+		/**
+		 * Removes an <code>adapter</code> and its <code>selector</code> from the <code>Invalidation</code> system.
+		 * 
+		 * @param selector The selector with that the adapter had been registered.
+		 * @param adapter The adapter to unregister.
+		 */
+		function unregisterAdapter(selector : II10NSelector, adapter : II10NApapter) : void;
+
+		/**
+		 * Starts an invalidation process for the specified component.
+		 * 
+		 * <p>The method will simply return if no adapter could be found for the given display object.</p>
+		 * 
+		 * <p>The optional <code>property</code> argument may be used to declare only parts
+		 * of a component to be updated.</p>
+		 * 
+		 * <p>The system will collect all given invalidation properties and pass the final
+		 * list to the <code>validate()</code> method of the adapter found for the display object.</p>
+		 * 
+		 * <p>If <code>property</code> is not set, the system assumes the wish of a full update. In that
+		 * case the list of update properties given to the <code>validate()</code> method of the adapter
+		 * will contain only the property <code>Invalidation.ALL_PROPERTIES</code>.</p>
+		 * 
+		 * @param displayObject The component to invalidate.
+		 * @param property An optional invalidation property.
+		 */
 		function invalidate(displayObject : DisplayObject, property : String = null) : void;
 
+		/**
+		 * Performs an immediate update of the given component.
+		 * 
+		 * <p>The method will simply return if no adapter could be found for the given display object.</p>
+		 * 
+		 * @param displayObject The component to invalidate.
+		 */
 		function validateNow(displayObject : DisplayObject) : void;
 
-		function unregister(selector : II10NSelector, adapter : II10NApapter) : void;
+		/**
+		 * Removes immediately a component from the validation queue.
+		 * 
+		 * <p>If invoked, the adapter methods <code>willValidate()</code> and <code>validate()</code>
+		 * won't be called at all.</p>
+		 * 
+		 * @param displayObject The component to remove from the validation queue.
+		 */
+		function stopValidation(displayObject : DisplayObject) : void;
 
-		function clear() : void;
+		/**
+		 * Clears the validation queue.
+		 */
+		function stopAllValidations() : void;
 
+		/**
+		 * Removes all listeners and references of the <code>Invalidation</code> instance.
+		 * 
+		 * <p>The <code>Invalidation</code> is then eligible for garbage collection.</p>
+		 */
 		function cleanUp() : void;
 
 	}
