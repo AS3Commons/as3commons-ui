@@ -15,12 +15,14 @@
  */
 package org.as3commons.ui.layout.framework.core.init {
 
-	import flash.display.DisplayObject;
 	import org.as3commons.ui.layout.framework.ILayout;
 	import org.as3commons.ui.layout.framework.ILayoutItem;
 
+	import flash.display.DisplayObject;
 
 	/**
+	 * Initializes a layout.
+	 * 
 	 * @author Jens Struwe 23.03.2011
 	 */
 	public class LayoutInitializer extends AbstractLayoutItemInitializer {
@@ -29,6 +31,9 @@ package org.as3commons.ui.layout.framework.core.init {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function initOther(arg : *) : void {
 			// item or list of items to be added
 			if (arg is Array || arg is DisplayObject || arg is ILayoutItem) {
@@ -44,6 +49,9 @@ package org.as3commons.ui.layout.framework.core.init {
 		 * Private
 		 */
 
+		/**
+		 * Cast the internal layout item to <code>ILayout</code>.
+		 */
 		private function get layout() : ILayout {
 			return _layoutItem as ILayout;
 		}

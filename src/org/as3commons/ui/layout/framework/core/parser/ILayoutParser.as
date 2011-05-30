@@ -19,20 +19,38 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
 
 	/**
+	 * Layout parser definition.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public interface ILayoutParser {
 
+		/**
+		 * The layout to be parsed.
+		 */
 		function set layout(layout : ILayout) : void;
 
 		/*
 		 * Parsing
 		 */
 
+		/**
+		 * Prepares parsing.
+		 */
 		function prepare() : void;
 
+		/**
+		 * Add and process the given cell.
+		 * 
+		 * @param cell The cell to process.
+		 */
 		function parseCell(cell : ICell) : void;
 
+		/**
+		 * Finishs parsing.
+		 * 
+		 * @return The corresponding layout cell.
+		 */
 		function finish() : ICell;
 
 	}

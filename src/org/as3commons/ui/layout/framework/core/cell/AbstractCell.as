@@ -23,19 +23,36 @@ package org.as3commons.ui.layout.framework.core.cell {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-
 	/**
+	 * Basic cell implementation.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public class AbstractCell extends AbstractRowItem implements ICell {
 		
+		/**
+		 * The cell config.
+		 */
 		protected var _config : CellConfig;
+
+		/**
+		 * The render config.
+		 */
 		protected var _renderConfig : RenderConfig;
 		
+		/**
+		 * The measured rect.
+		 */
 		protected var _measured : Rectangle;
 
+		/**
+		 * The content rect.
+		 */
 		protected var _contentRect : Rectangle;
 		
+		/**
+		 * <code>AbstractCell</code> constructor.
+		 */
 		public function AbstractCell() {
 			_config = new CellConfig();
 		}
@@ -46,26 +63,41 @@ package org.as3commons.ui.layout.framework.core.cell {
 
 		// Config
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function get config() : CellConfig {
 			return _config;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set renderConfig(renderConfig : RenderConfig) : void {
 			_renderConfig = renderConfig;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get renderConfig() : RenderConfig {
 			return _renderConfig;
 		}
 
 		// Size
 
+		/**
+		 * @inheritDoc
+		 */
 		public function isEmpty() : Boolean {
 			return !_space || !_space.width || !_space.height;
 		}
 
 		// Data
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get contentRect() : Rectangle {
 			return _contentRect;
 		}
@@ -74,6 +106,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * IBox
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function measure() : void {
 			_space = new Rectangle();
 
@@ -88,6 +123,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 			_space.offset(_config.marginX, _config.marginY);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function render() : void {
 			var offsetX : int = _config.marginX + _config.offsetX;
 			var offsetY : int = _config.marginY + _config.offsetY;
@@ -110,10 +148,16 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * Protected
 		 */
 
+		/**
+		 * Measures the cell content.
+		 */
 		protected function measureCellContent() : void {
 			// template method
 		}
 
+		/**
+		 * Renders the cell content.
+		 */
 		protected function renderCellContent(position : Point) : void {
 			// template method
 		}
@@ -122,6 +166,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * Private
 		 */
 
+		/**
+		 * Aligns the cell content.
+		 */
 		private function alignCellContent(position : Point) : void {
 			var diff : uint;
 			

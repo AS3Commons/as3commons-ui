@@ -19,13 +19,25 @@ package org.as3commons.ui.layout.framework.core.sizeitem {
 	import flash.geom.Rectangle;
 
 	/**
+	 * Abstract implementation of an item that can be measured and rendered.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class SizeItem implements ISizeItem {
 
+		/**
+		 * Space consumed by the item.
+		 */
 		protected var _space : Rectangle;
+
+		/**
+		 * The position of the item.
+		 */
 		protected var _position : Point;
 
+		/**
+		 * <code>SizeItem</code> constructor.
+		 */
 		public function SizeItem() {
 			_position = new Point();
 		}
@@ -36,26 +48,41 @@ package org.as3commons.ui.layout.framework.core.sizeitem {
 
 		// Measure
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function measure() : void {
 			// template method
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get space() : Rectangle {
 			return _space;
 		}
 		
 		// Render
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get position() : Point {
 			return _position;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function render() : void {
 			// template method
 		}
 
 		// Data
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get visibleRect() : Rectangle {
 			// template method
 			return null;

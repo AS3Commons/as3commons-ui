@@ -18,19 +18,45 @@ package org.as3commons.ui.layout.framework.core.row {
 	import org.as3commons.ui.layout.constants.Align;
 
 	/**
+	 * Row config object.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class RowConfig {
 
+		/**
+		 * The min width of the row.
+		 */
 		public var minWidth : uint;
+
+		/**
+		 * The min height of the row.
+		 */
 		public var minHeight : uint;
 
+		/**
+		 * The max size of the row.
+		 */
 		public var maxContentSize : uint;
+
+		/**
+		 * The max number of items of the row.
+		 */
 		public var maxItems : uint;
 
+		/**
+		 * The space between items.
+		 */
 		public var gap : uint;
 
+		/**
+		 * Horizontal align.
+		 */
 		public var hAlign : String = Align.LEFT;
+
+		/**
+		 * Vertical align.
+		 */
 		public var vAlign : String = Align.TOP;
 
 	}

@@ -23,13 +23,16 @@ package org.as3commons.ui.layout {
 	import flash.display.DisplayObject;
 
 	/**
+	 * Display object wrapper.
+	 * 
 	 * @author Jens Struwe 15.03.2011
 	 */
 	public class Display extends AbstractLayoutItem implements IDisplay {
 
+		/**
+		 * The display object.
+		 */
 		private var _displayObject : DisplayObject;
-		private var _width : uint;
-		private var _height : uint;
 		
 		/*
 		 * IDisplay
@@ -37,36 +40,27 @@ package org.as3commons.ui.layout {
 		
 		// Config - DisplayObject
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set displayObject(displayObject : DisplayObject) : void {
 			_displayObject = displayObject;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get displayObject() : DisplayObject {
 			return _displayObject;
-		}
-
-		// Config - Size
-		
-		public function set width(width : uint) : void {
-			_width = width;
-		}
-
-		public function get width() : uint {
-			return _width;
-		}
-
-		public function set height(height : uint) : void {
-			_height = height;
-		}
-
-		public function get height() : uint {
-			return _height;
 		}
 
 		/*
 		 * Info
 		 */
 
+		/**
+		 * Info
+		 */
 		override public function toString() : String {
 			return "[Display]" + super.toString() + ", object:" + _displayObject;
 		}
@@ -75,6 +69,9 @@ package org.as3commons.ui.layout {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function excludeLayoutItem(renderConfig : RenderConfig) : void {
 			if (_displayObject.parent != renderConfig.container) renderConfig.container.addChild(_displayObject);
 
@@ -84,6 +81,9 @@ package org.as3commons.ui.layout {
 			}
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function parseLayoutItem(renderConfig : RenderConfig) : void {
 			_cell = new DisplayCell();
 			DisplayCell(_cell).displayObject = _displayObject;

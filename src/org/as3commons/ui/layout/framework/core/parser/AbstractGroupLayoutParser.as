@@ -21,16 +21,24 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.IRow;
 
 	/**
+	 * Abstract single line layout parser implementation.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class AbstractGroupLayoutParser extends AbstractLayoutParser {
 		
+		/**
+		 * The type of the first row of the layout.
+		 */
 		protected var _RowType : Class;
 		
 		/*
 		 * ILayoutParser
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function parseCell(cell : ICell) : void {
 			CellConfigMerge.merge(cell.config, _layout.getCellConfig(_layoutCell.row.numItems));
 			cell.measure();
@@ -45,6 +53,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createRow() : IRow {
 			var row : IRow = new _RowType();
 

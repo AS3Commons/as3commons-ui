@@ -17,8 +17,9 @@ package org.as3commons.ui.layout.framework {
 
 	import flash.display.DisplayObject;
 
-
 	/**
+	 * Display object wrapper definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface IDisplay extends ILayoutItem {
@@ -27,21 +28,15 @@ package org.as3commons.ui.layout.framework {
 		 * Config - DisplayObject
 		 */
 		
+		/**
+		 * The display object to wrap.
+		 */
 		function set displayObject(displayObject : DisplayObject) : void;
 		
-		function get displayObject() : DisplayObject;
-
-		/*
-		 * Config - Size
+		/**
+		 * @private
 		 */
-		
-		function set width(width : uint) : void;
-		
-		function get width() : uint;
-		
-		function set height(height : uint) : void;
-		
-		function get height() : uint;
+		function get displayObject() : DisplayObject;
 
 	}
 }

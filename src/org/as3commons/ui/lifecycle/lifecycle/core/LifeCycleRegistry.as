@@ -6,7 +6,7 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 	import flash.display.DisplayObject;
 
 	/**
-	 * Registry of all <code>LifeCycle</code> components.
+	 * Registry of <code>LifeCycle</code> components.
 	 * 
 	 * @author Jens Struwe 26.05.2011
 	 */

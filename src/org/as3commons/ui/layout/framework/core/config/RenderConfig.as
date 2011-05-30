@@ -18,19 +18,47 @@ package org.as3commons.ui.layout.framework.core.config {
 	import flash.display.Sprite;
 
 	/**
+	 * Render config object.
+	 * 
 	 * @author Jens Struwe 24.03.2011
 	 */
 	public class RenderConfig {
 
+		/**
+		 * The container of the layout.
+		 */
 		public var container : Sprite;
 
+		/**
+		 * Flag to indicate that the item is to show during the next layout procedure.
+		 */
 		public var show : Boolean = false;
+
+		/**
+		 * Flag to indicate that the item is to hide during the next layout procedure.
+		 */
 		public var hide : Boolean = false;
 
+		/**
+		 * Render callback.
+		 */
 		public var renderCallback : Function;
+
+		/**
+		 * Hide callback.
+		 */
 		public var hideCallback : Function;
+
+		/**
+		 * Show callback.
+		 */
 		public var showCallback : Function;
 		
+		/**
+		 * Clones a render config.
+		 * 
+		 * @return The cloned config.
+		 */
 		public function clone() : RenderConfig {
 			var config : RenderConfig = new RenderConfig();
 			config.container = container;

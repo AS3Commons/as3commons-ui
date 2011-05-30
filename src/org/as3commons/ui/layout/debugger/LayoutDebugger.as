@@ -25,16 +25,35 @@ package org.as3commons.ui.layout.debugger {
 	import flash.geom.Rectangle;
 
 	/**
+	 * Layout debugger.
+	 * 
 	 * @author Jens Struwe 23.02.2011
 	 */
 	public class LayoutDebugger extends Sprite {
 		
+		/**
+		 * Flag to control the mouse over behaviour.
+		 */
 		public var showOnOver : Boolean = true;
+		
+		/**
+		 * Flag indicated that the view is being locked.
+		 */
 		private var _locked : Boolean;
+
+		/**
+		 * Temporarily stores a dump.
+		 */
 		private var _dump : String;
 		
+		/**
+		 * Base color.
+		 */
 		private var _contentColor : uint = 0xBBBBBB;
 		
+		/**
+		 * <code>LayoutDebugger</code> constructor.
+		 */
 		public function LayoutDebugger() {
 			if (showOnOver) alpha = 0;
 			
@@ -43,6 +62,11 @@ package org.as3commons.ui.layout.debugger {
 			addEventListener(MouseEvent.CLICK, click);
 		}
 
+		/**
+		 * Draws the debugging information.
+		 * 
+		 * @param layout The layout to be debugged.
+		 */
 		public function debug(layout : ILayout) : void {
 			graphics.clear();
 
@@ -54,6 +78,12 @@ package org.as3commons.ui.layout.debugger {
 
 		}
 		
+		/**
+		 * Returns a debug string.
+		 * 
+		 * @param layout The layout to be debugged.
+		 * @return A string containing the layout hierarchy.
+		 */
 		public function dumpAsString(layout : ILayout) : String {
 			_dump = "";
 			
@@ -71,6 +101,9 @@ package org.as3commons.ui.layout.debugger {
 		 * Private
 		 */
 		
+		/**
+		 * Debug drawing callback.
+		 */
 		private function debugCallback(layoutItem : ILayoutItem, depth : uint) : void {
 			var padding : uint = depth;
 
@@ -84,6 +117,9 @@ package org.as3commons.ui.layout.debugger {
 			}
 		}
 			
+		/**
+		 * Draws a rect.
+		 */
 		private function drawLayoutItemRect(
 			rect : Rectangle,
 			padding : int,
@@ -139,6 +175,9 @@ package org.as3commons.ui.layout.debugger {
 			}
 		}
 
+		/**
+		 * Debug string builder callback.
+		 */
 		private function dumpAsStringCallback(layoutItem : ILayoutItem, depth : uint) : void {
 			_dump += prefix(depth) + layoutItem + "\n";
 
@@ -151,16 +190,25 @@ package org.as3commons.ui.layout.debugger {
 			}
 		}
 
+		/**
+		 * RollOut handler.
+		 */
 		private function rollOut(event : MouseEvent) : void {
 			if (_locked) return;
 			alpha = showOnOver ? 0 : 1;
 		}
 
+		/**
+		 * RollOver handler.
+		 */
 		private function rollOver(event : MouseEvent) : void {
 			if (_locked) return;
 			alpha = showOnOver ? 1 : 0;
 		}
 
+		/**
+		 * Click handler.
+		 */
 		private function click(event : MouseEvent) : void {
 			_locked = !_locked;
 		}

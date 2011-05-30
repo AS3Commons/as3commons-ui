@@ -15,29 +15,61 @@
  */
 package org.as3commons.ui.layout.framework.core.row {
 
-	import flash.geom.Rectangle;
 	import org.as3commons.ui.layout.CellConfig;
 	import org.as3commons.ui.layout.constants.Align;
 
-
+	import flash.geom.Rectangle;
 
 	/**
+	 * Abstract row implementation.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public class AbstractRow extends AbstractRowDirection implements IRow {
 
+		/**
+		 * The row config.
+		 */
 		private var _config : RowConfig;
+
+		/**
+		 * The parent row.
+		 */
 		private var _parentRow : IRow;
 
+		/**
+		 * The first item in row.
+		 */
 		private var _firstRowItem : IRowItem;
+
+		/**
+		 * The last item in row.
+		 */
 		private var _lastRowItem : IRowItem;
 		
+		/**
+		 * The current parser position.
+		 */
 		private var _currentPosition : int;
+
+		/**
+		 * The measured size of the row.
+		 */
 		private var _measuredSize : uint;
+
+		/**
+		 * The number of row items.
+		 */
 		private var _numItems : uint;
 
+		/**
+		 * The visible rect.
+		 */
 		private var _visibleRect : Rectangle;
 
+		/**
+		 * <code>AbstractRow</code> constructor.
+		 */
 		public function AbstractRow() {
 			_config = new RowConfig;
 
@@ -51,12 +83,18 @@ package org.as3commons.ui.layout.framework.core.row {
 		
 		// Config
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get config() : RowConfig {
 			return _config;
 		}
 
 		// Add
 
+		/**
+		 * @inheritDoc
+		 */
 		public function accepts(rowItem : IRowItem, cellConfig : CellConfig = null) : Boolean {
 			// first item is always accepted
 			if (_numItems) {
@@ -74,6 +112,9 @@ package org.as3commons.ui.layout.framework.core.row {
 			return true;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function add(rowItem : IRowItem) : void {
 			// add
 			if (!_firstRowItem) {
@@ -99,6 +140,9 @@ package org.as3commons.ui.layout.framework.core.row {
 			_space = _space.union(rowItem.space);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function fillWithEmptyCell(cellSize : Rectangle) : void {
 			_numItems++;
 			
@@ -108,14 +152,23 @@ package org.as3commons.ui.layout.framework.core.row {
 			_space = _space.union(cellSize);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set parentRow(parentRow : IRow) : void {
 			_parentRow = parentRow;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function get numItems() : uint {
 			return _numItems;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get firstRowItem() : IRowItem {
 			return _firstRowItem;
 		}
@@ -124,6 +177,9 @@ package org.as3commons.ui.layout.framework.core.row {
 		 * IBox
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function measure() : void {
 			_measuredSize = _space[_width];
 
@@ -131,6 +187,9 @@ package org.as3commons.ui.layout.framework.core.row {
 			if (_config.minHeight) _space.height = Math.max(_space.height, _config.minHeight);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function render() : void {
 			var rowItem : IRowItem = _firstRowItem;
 			var index : uint;
@@ -147,6 +206,9 @@ package org.as3commons.ui.layout.framework.core.row {
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function get visibleRect() : Rectangle {
 			// template method
 			return _visibleRect;
@@ -156,6 +218,12 @@ package org.as3commons.ui.layout.framework.core.row {
 		 * Private
 		 */
 
+		/**
+		 * Aligns the given row item.
+		 * 
+		 * @param rowItem The row item to align.
+		 * @param index The index of the row item.
+		 */
 		private function alignRowItem(rowItem : IRowItem, index : uint) : void {
 			// align in row direction
 			if (_config[_align] != _alignLeft) {

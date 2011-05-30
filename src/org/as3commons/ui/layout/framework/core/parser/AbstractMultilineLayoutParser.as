@@ -21,22 +21,33 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.IRow;
 
 	/**
+	 * Abstract multiline layout parser implementation.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class AbstractMultilineLayoutParser extends AbstractLayoutParser {
 		
+		/**
+		 * The current sub row being parsed.
+		 */
 		protected var _subRow : IRow;
 
 		/*
 		 * ILayoutParser
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function prepare() : void {
 			super.prepare();
 			
 			_subRow = createSubRow();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function parseCell(cell : ICell) : void {
 			// measure cell first
 			cell.measure();
@@ -62,6 +73,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			_subRow.add(cell);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function finish() : ICell {
 			finishSubRow();
 			
@@ -72,12 +86,22 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		
+		/**
+		 * Returns the cell config for a cell at the specified position.
+		 * 
+		 * @param hIndex The horizontal index of the cell.
+		 * @param hIndex The vertical index of the cell.
+		 * @return The cell config.
+		 */
 		protected function getCellConfig(hIndex : uint, vIndex : uint) : CellConfig {
 			// Subclasses may return null with getCellConfig if they already fully control the
 			// position of the cell within the layout.
 			return _layout.getCellConfig(hIndex, vIndex);
 		}
 
+		/**
+		 * Creates a sub row.
+		 */
 		protected function createSubRow() : IRow {
 			// template method
 			return null;
@@ -87,6 +111,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Private
 		 */
 
+		/**
+		 * Finishs parsing of the current sub row.
+		 */
 		private function finishSubRow() : void {
 			_subRow.measure();
 			_subRow.parentRow = _layoutCell.row;

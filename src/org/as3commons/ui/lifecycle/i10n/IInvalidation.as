@@ -3,7 +3,7 @@ package org.as3commons.ui.lifecycle.i10n {
 	import flash.display.DisplayObject;
 
 	/**
-	 * <code>Invalidation</code> system definition.
+	 * <code>Invalidation</code> definition.
 	 * 
 	 * @author Jens Struwe 23.05.2011
 	 */

@@ -3,6 +3,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 	import flash.display.DisplayObject;
 
 	/**
+	 * <code>LifeCycle</code> definition.
+	 * 
 	 * @author Jens Struwe 23.05.2011
 	 */
 	public interface ILifeCycle {

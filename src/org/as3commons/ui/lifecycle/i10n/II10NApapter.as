@@ -38,7 +38,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		 * Callback for the validate event.
 		 * 
 		 * @param displayObject The component to be validated.
-		 * @param properties List of invalid properties specified in <code>Invalidation.invalidate(property)<code>.
+		 * @param properties List of invalid properties specified in <code>Invalidation.invalidate(property)</code>.
 		 */
 		function validate(displayObject : DisplayObject, properties : ISet) : void;
 		

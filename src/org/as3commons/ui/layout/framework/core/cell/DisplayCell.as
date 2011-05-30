@@ -20,21 +20,36 @@ package org.as3commons.ui.layout.framework.core.cell {
 	import flash.geom.Rectangle;
 
 	/**
+	 * Display object cell.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class DisplayCell extends AbstractCell implements IDisplayCell {
 		
+		/**
+		 * The visible rect.
+		 */
 		private var _visibleRect : Rectangle;
+
+		/**
+		 * The display object.
+		 */
 		private var _displayObject : DisplayObject;
 		
 		/*
 		 * IDisplayCell
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set displayObject(displayObject : DisplayObject) : void {
 			_displayObject = displayObject;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get displayObject() : DisplayObject {
 			return _displayObject;
 		}
@@ -43,11 +58,17 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * Protected
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function measureCellContent() : void {
 			_space.width = displayObject.width;
 			_space.height = displayObject.height;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function renderCellContent(position : Point) : void {
 			if (_displayObject.parent != renderConfig.container) renderConfig.container.addChild(_displayObject);
 
@@ -71,6 +92,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * IBox
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function get visibleRect() : Rectangle {
 			return _visibleRect;
 		}

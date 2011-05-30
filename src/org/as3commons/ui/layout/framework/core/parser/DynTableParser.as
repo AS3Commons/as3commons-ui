@@ -15,33 +15,62 @@
  */
 package org.as3commons.ui.layout.framework.core.parser {
 
-	import org.as3commons.ui.layout.framework.IDynamicTable;
+	import org.as3commons.ui.layout.framework.IDynTable;
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
 	import org.as3commons.ui.layout.framework.core.config.CellConfigMerge;
 
 	/**
+	 * Dynamic table parser.
+	 * 
 	 * @author Jens Struwe 19.03.2011
 	 */
 	public class DynTableParser extends TableParser {
 
+		/**
+		 * Max width of the layout.
+		 */
 		private var _maxContentWidth : uint;
+
+		/**
+		 * Horizontal space between items.
+		 */
 		private var _hGap : uint;
 
+		/**
+		 * List of the items with the biggest width.
+		 */
 		private var _maxItemWidths : MaxItemsList;
+
+		/**
+		 * Index of the widest item.
+		 */
 		private var _maxItemWidthIndex : uint;
 		
+		/**
+		 * Min number of columns created by the layout.
+		 */
 		private var _minNumColumns : uint;
+
+		/**
+		 * Max number of columns created by the layout.
+		 */
 		private var _maxNumColumns : uint;
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function prepare() : void {
 			super.prepare();
 
-			_maxContentWidth = IDynamicTable(_layout).maxContentWidth;
-			_hGap = IDynamicTable(_layout).hGap;
+			_maxContentWidth = IDynTable(_layout).maxContentWidth;
+			_hGap = IDynTable(_layout).hGap;
 
 			_maxItemWidths = new MaxItemsList(_maxContentWidth, _hGap);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function parseCell(cell : ICell) : void {
 			var hIndex : uint = _cache.length % numColumns;
 			var vIndex : uint = Math.floor(_cache.length / numColumns);
@@ -58,6 +87,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			_maxItemWidths.add(width);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function finish() : ICell {
 			_maxItemWidths.finalize();
 			_minNumColumns = _maxNumColumns = _maxItemWidths.size;
@@ -82,10 +114,16 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function get numColumns() : uint {
 			return _maxNumColumns;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function get maxContentWidth() : uint {
 			return _maxContentWidth;
 		}
@@ -94,6 +132,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Private
 		 */
 		
+		/**
+		 * Calculates the cell sizes.
+		 */
 		private function calculateCellSizes() : void {
 			var i : uint, j : uint;
 			var maxCellIndex : uint;
@@ -140,6 +181,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			}
 		}
 
+		/**
+		 * Finds a possible max number of cells.
+		 */
 		private function estimateMaxNumCells() : void {
 			var rangeSize : uint = _maxItemWidths.first;
 			var leftIndex : uint = _maxItemWidthIndex;
@@ -202,10 +246,16 @@ package org.as3commons.ui.layout.framework.core.parser {
 			}
 		}
 			
+		/**
+		 * Returns the width of a cell.
+		 */
 		private function getItemWidthByIndex(index : uint) : uint {
 			return ICell(_cache[index]).space.width;
 		}
 
+		/**
+		 * Returns the height of a cell.
+		 */
 		private function getItemHeightByIndex(index : uint) : uint {
 			return ICell(_cache[index]).space.height;
 		}
@@ -217,6 +267,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 import org.as3commons.collections.SortedList;
 import org.as3commons.collections.utils.NumericComparator;
 
+/**
+ * Internal class to manage the list of the widest items of the layout.
+ */
 internal class MaxItemsList extends SortedList {
 	private var _maxTotal : uint;
 	private var _total : uint;

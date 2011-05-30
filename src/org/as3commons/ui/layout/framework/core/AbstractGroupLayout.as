@@ -18,10 +18,15 @@ package org.as3commons.ui.layout.framework.core {
 	import org.as3commons.ui.layout.framework.IGroupLayout;
 
 	/**
+	 * Abstract single line layout implementation.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class AbstractGroupLayout extends AbstractLayout implements IGroupLayout {
 
+		/**
+		 * Space between items.
+		 */
 		private var _gap : uint;
 
 		/*
@@ -30,10 +35,16 @@ package org.as3commons.ui.layout.framework.core {
 		
 		// Config - Gap
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set gap(gap : uint) : void {
 			_gap = gap;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get gap() : uint {
 			return _gap;
 		}

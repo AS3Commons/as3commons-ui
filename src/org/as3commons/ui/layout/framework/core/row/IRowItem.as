@@ -16,21 +16,42 @@
 package org.as3commons.ui.layout.framework.core.row {
 
 	import org.as3commons.ui.layout.framework.core.sizeitem.ISizeItem;
+
 	/**
+	 * Row item definition.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public interface IRowItem extends ISizeItem {
 
+		/**
+		 * Flag, <code>true</code> it the item is the first in the row.
+		 */
 		function set isFirst(isFirst : Boolean) : void;
 
+		/**
+		 * @private
+		 */
 		function get isFirst() : Boolean;
 
+		/**
+		 * Flag, <code>true</code> it the item is the last in the row.
+		 */
 		function set isLast(isLast : Boolean) : void;
 
+		/**
+		 * @private
+		 */
 		function get isLast() : Boolean;
 
+		/**
+		 * The next item in row.
+		 */
 		function set nextRowItem(rowItem : IRowItem) : void;
 
+		/**
+		 * @private
+		 */
 		function get nextRowItem() : IRowItem;
 		
 	}

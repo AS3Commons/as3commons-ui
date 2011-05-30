@@ -15,11 +15,13 @@
  */
 package org.as3commons.ui.layout.framework.core.row {
 
-	import flash.geom.Rectangle;
 	import org.as3commons.ui.layout.CellConfig;
 
+	import flash.geom.Rectangle;
 
 	/**
+	 * Row definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface IRow extends IRowItem {
@@ -28,22 +30,51 @@ package org.as3commons.ui.layout.framework.core.row {
 		 * Config
 		 */
 
+		/**
+		 * The row config.
+		 */
 		function get config() : RowConfig;
 
 		/*
 		 * Add
 		 */
 
+		/**
+		 * Returns <code>true</code>, if the row accepts the given <code>rowItem</code>.
+		 * 
+		 * @param rowItem The row item to test.
+		 * @param cellConfig An optional cell config for the row item.
+		 * @return <code>true</code>, if the item fits into the row.
+		 */
 		function accepts(rowItem : IRowItem, cellConfig : CellConfig = null) : Boolean;
 		
+		/**
+		 * Adds the given <code>rowItem</code>.
+		 * 
+		 * @param rowItem The row item to add.
+		 */
 		function add(rowItem : IRowItem) : void;
 		
+		/**
+		 * Fills the row with an empty cell of the specified size.
+		 * 
+		 * @param cellSize The size of the empty cell.
+		 */
 		function fillWithEmptyCell(cellSize : Rectangle) : void;
 		
+		/**
+		 * The parent row.
+		 */
 		function set parentRow(parentRow : IRow) : void;
 		
+		/**
+		 * The number of items in the row.
+		 */
 		function get numItems() : uint;
 		
+		/**
+		 * The first row item.
+		 */
 		function get firstRowItem() : IRowItem;
 
 	}

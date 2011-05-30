@@ -18,6 +18,9 @@ package org.as3commons.ui.layout.shortcut {
 	import org.as3commons.ui.layout.framework.core.init.CellConfigInitObject;
 
 	/**
+	 * Shortcut to create a <code>CellConfig</code> object.
+	 * 
+	 * @param args List of configuration parameters.
 	 * @author Jens Struwe 18.03.2011
 	 */
 	public function cellconfig(...args) : CellConfigInitObject {

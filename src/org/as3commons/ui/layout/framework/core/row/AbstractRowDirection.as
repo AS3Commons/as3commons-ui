@@ -16,23 +16,70 @@
 package org.as3commons.ui.layout.framework.core.row {
 
 	/**
+	 * Row properties.
+	 * 
 	 * @author Jens Struwe 18.03.2011
 	 */
 	public class AbstractRowDirection extends AbstractRowItem {
 
+		/**
+		 * Left position.
+		 */
 		protected var _x : String;
+
+		/**
+		 * Top position.
+		 */
 		protected var _y : String;
+
+		/**
+		 * With.
+		 */
 		protected var _width : String;
+
+		/**
+		 * Height
+		 */
 		protected var _height : String;
 		
+		/**
+		 * Align property in row direction.
+		 */
 		protected var _align : String;
+
+		/**
+		 * Align.LEFT property in row direction.
+		 */
 		protected var _alignLeft : String;
+
+		/**
+		 * Align.CENTER property in row direction.
+		 */
 		protected var _alignCenter : String;
+
+		/**
+		 * Align.RIGHT property in row direction.
+		 */
 		protected var _alignRight : String;
 
+		/**
+		 * Align property in opposite direction.
+		 */
 		protected var _oppositeAlign : String;
+
+		/**
+		 * Align.TOP property in opposite direction.
+		 */
 		protected var _oppositeAlignTop : String;
+
+		/**
+		 * Align.MIDDLE property in opposite direction.
+		 */
 		protected var _oppositeAlignMiddle : String;
+
+		/**
+		 * Align.BOTTOM property in opposite direction.
+		 */
 		protected var _oppositeAlignBottom : String;
 
 	}

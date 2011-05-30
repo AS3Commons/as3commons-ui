@@ -11,6 +11,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 	import flash.display.DisplayObject;
 
 	/**
+	 * <code>LifeCycle</code> basic component adapter.
+	 * 
 	 * @author Jens Struwe 25.05.2011
 	 */
 	public class LifeCycleAdapter implements ILifeCycleAdapter {

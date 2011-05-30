@@ -22,6 +22,8 @@ package org.as3commons.ui.layout.framework {
 	import flash.display.Sprite;
 
 	/**
+	 * Basic layout definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface ILayout extends ILayoutItem, IIterable {
@@ -30,42 +32,118 @@ package org.as3commons.ui.layout.framework {
 		 * Config - Cell
 		 */
 
+		/**
+		 * Sets a cell config affecting all cells specified by <code>hIndex</code> and <code>vIndex</code>.
+		 * 
+		 * @param cellConfig The cell config.
+		 * @param hIndex The horizontal index of the affected cell or cells.
+		 * @param hIndex The vertical index of the affected cell or cells.
+		 */
 		function setCellConfig(cellConfig : CellConfig, hIndex : int = -1, vIndex : int = -1) : void;
 
+		/**
+		 * Returns the cell config for the cell specified by <code>hIndex</code> and <code>vIndex</code>.
+		 * 
+		 * @param hIndex The horizontal index of the cell.
+		 * @param hIndex The vertical index of the cell.
+		 * @return The cell config.
+		 */
 		function getCellConfig(hIndex : int = -1, vIndex : int = -1) : CellConfig;
 
 		/*
 		 * Config - Min Size
 		 */
 
+		/**
+		 * The min width of the layout.
+		 */
 		function set minWidth(minWidth : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get minWidth() : uint;
 		
+		/**
+		 * The min height of the layout.
+		 */
 		function set minHeight(minHeight : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get minHeight() : uint;
 
 		/*
 		 * Add, Get, Remove
 		 */
 		
+		/**
+		 * Adds the given list of items to the layout.
+		 * 
+		 * <p>A single argument may be a plain display object, an <code>ILayoutItem</code> or an array
+		 * containing each of them.</p>
+		 * 
+		 * @param args List of items to add to the layout.
+		 */
 		function add(...args) : void;
 		
+		/**
+		 * Adds all display objects of the given container to the layout.
+		 * 
+		 * @param container The container to add its content to the layout.
+		 */
 		function addAll(container : Sprite) : void;
 		
+		/**
+		 * Returns a layout item by a given key or list of keys.
+		 * 
+		 * <p>A single key may be an id (String) or a display object or
+		 * an <code>ILayoutItem</code>.</p>
+		 * 
+		 * <p>If multiple arguments are given, the method tries to find the
+		 * layout item hierarchically.</p>
+		 * 
+		 * @return The layout item found or <code>null</code>.
+		 */
 		function getLayoutItem(...args) : ILayoutItem;
 		
+		/**
+		 * Returns an <code>IRecursiveIterator</code> over all added items.
+		 * 
+		 * @return An recursive iterator.
+		 */
 		function recursiveIterator() : IRecursiveIterator;
 		
+		/**
+		 * Removes an item from the layout by the given key.
+		 * 
+		 * <p>A key may be an id (String) or a display object or
+		 * an <code>ILayoutItem</code>.</p>
+		 * 
+		 * @param key The key identifying an item added to the layout.
+		 */
 		function remove(key : *) : void;
 
+		/**
+		 * Returns the number of items added to the layout.
+		 */
 		function get numItems() : uint;
 
 		/*
 		 * Layout
 		 */
 
+		/**
+		 * Executed the layout procedure.
+		 * 
+		 * <p>If <code>relayout</code> is set to <code>true</code>, the layout will
+		 * keep its origin from a former layout process. This may be useful if only
+		 * a sublayout should be updated.</p>
+		 * 
+		 * @param container The container that contains the items.
+		 * @param relayout Flag to indicate if a former position should be reused.
+		 */
 		function layout(container : Sprite, relayout : Boolean = false) : void;
 
 	}

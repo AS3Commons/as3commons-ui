@@ -15,7 +15,7 @@
  */
 package org.as3commons.ui.layout {
 
-	import org.as3commons.ui.layout.framework.IDynamicTable;
+	import org.as3commons.ui.layout.framework.IDynTable;
 	import org.as3commons.ui.layout.framework.core.AbstractMultilineLayout;
 	import org.as3commons.ui.layout.framework.core.cell.ILayoutCell;
 	import org.as3commons.ui.layout.framework.core.parser.DynTableParser;
@@ -24,16 +24,24 @@ package org.as3commons.ui.layout {
 	import org.as3commons.ui.layout.framework.core.row.IRow;
 
 	/**
+	 * Dynamic table layout.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
-	public class DynTable extends AbstractMultilineLayout implements IDynamicTable {
+	public class DynTable extends AbstractMultilineLayout implements IDynTable {
 
+		/**
+		 * Max layout width.
+		 */
 		private var _maxContentWidth : uint;
 
 		/*
 		 * ILayout
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function setCellConfig(cellConfig : CellConfig, hIndex : int = -1, vIndex : int = -1) : void {
 			cellConfig.width = cellConfig.height = 0;
 			cellConfig.marginX = cellConfig.marginY = 0;
@@ -47,20 +55,32 @@ package org.as3commons.ui.layout {
 		
 		// Config - Max Size
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set maxContentWidth(maxContentWidth : uint) : void {
 			_maxContentWidth = maxContentWidth;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get maxContentWidth() : uint {
 			return _maxContentWidth;
 		}
 
 		// Info
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numTableRows() : uint {
 			return _cell ? ILayoutCell(_cell).row.numItems : 0;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numTableColumns() : uint {
 			if (!_cell) return 0;
 			var row : IRow = ILayoutCell(_cell).row.firstRowItem as IRow;
@@ -72,6 +92,9 @@ package org.as3commons.ui.layout {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createParser() : ILayoutParser {
 			if (_maxContentWidth) return new DynTableParser();
 			else return new SingleRowTableParser();

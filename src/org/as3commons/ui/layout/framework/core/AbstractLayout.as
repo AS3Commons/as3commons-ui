@@ -34,19 +34,45 @@ package org.as3commons.ui.layout.framework.core {
 	import flash.geom.Point;
 	
 	/**
+	 * Abstract layout implementation.
+	 * 
 	 * @author Jens Struwe 15.03.2011
 	 */
 	public class AbstractLayout extends AbstractLayoutItem implements ILayout {
 
+		/**
+		 * Cell configurations.
+		 */
 		private var _cellConfigs : CellConfigCollection;
 
+		/**
+		 * Min width.
+		 */
 		private var _minWidth : uint;
+
+		/**
+		 * Min height.
+		 */
 		private var _minHeight : uint;
 
+		/**
+		 * Map of layout items.
+		 */
 		private var _items : LinkedMap;
+
+		/**
+		 * Map of ids to layout items.
+		 */
 		private var _itemIds : Map;
+
+		/**
+		 * List of sublayouts.
+		 */
 		private var _subLayouts : LinkedSet;
 		
+		/**
+		 * <code>AbstractLayout</code> constructor.
+		 */
 		public function AbstractLayout() {
 			_items = new LinkedMap();
 		}
@@ -57,11 +83,17 @@ package org.as3commons.ui.layout.framework.core {
 
 		// Config - Cell
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function setCellConfig(cellConfig : CellConfig, hIndex : int = -1, vIndex : int = -1) : void {
 			if (!_cellConfigs) _cellConfigs = new CellConfigCollection();
 			_cellConfigs.setConfig(cellConfig, hIndex, vIndex);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function getCellConfig(hIndex : int = -1, vIndex : int = -1) : CellConfig {
 			if (!_cellConfigs) return null;
 			return _cellConfigs.getConfig(hIndex, vIndex);
@@ -69,24 +101,39 @@ package org.as3commons.ui.layout.framework.core {
 
 		// Config - Min Size
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set minWidth(minWidth : uint) : void {
 			_minWidth = minWidth;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get minWidth() : uint {
 			return _minWidth;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set minHeight(minHeight : uint) : void {
 			_minHeight = minHeight;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get minHeight() : uint {
 			return _minHeight;
 		}
 
 		// Add, Get, Remove
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function add(...args) : void {
 			var item : *;
 			var layoutItem : AbstractLayoutItem;
@@ -132,6 +179,9 @@ package org.as3commons.ui.layout.framework.core {
 			}
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function addAll(container : Sprite) : void {
 			var i : uint;
 			while (i < container.numChildren) {
@@ -140,6 +190,9 @@ package org.as3commons.ui.layout.framework.core {
 			}
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function getLayoutItem(...args) : ILayoutItem {
 			var layoutItem : ILayoutItem;
 			var layout : AbstractLayout = this;
@@ -159,10 +212,16 @@ package org.as3commons.ui.layout.framework.core {
 			return i == args.length ? layoutItem : null;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function recursiveIterator() : IRecursiveIterator {
 			return new RecursiveIterator(this);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function remove(key : *) : void {
 			var layoutItem : ILayoutItem = getLayoutItemByKey(key);
 			if (!layoutItem) return;
@@ -183,12 +242,18 @@ package org.as3commons.ui.layout.framework.core {
 			}
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numItems() : uint {
 			return _items.size;
 		}
 
 		// Layout
 
+		/**
+		 * @inheritDoc
+		 */
 		public function layout(container : Sprite, relayout : Boolean = false) : void {
 			var renderConfig : RenderConfig;
 			var position : Point;
@@ -217,6 +282,9 @@ package org.as3commons.ui.layout.framework.core {
 		 * IIterable
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		public function iterator(cursor : * = undefined) : IIterator {
 			return _items.iterator();
 		}
@@ -225,6 +293,9 @@ package org.as3commons.ui.layout.framework.core {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function parseLayoutItem(renderConfig : RenderConfig) : void {
 			var parser : ILayoutParser = createParser();
 			parser.layout = this;
@@ -252,6 +323,9 @@ package org.as3commons.ui.layout.framework.core {
 			_cell.renderConfig = renderConfig;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function excludeLayoutItem(renderConfig : RenderConfig) : void {
 			var iterator : IIterator = _items.iterator();
 			var layoutItem : AbstractLayoutItem;
@@ -265,6 +339,11 @@ package org.as3commons.ui.layout.framework.core {
 			}
 		}
 
+		/**
+		 * Creates a layout parser specific to the particular layout.
+		 * 
+		 * @return The layout parser.
+		 */
 		protected function createParser() : ILayoutParser {
 			// template method
 			return null;
@@ -274,20 +353,31 @@ package org.as3commons.ui.layout.framework.core {
 		 * Private
 		 */
 
+		/**
+		 * Tests if the layout contains the given layout item.
+		 */
 		private function hasLayoutItem(layoutItem : AbstractLayoutItem) : Boolean {
 			return _items.hasKey(layoutItem);
 		}
 
+		/**
+		 * Returns the layout item stored with the given display object.
+		 */
 		private function getLayoutItemByDisplayObject(displayObject : DisplayObject) : AbstractLayoutItem {
 			return _items.itemFor(displayObject);
 		}
 
+		/**
+		 * Returns the layout item stored with the given id.
+		 */
 		private function getLayoutItemById(id : String) : AbstractLayoutItem {
 			if (!_itemIds) return null;
 			return _itemIds.itemFor(id);
 		}
 
-		/*
+		/**
+		 * Returns the layout item by a given key.
+		 * 
 		 * The key can be one of the following:
 		 * - The id of a sublayout or a display
 		 * - A sublayout or display instance
@@ -303,6 +393,9 @@ package org.as3commons.ui.layout.framework.core {
 			return null;
 		}
 
+		/**
+		 * Finds a layout item by key recursively.
+		 */
 		private function findLayoutItemByKey(key : *) : ILayoutItem {
 			var layoutItem : ILayoutItem = getLayoutItemByKey(key);
 			if (layoutItem) return layoutItem;

@@ -22,11 +22,20 @@ package org.as3commons.ui.layout {
 	import org.as3commons.ui.layout.framework.core.parser.VLayoutParser;
 
 	/**
+	 * Vertical multiline layout.
+	 * 
 	 * @author Jens Struwe 09.03.2011
 	 */
 	public class VLayout extends AbstractMultilineLayout implements IVLayout {
 
+		/**
+		 * Max number of items per column.
+		 */
 		private var _maxItemsPerColumn : uint;
+
+		/**
+		 * Max height of the layout.
+		 */
 		private var _maxContentHeight : uint;
 
 		/*
@@ -35,24 +44,39 @@ package org.as3commons.ui.layout {
 		
 		// Config - Max Size
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set maxItemsPerColumn(maxItemsPerColumn : uint) : void {
 			_maxItemsPerColumn = maxItemsPerColumn;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get maxItemsPerColumn() : uint {
 			return _maxItemsPerColumn;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set maxContentHeight(maxContentHeight : uint) : void {
 			_maxContentHeight = maxContentHeight;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get maxContentHeight() : uint {
 			return _maxContentHeight;
 		}
 
 		// Info
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numLayoutColumns() : uint {
 			return _cell ? ILayoutCell(_cell).row.numItems : 0;
 		}
@@ -61,6 +85,9 @@ package org.as3commons.ui.layout {
 		 * Info
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function toString() : String {
 			return "[VLayout]" + super.toString();
 		}
@@ -69,6 +96,9 @@ package org.as3commons.ui.layout {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createParser() : ILayoutParser {
 			var parser : ILayoutParser = new VLayoutParser();
 			return parser;

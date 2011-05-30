@@ -18,10 +18,15 @@ package org.as3commons.ui.layout.framework.core.row {
 	import org.as3commons.ui.layout.constants.Align;
 
 	/**
+	 * Vertical row.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class VRow extends AbstractRow {
 
+		/**
+		 * <code>VRow</code> constructor.
+		 */
 		public function VRow() {
 			_x = "y";
 			_y = "x";

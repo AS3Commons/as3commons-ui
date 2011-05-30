@@ -22,8 +22,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 
 	import flash.geom.Rectangle;
 
-
 	/**
+	 * Layout cell definition.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public interface ICell extends ISizeItem, IRowItem {
@@ -32,22 +33,37 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * Config
 		 */
 
+		/**
+		 * The cell config.
+		 */
 		function get config() : CellConfig;
 
+		/**
+		 * The render config.
+		 */
 		function set renderConfig(renderConfig : RenderConfig) : void;
 
+		/**
+		 * @private
+		 */
 		function get renderConfig() : RenderConfig;
 
 		/*
 		 * Size
 		 */
 
+		/**
+		 * <code>true</code> if the cell does not have any visible content.
+		 */
 		function isEmpty() : Boolean;
 
 		/*
 		 * Data
 		 */
 
+		/**
+		 * The cell's content rect.
+		 */
 		function get contentRect() : Rectangle;
 
 	}

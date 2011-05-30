@@ -19,6 +19,9 @@ package org.as3commons.ui.layout.shortcut {
 	import org.as3commons.ui.layout.framework.core.init.DisplayInitializer;
 
 	/**
+	 * Shortcut to create a display object wrapper.
+	 * 
+	 * @param args List of configuration parameters.
 	 * @author Jens Struwe 18.03.2011
 	 */
 	public function display(...args) : Display {

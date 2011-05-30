@@ -16,18 +16,45 @@
 package org.as3commons.ui.layout.constants {
 
 	/**
+	 * Alignments.
+	 * 
 	 * @author Jens Struwe 09.02.2011
 	 */
 	public class Align {
 		
+		/**
+		 * Left (horizontal).
+		 */
 		public static const LEFT : String = "left";
+
+		/**
+		 * Center (horizontal).
+		 */
 		public static const CENTER : String = "center";
+
+		/**
+		 * Right (horizontal).
+		 */
 		public static const RIGHT : String = "right";
 		
+		/**
+		 * Top (vertical).
+		 */
 		public static const TOP : String = "top";
+
+		/**
+		 * Middle (vertical).
+		 */
 		public static const MIDDLE : String = "middle";
+
+		/**
+		 * Bottom (vertical).
+		 */
 		public static const BOTTOM : String = "bottom";
 		
+		/**
+		 * Justify (horizontal or vertical).
+		 */
 		public static const JUSTIFY : String = "justify";
 
 	}

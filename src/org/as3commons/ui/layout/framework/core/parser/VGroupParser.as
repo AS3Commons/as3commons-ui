@@ -18,10 +18,15 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.VRow;
 
 	/**
+	 * Vertical multiline layout parser.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class VGroupParser extends AbstractGroupLayoutParser {
 
+		/**
+		 * <code>VGroupParser</code> constructor.
+		 */
 		public function VGroupParser() {
 			_RowType = VRow;
 		}

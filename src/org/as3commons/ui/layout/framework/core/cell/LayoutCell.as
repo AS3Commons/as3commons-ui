@@ -20,23 +20,32 @@ package org.as3commons.ui.layout.framework.core.cell {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-
-
 	/**
+	 * Layout cell.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class LayoutCell extends AbstractCell implements ILayoutCell {
 		
+		/**
+		 * The first row of the layout.
+		 */
 		private var _row : IRow;
 		
 		/*
 		 * ILayoutCell
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set row(row : IRow) : void {
 			_row = row;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get row() : IRow {
 			return _row;
 		}
@@ -45,6 +54,9 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * IBox
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function get visibleRect() : Rectangle {
 			return _row.visibleRect;
 		}
@@ -53,10 +65,16 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * Protected
 		 */
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function measureCellContent() : void {
 			_space = row.space.clone();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function renderCellContent(position : Point) : void {
 			_row.position.x = position.x;
 			_row.position.y = position.y;

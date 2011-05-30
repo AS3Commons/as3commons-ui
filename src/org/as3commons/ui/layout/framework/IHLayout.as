@@ -16,6 +16,8 @@
 package org.as3commons.ui.layout.framework {
 
 	/**
+	 * Horizontal multiline layout definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface IHLayout extends IMultilineLayout {
@@ -24,18 +26,33 @@ package org.as3commons.ui.layout.framework {
 		 * Config - Max Size
 		 */
 		
+		/**
+		 * Max number of items per row.
+		 */
 		function set maxItemsPerRow(maxItemsPerRow : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get maxItemsPerRow() : uint;
 		
+		/**
+		 * Max width of the layout.
+		 */
 		function set maxContentWidth(maxContentWidth : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get maxContentWidth() : uint;
 
 		/*
 		 * Info
 		 */
 
+		/**
+		 * The number of rows created by the layout.
+		 */
 		function get numLayoutRows() : uint;
 
 	}

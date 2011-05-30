@@ -16,24 +16,38 @@
 package org.as3commons.ui.layout.framework {
 
 	/**
+	 * Dynamic table definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
-	public interface IDynamicTable extends IMultilineLayout {
+	public interface IDynTable extends IMultilineLayout {
 
 		/*
 		 * Config - Max Size
 		 */
 		
+		/**
+		 * The max width of the layout.
+		 */
 		function set maxContentWidth(maxContentWidth : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get maxContentWidth() : uint;
 
 		/*
 		 * Info
 		 */
 
+		/**
+		 * The number of columns created by the layout.
+		 */
 		function get numTableRows() : uint;
 
+		/**
+		 * @private
+		 */
 		function get numTableColumns() : uint;
 
 	}

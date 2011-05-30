@@ -16,6 +16,8 @@
 package org.as3commons.ui.layout.framework {
 
 	/**
+	 * Multiline layout definition.
+	 *  
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface IMultilineLayout extends ILayout {
@@ -24,12 +26,24 @@ package org.as3commons.ui.layout.framework {
 		 * Config - Gap
 		 */
 
+		/**
+		 * Horizontal space between items.
+		 */
 		function set hGap(hGap : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get hGap() : uint;
 		
+		/**
+		 * Vertical space between items.
+		 */
 		function set vGap(vGap : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get vGap() : uint;
 
 	}

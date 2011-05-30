@@ -20,6 +20,8 @@ package org.as3commons.ui.layout {
 	import org.as3commons.ui.layout.framework.core.parser.VGroupParser;
 
 	/**
+	 * Vertical single line layout.
+	 * 
 	 * @author Jens Struwe 09.03.2011
 	 */
 	public class VGroup extends AbstractGroupLayout {
@@ -28,6 +30,9 @@ package org.as3commons.ui.layout {
 		 * ILayout
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function setCellConfig(cellConfig : CellConfig, hIndex : int = -1, vIndex : int = -1) : void {
 			super.setCellConfig(cellConfig, -1, vIndex);
 		}
@@ -36,6 +41,9 @@ package org.as3commons.ui.layout {
 		 * Info
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function toString() : String {
 			return "[VGroup]" + super.toString();
 		}
@@ -44,6 +52,9 @@ package org.as3commons.ui.layout {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createParser() : ILayoutParser {
 			var parser : ILayoutParser = new VGroupParser();
 			return parser;

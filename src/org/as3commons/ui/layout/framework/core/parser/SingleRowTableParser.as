@@ -20,6 +20,8 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.IRow;
 
 	/**
+	 * Optimized parser for a table containg only a single row.
+	 * 
 	 * @author Jens Struwe 19.03.2011
 	 */
 	public class SingleRowTableParser extends AbstractGroupLayoutParser {
@@ -28,6 +30,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createRow() : IRow {
 			var row : IRow = new HRow();
 

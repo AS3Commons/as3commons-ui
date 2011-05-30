@@ -23,10 +23,15 @@ package org.as3commons.ui.layout {
 	import org.as3commons.ui.layout.framework.core.parser.TableParser;
 
 	/**
+	 * Table or grid layout.
+	 * 
 	 * @author Jens Struwe 09.03.2011
 	 */
 	public class Table extends AbstractMultilineLayout implements ITable {
 
+		/**
+		 * Number of columns.
+		 */
 		private var _numColumns : uint;
 
 		/*
@@ -35,16 +40,25 @@ package org.as3commons.ui.layout {
 		
 		// Config - Max Size
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set numColumns(numColumns : uint) : void {
 			_numColumns = numColumns;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numColumns() : uint {
 			return _numColumns;
 		}
 
 		// Info
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get numTableRows() : uint {
 			return _cell ? ILayoutCell(_cell).row.numItems : 0;
 		}
@@ -53,6 +67,9 @@ package org.as3commons.ui.layout {
 		 * Info
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function toString() : String {
 			return "[Table]" + super.toString();
 		}
@@ -61,6 +78,9 @@ package org.as3commons.ui.layout {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createParser() : ILayoutParser {
 			if (_numColumns) return new TableParser();
 			else return new SingleRowTableParser();

@@ -27,22 +27,37 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import flash.geom.Rectangle;
 
 	/**
+	 * Table parser.
+	 * 
 	 * @author Jens Struwe 19.03.2011
 	 */
 	public class TableParser extends AbstractMultilineLayoutParser {
 
+		/**
+		 * Cache of cells added to the parser.
+		 */
 		protected var _cache : Array;
+
+		/**
+		 * List if cell sizes.
+		 */
 		protected var _cellSizes : Array;
 
 		/*
 		 * ILayoutParser
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function prepare() : void {
 			_cache = new Array();
 			_cellSizes = new Array();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function parseCell(cell : ICell) : void {
 			var hIndex : uint = _cache.length % numColumns;
 			var vIndex : uint = Math.floor(_cache.length / numColumns);
@@ -66,6 +81,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			_cache.push(cell);
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override public function finish() : ICell {
 			super.prepare();
 
@@ -110,22 +128,20 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		 
-		protected function get numColumns() : uint {
-			return ITable(_layout).numColumns;
-		}
-
-		protected function get maxContentWidth() : uint {
-			return 0;
-		}
-
-		/*
-		 * A cellConfig is already being set in this class, so there is no need to
-		 * check again for a config. 
+		/**
+		 * @inheritDoc
 		 */
 		override protected function getCellConfig(hIndex : uint, vIndex : uint) : CellConfig {
+			/*
+			 * A cellConfig is already being set in this class, so there is no need to
+			 * check again for a config. 
+			 */
 			return null;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createRow() : IRow {
 			var row : IRow = new VRow();
 
@@ -136,6 +152,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			return row;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createSubRow() : IRow {
 			var row : IRow = new HRow();
 
@@ -147,6 +166,20 @@ package org.as3commons.ui.layout.framework.core.parser {
 			row.config.vAlign = _layout.vAlign;
 
 			return row;
+		}
+
+		/**
+		 * The number of table columns.
+		 */
+		protected function get numColumns() : uint {
+			return ITable(_layout).numColumns;
+		}
+
+		/**
+		 * The max width of the layout.
+		 */
+		protected function get maxContentWidth() : uint {
+			return 0;
 		}
 
 	}

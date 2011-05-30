@@ -18,11 +18,20 @@ package org.as3commons.ui.layout.framework.core {
 	import org.as3commons.ui.layout.framework.IMultilineLayout;
 
 	/**
+	 * Abstract multiline layout implementation.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class AbstractMultilineLayout extends AbstractLayout implements IMultilineLayout {
 
+		/**
+		 * Horizontal space between items.
+		 */
 		private var _hGap : uint;
+
+		/**
+		 * Vertical space between items.
+		 */
 		private var _vGap : uint;
 
 		/*
@@ -31,18 +40,30 @@ package org.as3commons.ui.layout.framework.core {
 		
 		// Config - Gap
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set hGap(hGap : uint) : void {
 			_hGap = hGap;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get hGap() : uint {
 			return _hGap;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set vGap(vGap : uint) : void {
 			_vGap = vGap;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get vGap() : uint {
 			return _vGap;
 		}

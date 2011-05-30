@@ -16,6 +16,8 @@
 package org.as3commons.ui.layout.framework {
 
 	/**
+	 * Table layout definition.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public interface ITable extends IMultilineLayout {
@@ -24,14 +26,23 @@ package org.as3commons.ui.layout.framework {
 		 * Config - Max Size
 		 */
 		
+		/**
+		 * Number of columns.
+		 */
 		function set numColumns(numColumns : uint) : void;
 		
+		/**
+		 * @private
+		 */
 		function get numColumns() : uint;
 		
 		/*
 		 * Info
 		 */
 
+		/**
+		 * The number of rows created by the layout.
+		 */
 		function get numTableRows() : uint;
 
 	}

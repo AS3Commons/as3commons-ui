@@ -22,6 +22,8 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.VRow;
 
 	/**
+	 * Vertical multiline layout parser.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class VLayoutParser extends AbstractMultilineLayoutParser {
@@ -30,6 +32,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 		 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createRow() : IRow {
 			var row : IRow = new HRow();
 
@@ -40,6 +45,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 			return row;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function createSubRow() : IRow {
 			var row : IRow = new VRow();
 

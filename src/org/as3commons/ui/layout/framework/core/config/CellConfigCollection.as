@@ -18,14 +18,30 @@ package org.as3commons.ui.layout.framework.core.config {
 	import org.as3commons.ui.layout.CellConfig;
 
 	/**
+	 * Cell config storage table.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public class CellConfigCollection {
 		
+		/**
+		 * The width of the table.
+		 */
 		private var _width : uint;
+
+		/**
+		 * The height of the table.
+		 */
 		private var _height : uint;
+
+		/**
+		 * The cell configurations.
+		 */
 		private var _cellConfigs : Object;
 
+		/**
+		 * <code>CellConfigCollection</code> constructor.
+		 */
 		public function CellConfigCollection() {
 			_cellConfigs = new Object();
 		}
@@ -34,6 +50,13 @@ package org.as3commons.ui.layout.framework.core.config {
 		 * Public
 		 */
 
+		/**
+		 * Sets a cell config affecting all cells specified by <code>hIndex</code> and <code>vIndex</code>.
+		 * 
+		 * @param cellConfig The cell config.
+		 * @param hIndex The horizontal index of the affected cell or cells.
+		 * @param hIndex The vertical index of the affected cell or cells.
+		 */
 		public function setConfig(cellConfig : CellConfig, hIndex : int = -1, vIndex : int = -1) : void {
 			var x : uint = hIndex + 1;
 			var y : uint = vIndex + 1;
@@ -42,6 +65,13 @@ package org.as3commons.ui.layout.framework.core.config {
 			_cellConfigs[y * _width + x] = cellConfig;
 		}
 
+		/**
+		 * Returns the cell config for the cell specified by <code>hIndex</code> and <code>vIndex</code>.
+		 * 
+		 * @param hIndex The horizontal index of the cell.
+		 * @param hIndex The vertical index of the cell.
+		 * @return The cell config.
+		 */
 		public function getConfig(hIndex : int = -1, vIndex : int = -1) : CellConfig {
 			var x : uint = hIndex + 1;
 			var y : uint = vIndex + 1;
@@ -61,6 +91,9 @@ package org.as3commons.ui.layout.framework.core.config {
 		 * Private
 		 */
 
+		/**
+		 * Resizes the internal storage table.
+		 */
 		private function resize(width : uint, height : uint) : void {
 			width = Math.max(width, _width);
 			height = Math.max(height, _height);

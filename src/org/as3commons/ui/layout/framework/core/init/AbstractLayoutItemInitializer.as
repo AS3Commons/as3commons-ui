@@ -18,14 +18,33 @@ package org.as3commons.ui.layout.framework.core.init {
 	import org.as3commons.ui.layout.framework.ILayoutItem;
 
 	/**
+	 * Abstract layout item initializer implementation.
+	 * 
 	 * @author Jens Struwe 23.03.2011
 	 */
 	public class AbstractLayoutItemInitializer {
 		
+		/**
+		 * The layout item.
+		 */
 		protected var _layoutItem : ILayoutItem;
+
+		/**
+		 * Flag to indicate if the item is included in the layout.
+		 */
 		private var _inLayout : Boolean = true;
+
+		/**
+		 * Flag to indicate if the item should be hidden when excluded.
+		 */
 		private var _hide : Boolean = true;
 		
+		/**
+		 * Initializes the layout item.
+		 * 
+		 * @param layoutItem The layout item to initialize.
+		 * @param args List of layout items and configuration parameters.
+		 */
 		public function init(layoutItem : ILayoutItem, args : Array) : void {
 			_layoutItem = layoutItem;
 
@@ -50,6 +69,9 @@ package org.as3commons.ui.layout.framework.core.init {
 		 * Protected
 		 */
 
+		/**
+		 * Hook to initialize a given init argument.
+		 */
 		protected function initOther(arg : *) : void {
 			// template method
 		}
@@ -58,6 +80,9 @@ package org.as3commons.ui.layout.framework.core.init {
 		 * Private
 		 */
 
+		/**
+		 * Inits a property.
+		 */
 		private function initProperty(property : String, value : *) : void {
 			if (property == "inLayout") {
 				_inLayout = value;

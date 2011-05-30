@@ -18,10 +18,15 @@ package org.as3commons.ui.layout.framework.core.row {
 	import org.as3commons.ui.layout.constants.Align;
 
 	/**
+	 * Horizontal row.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class HRow extends AbstractRow {
 
+		/**
+		 * <code>HRow</code> constructor.
+		 */
 		public function HRow() {
 			_x = "x";
 			_y = "y";

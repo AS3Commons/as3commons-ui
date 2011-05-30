@@ -18,14 +18,30 @@ package org.as3commons.ui.layout.framework.core.init {
 	import org.as3commons.ui.layout.CellConfig;
 
 	/**
+	 * Cell configuration init object.
+	 * 
 	 * @author Jens Struwe 21.03.2011
 	 */
 	public dynamic class CellConfigInitObject {
 		
+		/**
+		 * Horizontal index of items that are affected.
+		 */
 		public var hIndex : int = -1;
+
+		/**
+		 * Vertical index of items that are affected.
+		 */
 		public var vIndex : int = -1;
+
+		/**
+		 * Internal cell configuration object.
+		 */
 		public var cellConfig : CellConfig;
 
+		/**
+		 * <code>CellConfigInitObject</code> constructor.
+		 */
 		public function CellConfigInitObject() {
 			cellConfig = new CellConfig();
 		}

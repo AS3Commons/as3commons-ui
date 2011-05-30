@@ -23,30 +23,91 @@ package org.as3commons.ui.layout.framework.core {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-
 	/**
+	 * Abstact layout item implementation.
+	 * 
 	 * @author Jens Struwe 15.03.2011
 	 */
 	public class AbstractLayoutItem implements ILayoutItem {
 		
+		/**
+		 * Constant to describe that an object should be neither shown nor hidden in the next layout procedure.
+		 */
 		protected const FALSE : String = "false";
+
+		/**
+		 * Constant to describe that an object should be hidden in the next layout procedure.
+		 */
 		protected const HIDE : String = "hide";
+
+		/**
+		 * Constant to describe that an object should be shown in the next layout procedure.
+		 */
 		protected const SHOW : String = "show";
 		
+		/**
+		 * The id.
+		 */
 		private var _id : String;
+
+		/**
+		 * Horizontal margin.
+		 */
 		protected var _marginX : int;
+
+		/**
+		 * Vertical margin.
+		 */
 		protected var _marginY : int;
+
+		/**
+		 * Horizontal offset.
+		 */
 		protected var _offsetX : int;
+
+		/**
+		 * Vertical offset.
+		 */
 		protected var _offsetY : int;
+
+		/**
+		 * Horizontal align.
+		 */
 		protected var _hAlign : String = Align.LEFT;
+
+		/**
+		 * Vertical align.
+		 */
 		protected var _vAlign : String = Align.TOP;
+
+		/**
+		 * Custom render callback.
+		 */
 		protected var _renderCallback : Function;
+
+		/**
+		 * Custom hide callback.
+		 */
 		protected var _hideCallback : Function;
+
+		/**
+		 * Custom show callback.
+		 */
 		protected var _showCallback : Function;
 		
+		/**
+		 * <code>true</code> if the layout item is not excluded from its parent layout.
+		 */
 		protected var _inLayout : Boolean = true;
+
+		/**
+		 * Flag to indicate if the item should be shown or hidden in the next layout procedure.
+		 */
 		protected var _showOrHide : String = FALSE;
 		
+		/**
+		 * The layout item cell.
+		 */
 		protected var _cell : ICell;
 		
 		/*
@@ -55,78 +116,129 @@ package org.as3commons.ui.layout.framework.core {
 		
 		// Config - ID
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set id(id : String) : void {
 			_id = id;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get id() : String {
 			return _id;
 		}
 
 		// Config - Margin, Offset
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set marginX(marginX : int) : void {
 			_marginX = marginX;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get marginX() : int {
 			return _marginX;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set marginY(marginY : int) : void {
 			_marginY = marginY;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get marginY() : int {
 			return _marginY;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set offsetX(offsetX : int) : void {
 			_offsetX = offsetX;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get offsetX() : int {
 			return _offsetX;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set offsetY(offsetY : int) : void {
 			_offsetY = offsetY;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get offsetY() : int {
 			return _offsetY;
 		}
 
 		// Config - Align
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function set hAlign(hAlign : String) : void {
 			_hAlign = hAlign;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get hAlign() : String {
 			return _hAlign;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set vAlign(vAlign : String) : void {
 			_vAlign = vAlign;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get vAlign() : String {
 			return _vAlign;
 		}
 		
 		// Config - Include, Exclude
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get inLayout() : Boolean {
 			return _inLayout;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function excludeFromLayout(hide : Boolean = true) : void {
 			if (!_inLayout) return;
 			_inLayout = false;
 			if (hide) _showOrHide = HIDE;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function includeInLayout(show : Boolean = true) : void {
 			if (_inLayout) return;
 			_inLayout = true;
@@ -135,40 +247,67 @@ package org.as3commons.ui.layout.framework.core {
 		
 		// Layout
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set renderCallback(renderCallback : Function) : void {
 			_renderCallback = renderCallback;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get renderCallback() : Function {
 			return _renderCallback;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set hideCallback(excludeCallback : Function) : void {
 			_hideCallback = excludeCallback;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get hideCallback() : Function {
 			return _hideCallback;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set showCallback(showCallback : Function) : void {
 			_showCallback = showCallback;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get showCallback() : Function {
 			return _showCallback;
 		}
 
 		// Info Data
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get position() : Point {
 			return _cell ? _cell.position : new Point();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get contentRect() : Rectangle {
 			return _cell && _cell.contentRect ? _cell.contentRect : new Rectangle();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get visibleRect() : Rectangle {
 			return _cell && _cell.visibleRect ? _cell.visibleRect : new Rectangle();
 		}
@@ -177,6 +316,9 @@ package org.as3commons.ui.layout.framework.core {
 		 * Info
 		 */
 		
+		/**
+		 * Info
+		 */
 		public function toString() : String {
 			return "" 
 				+ (id ? " id:" + id + "," : "")
@@ -190,16 +332,32 @@ package org.as3commons.ui.layout.framework.core {
 		 * Internal
 		 */
 		
+		/**
+		 * Parses the layout item.
+		 * 
+		 * @param renderConfig The render config.
+		 */
 		internal function parse(renderConfig : RenderConfig) : void {
 			parseLayoutItem(renderConfig);
 			_showOrHide = FALSE;
 		}
 		
+		/**
+		 * Excludes the layout item.
+		 * 
+		 * @param renderConfig The render config.
+		 */
 		internal function exclude(renderConfig : RenderConfig) : void {
 			excludeLayoutItem(renderConfig);
 			_showOrHide = FALSE;
 		}
 		
+		/**
+		 * Creates or clones a render config.
+		 * 
+		 * @param renderConfig The render config.
+		 * @return A new or cloned render config.
+		 */
 		internal function createRenderConfig(parentRenderConfig : RenderConfig = null) : RenderConfig {
 			var renderConfig : RenderConfig = parentRenderConfig ? parentRenderConfig.clone() : new RenderConfig();
 			if (_showOrHide == SHOW) renderConfig.show = true;
@@ -210,6 +368,9 @@ package org.as3commons.ui.layout.framework.core {
 			return renderConfig;
 		}
 		
+		/**
+		 * The cell of the layout item.
+		 */
 		internal function get cell() : ICell {
 			return _cell;
 		}
@@ -218,10 +379,20 @@ package org.as3commons.ui.layout.framework.core {
 		 * Protected
 		 */
 		
+		/**
+		 * Performs operations to exclude the layout item.
+		 * 
+		 * @param renderConfig The render config.
+		 */
 		protected function excludeLayoutItem(renderConfig : RenderConfig) : void {
 			// template method
 		}
 
+		/**
+		 * Parses the layout item.
+		 * 
+		 * @param renderConfig The render config.
+		 */
 		protected function parseLayoutItem(renderConfig : RenderConfig) : void {
 			// template method
 		}

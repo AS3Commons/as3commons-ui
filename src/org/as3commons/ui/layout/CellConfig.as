@@ -18,20 +18,50 @@ package org.as3commons.ui.layout {
 	import org.as3commons.ui.layout.constants.Align;
 
 	/**
+	 * Layout cell config object.
+	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
 	public class CellConfig {
 		
+		/**
+		 * Cell width.
+		 */
 		public var width : uint;
+
+		/**
+		 * Cell height.
+		 */
 		public var height : uint;
 
+		/**
+		 * Cell horizontal margin.
+		 */
 		public var marginX : int;
+
+		/**
+		 * Cell vertical margin.
+		 */
 		public var marginY : int;
 
+		/**
+		 * Cell horizontal offset.
+		 */
 		public var offsetX : int;
+
+		/**
+		 * Cell vertical offset.
+		 */
 		public var offsetY : int;
 
+		/**
+		 * Cell horizontal align.
+		 */
 		public var hAlign : String = Align.LEFT;
+
+		/**
+		 * Cell vertical align.
+		 */
 		public var vAlign : String = Align.TOP;
 
 	}

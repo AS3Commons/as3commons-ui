@@ -19,10 +19,19 @@ package org.as3commons.ui.layout.framework.core.config {
 	import org.as3commons.ui.layout.constants.Align;
 
 	/**
+	 * Util to merge two different cell configs.
+	 * 
 	 * @author Jens Struwe 23.03.2011
 	 */
 	public class CellConfigMerge {
 		
+		/**
+		 * Merge.
+		 * 
+		 * @param toConfig The config to merge to.
+		 * @param fromConfig The config to merge from.
+		 * @return The merged config.
+		 */
 		public static function merge(toConfig : CellConfig, fromConfig : CellConfig) : CellConfig {
 			if (!fromConfig) return toConfig;
 

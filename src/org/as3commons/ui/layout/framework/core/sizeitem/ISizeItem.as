@@ -19,6 +19,8 @@ package org.as3commons.ui.layout.framework.core.sizeitem {
 	import flash.geom.Rectangle;
 
 	/**
+	 * Definition of an item that can be measured and rendered.
+	 * 
 	 * @author Jens Struwe 11.03.2011
 	 */
 	public interface ISizeItem {
@@ -27,22 +29,37 @@ package org.as3commons.ui.layout.framework.core.sizeitem {
 		 * Measure
 		 */
 		
+		/**
+		 * Measures the item.
+		 */
 		function measure() : void;
 
+		/**
+		 * Space consumed by the item.
+		 */
 		function get space() : Rectangle;
 
 		/*
 		 * Render
 		 */
 
+		/**
+		 * The position of the item.
+		 */
 		function get position() : Point;
 		
+		/**
+		 * Renders the item.
+		 */
 		function render() : void;
 
 		/*
 		 * Data
 		 */
 
+		/**
+		 * The visible rect.
+		 */
 		function get visibleRect() : Rectangle;
 
 	}

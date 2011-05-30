@@ -19,6 +19,9 @@ package org.as3commons.ui.layout.shortcut {
 	import org.as3commons.ui.layout.framework.core.init.LayoutInitializer;
 
 	/**
+	 * Shortcut to create a <code>DynTable</code> layout.
+	 * 
+	 * @param args List of layout items and configuration parameters.
 	 * @author Jens Struwe 18.03.2011
 	 */
 	public function dyntable(...args) : DynTable {

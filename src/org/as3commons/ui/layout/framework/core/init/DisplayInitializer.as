@@ -15,11 +15,13 @@
  */
 package org.as3commons.ui.layout.framework.core.init {
 
-	import flash.display.DisplayObject;
 	import org.as3commons.ui.layout.Display;
 
+	import flash.display.DisplayObject;
 
 	/**
+	 * Initializes a display object wrapper.
+	 * 
 	 * @author Jens Struwe 23.03.2011
 	 */
 	public class DisplayInitializer extends AbstractLayoutItemInitializer {
@@ -28,6 +30,9 @@ package org.as3commons.ui.layout.framework.core.init {
 		 * Protected
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		override protected function initOther(arg : *) : void {
 			// display object
 			if (arg is DisplayObject) {

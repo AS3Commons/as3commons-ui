@@ -22,21 +22,36 @@ package org.as3commons.ui.layout.framework.core.parser {
 	import org.as3commons.ui.layout.framework.core.row.IRow;
 
 	/**
+	 * Abstract layout parser implementation.
+	 * 
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public class AbstractLayoutParser implements ILayoutParser {
 		
+		/**
+		 * The layout to be parsed.
+		 */
 		protected var _layout : ILayout;
+
+		/**
+		 * The cell corresponding to the layout.
+		 */
 		protected var _layoutCell : ILayoutCell;
 
 		/*
 		 * ILayoutParser
 		 */
 
+		/**
+		 * @inheritDoc
+		 */
 		public function set layout(layout : ILayout) : void {
 			_layout = layout;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function prepare() : void {
 			_layoutCell = new LayoutCell();
 			_layoutCell.config.marginX = _layout.marginX;
@@ -49,10 +64,16 @@ package org.as3commons.ui.layout.framework.core.parser {
 			_layoutCell.row = row;
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function parseCell(cell : ICell) : void {
 			// template method
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function finish() : ICell {
 			_layoutCell.row.measure();
 			_layoutCell.measure();
@@ -63,11 +84,9 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * Protected
 		 */
 
-		protected function setCellConfig(cell : ICell, hIndex : int = -1, vIndex : int = -1) : IRow {
-			// template method
-			return null;
-		}
-
+		/**
+		 * Creates the first row of the layout.
+		 */
 		protected function createRow() : IRow {
 			// template method
 			return null;
