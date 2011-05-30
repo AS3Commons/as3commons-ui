@@ -96,8 +96,8 @@
 
 		<zip destfile="${ZIP}/${FILE_NAME}-${VERSION}.zip">
 			<zipfileset dir="${SRC}" prefix="src" />
-			<!--<zipfileset dir="${TESTS}" prefix="tests" />
-			<zipfileset dir="${EXAMPLES}" prefix="examples" />-->
+			<zipfileset dir="${TESTS}" prefix="tests" />
+			<zipfileset dir="${EXAMPLES}" prefix="examples" />
 			<zipfileset file="${SWC}/${FILE_NAME}-${VERSION}.swc" prefix="swc" />
 			<zipfileset dir="${LIBS}" prefix="libs" />
 			<zipfileset dir="${DOC}" prefix="doc" />
