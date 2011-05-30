@@ -3,10 +3,8 @@
 
 	<property file="build/build.env" />
 
-	<property name="ASDOC" value="${FLEX_HOME}\bin\asdoc.exe" />
-
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.1.4" />
+	<property name="VERSION" value="0.2" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
@@ -33,12 +31,13 @@
 		</compc>
 	</target>
 
-	<target name="Clean" description="Clean" depends="Clean_TMP">
-		<delete dir="doc/apidoc" failonerror="false" />
+	<target name="Clean" description="Clean">
+		<delete dir="${TMP}" failonerror="true" />
+		<delete dir="${DOC}/apidoc" failonerror="true" />
 	</target>
 	
 	<target name="Clean_TMP">
-		<delete dir="${TMP}" failonerror="false" />
+		<delete dir="${TMP}" failonerror="true" />
 	</target>
 
 	<target name="Embed_Examples">
@@ -65,24 +64,27 @@
 			<arg line="-window-title 'AS3Commons UI ${VERSION}'" />
 			<arg line="-output '${DOC}/apidoc'"/>
 			
-			<arg line="-external-library-path libs" />
-			<arg line="-external-library-path ${FLEX_HOME}/frameworks/libs" />
-			<arg line="-external-library-path ${FLEX_HOME}/frameworks/libs/player/9" />
+			<arg line="-external-library-path ${LIBS}" />
+			<arg line="-external-library-path ${FLASH_PLAYER_LIBS}" />
 
 			<arg line="-package org.as3commons.ui.layout 'Layouts (public).'" />
-			<arg line="-package org.as3commons.ui.layout.constants 'Constants (public).'" />
-			<arg line="-package org.as3commons.ui.layout.debugger 'Debugger (public).'" />
-			<arg line="-package org.as3commons.ui.layout.framework 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.cell 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.config 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.init 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.parser 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.row 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.framework.core.sizeitem 'Framework internal code (hidden).'" />
-			<arg line="-package org.as3commons.ui.layout.shortcut 'Layout shortcuts (public).'" />
-
-			<arg line="-library-path ${FLEX_HOME}/frameworks/locale/en_US" />
+			<arg line="-package org.as3commons.ui.layout.constants 'Layouts - Constants (public).'" />
+			<arg line="-package org.as3commons.ui.layout.debugger 'Layouts - Debugger (public).'" />
+			<arg line="-package org.as3commons.ui.layout.framework 'Layouts - API definition (public).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.cell 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.config 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.init 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.parser 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.row 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.framework.core.sizeitem 'Layouts - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.layout.shortcut 'Layouts - Layout shortcuts (public).'" />
+			
+			<arg line="-package org.as3commons.ui.lifecycle.i10n 'Invalidation (public).'" />
+			<arg line="-package org.as3commons.ui.lifecycle.i10n.core 'Invalidation - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.lifecycle.lifecycle 'LifeCycle (public).'" />
+			<arg line="-package org.as3commons.ui.lifecycle.lifecycle.core 'LifeCycle - Framework internal code (hidden).'" />
+			
 		</exec>
 
 		<copy file="${BUILD}/asdoc/asdoc.js" todir="${DOC}/apidoc" overwrite="true" />
