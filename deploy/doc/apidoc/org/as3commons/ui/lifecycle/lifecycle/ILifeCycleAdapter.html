@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../../override.css" type="text/css"><meta name="keywords" content="ILifeCycleAdapter,org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter,_autoUpdates,_cleanUpHandler,_component,_i10n,_initHandler,_initialized,_invalidProperties,_prepareUpdateHandler,_updateHandler,_updateKinds,cleanUpHandler,cleanUpHandler,component,component,initHandler,initHandler,prepareUpdateHandler,prepareUpdateHandler,updateHandler,updateHandler,autoUpdateBefore,autoUpdateBefore,cleanUp,cleanUp,cleanUp,cleanUp,getAdapter_internal,invalidate,invalidate,isInvalid,isInvalid,onCleanUp,onInit,onPrepareUpdate,onUpdate,registerComponent,registerComponent,removeAutoUpdateBefore,removeAutoUpdateBefore,scheduleUpdate,scheduleUpdate,setUp_internal,shouldUpdate,shouldUpdate,unregisterAllComponents,unregisterAllComponents,unregisterComponent,unregisterComponent,validateNow,validateNow,validate_internal,willValidate_internal"><title>org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter</title></head><body><script language="javascript" type="text/javascript" src="../../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'ILifeCycleAdapter - AS3Commons UI 0.2';
+				var baseRef = '../../../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../index.html?org/as3commons/ui/lifecycle/lifecycle/ILifeCycleAdapter.html&amp;org/as3commons/ui/lifecycle/lifecycle/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ILifeCycleAdapter</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ILifeCycleAdapter"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">org.as3commons.ui.lifecycle.lifecycle</a></td></tr><tr><td class="classHeaderTableLabel">Interface</td><td class="classSignature">public  interface  ILifeCycleAdapter</td></tr><tr><td class="classHeaderTableLabel">Implementors</td><td> <a href="../../../../../org/as3commons/ui/lifecycle/lifecycle/LifeCycleAdapter.html">LifeCycleAdapter</a></td></tr></table><p></p><p></p><p></p>
+	              <code>LifeCycle</code> component adapter definition.
+	 
+	 <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#cleanUpHandler" class="signatureLink">cleanUpHandler</a> : Function<div class="summaryTableDescription">[write-only] 
+		 Sets a custom callback for the clean up event.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#component" class="signatureLink">component</a> : DisplayObject<div class="summaryTableDescription">[read-only] 
+		 Component with that the adapter has been registered in LifeCycle.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#initHandler" class="signatureLink">initHandler</a> : Function<div class="summaryTableDescription">[write-only] 
+		 Sets a custom callback for the init event.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#prepareUpdateHandler" class="signatureLink">prepareUpdateHandler</a> : Function<div class="summaryTableDescription">[write-only] 
+		 Sets a custom callback for the prepare update event.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#updateHandler" class="signatureLink">updateHandler</a> : Function<div class="summaryTableDescription">[write-only] 
+		 Sets a custom callback for the update event.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#autoUpdateBefore()" class="signatureLink">autoUpdateBefore</a>(child:DisplayObject):void</div><div class="summaryTableDescription">
+		 Registers a component to be updated right before an update is performed.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#cleanUp()" class="signatureLink">cleanUp</a>():void</div><div class="summaryTableDescription">
+		 Removes all listeners and references of the particular adapter.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#invalidate()" class="signatureLink">invalidate</a>(property:String = null):void</div><div class="summaryTableDescription">
+		 Starts an invalidation process.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#isInvalid()" class="signatureLink">isInvalid</a>(property:String):Boolean</div><div class="summaryTableDescription">
+		 Returns true if the property has been invalidated beforehand.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#removeAutoUpdateBefore()" class="signatureLink">removeAutoUpdateBefore</a>(child:DisplayObject):void</div><div class="summaryTableDescription">
+		 Removes a component from the auto update list.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#scheduleUpdate()" class="signatureLink">scheduleUpdate</a>(updateKind:String):void</div><div class="summaryTableDescription">
+		 Defines an updateKind that can be considered within the onUpdate hook.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#shouldUpdate()" class="signatureLink">shouldUpdate</a>(updateKind:String):Boolean</div><div class="summaryTableDescription">
+		 Returns true if the updateKind has been scheduled beforehand.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#validateNow()" class="signatureLink">validateNow</a>():void</div><div class="summaryTableDescription">
+		 Immediately performs an update.</div></td><td class="summaryTableOwnerCol">ILifeCycleAdapter</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="cleanUpHandler"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">cleanUpHandler</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>cleanUpHandler:Function</code>&nbsp;&nbsp;[write-only] <p></p><p></p><p>
+		 Sets a custom callback for the clean up event.
+		 
+		 <p>If specified, this callback is invoked instead of the protected <code>onCleanUp()</code> hook.</p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set cleanUpHandler(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="component"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">component</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>component:DisplayObject</code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+		 Component with that the adapter has been registered in LifeCycle.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get component():DisplayObject</code><br/></div><a name="propertyDetail"></a><a name="initHandler"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">initHandler</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>initHandler:Function</code>&nbsp;&nbsp;[write-only] <p></p><p></p><p>
+		 Sets a custom callback for the init event.
+		 
+		 <p>If specified, this callback is invoked instead of the protected <code>onInit()</code> hook.</p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set initHandler(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="prepareUpdateHandler"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">prepareUpdateHandler</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>prepareUpdateHandler:Function</code>&nbsp;&nbsp;[write-only] <p></p><p></p><p>
+		 Sets a custom callback for the prepare update event.
+		 
+		 <p>If specified, this callback is invoked instead of the protected <code>onPrepareUpdate()</code> hook.</p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set prepareUpdateHandler(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="updateHandler"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">updateHandler</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>updateHandler:Function</code>&nbsp;&nbsp;[write-only] <p></p><p></p><p>
+		 Sets a custom callback for the update event.
+		 
+		 <p>If specified, this callback is invoked instead of the protected <code>onUpdate()</code> hook.</p>
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set updateHandler(value:Function):void</code><br/></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="autoUpdateBefore()"></a><a name="autoUpdateBefore(flash.display.DisplayObject)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">autoUpdateBefore</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function autoUpdateBefore(child:DisplayObject):void</code><p></p><p></p><p>
+		 Registers a component to be updated right before an update is performed.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">child</span>:DisplayObject</code> &mdash; The component to auto update.
+		 </td></tr></table></p></div><a name="cleanUp()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">cleanUp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function cleanUp():void</code><p></p><p></p><p>
+		 Removes all listeners and references of the particular adapter.
+		 
+		 <p>The adapter is then eligible for garbage collection.</p>
+		 
+		 <p>Calling <code>cleanUp</code> will subsequently invoke the clean up hook <code>onCleanUp()</code>
+		 to enable a client to perform further disposals.</p>
+		 </p></div><a name="invalidate()"></a><a name="invalidate(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">invalidate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function invalidate(property:String = null):void</code><p></p><p></p><p>
+		 Starts an invalidation process.
+		 
+		 <p>The optional <code>property</code> argument may be used to declare only parts
+		 of a component to be updated.</p>
+		 
+		 <p>If <code>property</code> is set, a call to <code>isInvalid(property)</code> within
+		 the update hooks <code>onPrepareUpdate()</code> and <code>onUpdate()</code> will return
+		 <code>true</code>.</p>
+		 
+		 <p>If <code>property</code> is not set, the system assumes the wish of a full update,
+		 and a call to <code>isInvalid(property)</code> withing the update hooks <code>onPrepareUpdate()</code>
+		 and <code>onUpdate()</code> will always return <code>true</code> regardless of the actual
+		 value of <code>property</code>.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">property</span>:String</code> (default = <code>null</code>)<code></code> &mdash; An optional invalidation property.
+		 </td></tr></table></p></div><a name="isInvalid()"></a><a name="isInvalid(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isInvalid</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function isInvalid(property:String):Boolean</code><p></p><p></p><p>
+		 Returns <code>true</code> if the <code>property</code> has been invalidated beforehand.
+		 
+		 <p>Returns also <code>true</code> for any property value, if an invalidation
+		 process had been invoked without specification of an invalidation property
+		 (<code>invalidate()</code>).</p>
+		 
+		 <p>This method might be used within the update hooks <code>onPrepareUpdate()</code>
+		 and <code>onUpdate()</code> to determine what properties of a component had been
+		 changed and should cause an visual update.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">property</span>:String</code> &mdash; The property that might be invalid.
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="removeAutoUpdateBefore()"></a><a name="removeAutoUpdateBefore(flash.display.DisplayObject)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">removeAutoUpdateBefore</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function removeAutoUpdateBefore(child:DisplayObject):void</code><p></p><p></p><p>
+		 Removes a component from the auto update list.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">child</span>:DisplayObject</code> &mdash; The component to remove from auto updates.
+		 </td></tr></table></p></div><a name="scheduleUpdate()"></a><a name="scheduleUpdate(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scheduleUpdate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function scheduleUpdate(updateKind:String):void</code><p></p><p></p><p>
+		 Defines an <code>updateKind</code> that can be considered within the <code>onUpdate</code> hook.
+		 
+		 <p>This method might be used within the update hook <code>onPrepareUpdate()</code> to
+		 schedule a visual update that should be subsequently executed within the <code>onUpdate()</code>
+		 hook.</p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">updateKind</span>:String</code> &mdash; The visual update to schedule.
+		 </td></tr></table></p></div><a name="shouldUpdate()"></a><a name="shouldUpdate(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">shouldUpdate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function shouldUpdate(updateKind:String):Boolean</code><p></p><p></p><p>
+		 Returns <code>true</code> if the <code>updateKind</code> has been scheduled beforehand.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">updateKind</span>:String</code> &mdash; The kind of update that could be executed.
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="validateNow()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">validateNow</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function validateNow():void</code><p></p><p></p><p>
+		 Immediately performs an update.
+		 
+		 <p>Components not invalidated beforehand are not validated.</p>
+		 
+		 <p>Components currently not in the display list are not validated.</p>
+		 </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Montag Mai 30 2011, 03:46 PM +02:00  </center></div></body></html><!--<br/>Montag Mai 30 2011, 03:46 PM +02:00  -->

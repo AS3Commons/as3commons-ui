@@ -1,512 +1,128 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="HLayout,org.as3commons.ui.layout.HLayout,maxContentWidth,maxItemsPerRow,numLayoutRows,createParser,toString" name="keywords">
-<title>org.as3commons.ui.layout.HLayout</title>
-</head>
-<body>
-<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
-<!--
-				asdocTitle = 'HLayout - AS3Commons UI 0.1.2';
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="HLayout,org.as3commons.ui.layout.HLayout,displayObject,hAlign,height,marginX,marginY,maxContentHeight,maxContentWidth,maxContentWidth,maxItemsPerColumn,maxItemsPerRow,numColumns,numLayoutColumns,numLayoutRows,numTableColumns,numTableRows,numTableRows,offsetX,offsetY,vAlign,width,createParser,createParser,createParser,createParser,createParser,createParser,excludeLayoutItem,parseLayoutItem,setCellConfig,setCellConfig,setCellConfig,toString,toString,toString,toString,toString,toString"><title>org.as3commons.ui.layout.HLayout</title></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'HLayout - AS3Commons UI 0.2';
 				var baseRef = '../../../../';
 				window.onload = configPage;
 			--></script>
-<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
-<tr>
-<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?org/as3commons/ui/layout/HLayout.html&amp;org/as3commons/ui/layout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
-</tr>
-<tr class="titleTableRow2">
-<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;HLayout</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
-</tr>
-<tr class="titleTableRow3">
-<td colspan="2">&nbsp;</td>
-</tr>
-</table>
-<script type="text/javascript" language="javascript">
-<!--
-if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class HLayout"); titleBar_setSubNav(true,true,false,false,false,false,true,false,false,false,false,false,false,false);}
---></script>
-<div class="MainContent">
-<table cellspacing="0" cellpadding="0" class="classHeaderTable">
-<tr>
-<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">org.as3commons.ui.layout</a></td>
-</tr>
-<tr>
-<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class HLayout</td>
-</tr>
-<tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">HLayout <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="framework/core/AbstractLayout.html">AbstractLayout</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr>
-<td class="classHeaderTableLabel">Implements</td><td><a href="framework/IHLayout.html">IHLayout</a></td>
-</tr>
-</table>
-<p></p>
-  <p></p>
-<br>
-<hr>
-</div>
-<a name="propertySummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Public Properties</div>
-<div class="showHideLinks">
-<div class="hideInheritedProperty" id="hideInheritedProperty">
-<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
-</div>
-<div class="showInheritedProperty" id="showInheritedProperty">
-<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
-</div>
-</div>
-<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#cell">cell</a> : <a href="framework/core/cell/ICell.html">ICell</a>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#contentRect">contentRect</a> : Rectangle<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#hAlign">hAlign</a> : String<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractMultilineLayout.html#hGap">hGap</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#hideCallback">hideCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#id">id</a> : String<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#inLayout">inLayout</a> : Boolean<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#marginX">marginX</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#marginY">marginY</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxContentWidth">maxContentWidth</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">HLayout</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxItemsPerRow">maxItemsPerRow</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">HLayout</td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayout.html#minHeight">minHeight</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayout.html#minWidth">minWidth</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayout.html#numItems">numItems</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numLayoutRows">numLayoutRows</a> : uint<div class="summaryTableDescription">[read-only]</div>
-</td><td class="summaryTableOwnerCol">HLayout</td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#offsetX">offsetX</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#offsetY">offsetY</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#position">position</a> : Point<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#renderCallback">renderCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#showCallback">showCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#vAlign">vAlign</a> : String<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractMultilineLayout.html#vGap">vGap</a> : uint<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a></td>
-</tr>
-<tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#visibleRect">visibleRect</a> : Rectangle<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-</table>
-</div>
-<a name="protectedPropertySummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Protected Properties</div>
-<div class="showHideLinks">
-<div class="hideInheritedProtectedProperty" id="hideInheritedProtectedProperty">
-<a onclick="javascript:setInheritedVisible(false,'ProtectedProperty');" href="#protectedPropertySummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Protected Properties</a>
-</div>
-<div class="showInheritedProtectedProperty" id="showInheritedProtectedProperty">
-<a onclick="javascript:setInheritedVisible(true,'ProtectedProperty');" href="#protectedPropertySummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Properties</a>
-</div>
-</div>
-<table id="summaryTableProtectedProperty" class="summaryTable hideInheritedProtectedProperty" cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_cell">_cell</a> : <a href="framework/core/cell/ICell.html">ICell</a>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_hAlign">_hAlign</a> : String = "left"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_hideCallback">_hideCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_inLayout">_inLayout</a> : Boolean = true<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_marginX">_marginX</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_marginY">_marginY</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_offsetX">_offsetX</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_offsetY">_offsetY</a> : int<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_renderCallback">_renderCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_showCallback">_showCallback</a> : Function<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_showOrHide">_showOrHide</a> : String = "false"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#_vAlign">_vAlign</a> : String = "top"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-</table>
-</div>
-<a name="methodSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Public Methods</div>
-<div class="showHideLinks">
-<div class="hideInheritedMethod" id="hideInheritedMethod">
-<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
-</div>
-<div class="showInheritedMethod" id="showInheritedMethod">
-<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
-</div>
-</div>
-<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#add()">add</a>(... args):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#addAll()">addAll</a>(container:Sprite):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayoutItem.html#createRenderConfig()">createRenderConfig</a>(parentRenderConfig:<a href="framework/core/config/RenderConfig.html">RenderConfig</a> = null):<a href="framework/core/config/RenderConfig.html">RenderConfig</a>
-</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayoutItem.html#exclude()">exclude</a>(renderConfig:<a href="framework/core/config/RenderConfig.html">RenderConfig</a>):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayoutItem.html#excludeFromLayout()">excludeFromLayout</a>(hide:Boolean = true):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#getCellConfig()">getCellConfig</a>(hIndex:int = -1, vIndex:int = -1):<a href="../layout/CellConfig.html">CellConfig</a>
-</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#getLayoutItem()">getLayoutItem</a>(... args):<a href="framework/ILayoutItem.html">ILayoutItem</a>
-</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayoutItem.html#includeInLayout()">includeInLayout</a>(show:Boolean = true):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#iterator()">iterator</a>(cursor:*):IIterator</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#layout()">layout</a>(container:Sprite, relayout:Boolean = false):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayoutItem.html#parse()">parse</a>(renderConfig:<a href="framework/core/config/RenderConfig.html">RenderConfig</a>):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#recursiveIterator()">recursiveIterator</a>():IRecursiveIterator</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#remove()">remove</a>(key:*):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#setCellConfig()">setCellConfig</a>(cellConfig:<a href="../layout/CellConfig.html">CellConfig</a>, hIndex:int = -1, vIndex:int = -1):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#toString()">toString</a>():String</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">HLayout</td>
-</tr>
-</table>
-</div>
-<a name="protectedMethodSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Protected Methods</div>
-<div class="showHideLinks">
-<div class="hideInheritedProtectedMethod" id="hideInheritedProtectedMethod">
-<a onclick="javascript:setInheritedVisible(false,'ProtectedMethod');" href="#protectedMethodSummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Protected Methods</a>
-</div>
-<div class="showInheritedProtectedMethod" id="showInheritedProtectedMethod">
-<a onclick="javascript:setInheritedVisible(true,'ProtectedMethod');" href="#protectedMethodSummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Methods</a>
-</div>
-</div>
-<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#createParser()">createParser</a>():<a href="framework/core/parser/ILayoutParser.html">ILayoutParser</a>
-</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">HLayout</td>
-</tr>
-<tr class="hideInheritedProtectedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#excludeLayoutItem()">excludeLayoutItem</a>(renderConfig:<a href="framework/core/config/RenderConfig.html">RenderConfig</a>):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-<tr class="hideInheritedProtectedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="framework/core/AbstractLayout.html#parseLayoutItem()">parseLayoutItem</a>(renderConfig:<a href="framework/core/config/RenderConfig.html">RenderConfig</a>):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayout.html">AbstractLayout</a></td>
-</tr>
-</table>
-</div>
-<a name="constantSummary"></a><a name="protectedConstantSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Protected Constants</div>
-<div class="showHideLinks">
-<div class="hideInheritedProtectedConstant" id="hideInheritedProtectedConstant">
-<a onclick="javascript:setInheritedVisible(false,'ProtectedConstant');" href="#protectedConstantSummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Protected Constants</a>
-</div>
-<div class="showInheritedProtectedConstant" id="showInheritedProtectedConstant">
-<a onclick="javascript:setInheritedVisible(true,'ProtectedConstant');" href="#protectedConstantSummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Constants</a>
-</div>
-</div>
-<table id="summaryTableProtectedConstant" class="summaryTable hideInheritedProtectedConstant" cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="hideInheritedProtectedConstant">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#FALSE">FALSE</a> : String = "false"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedConstant">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#HIDE">HIDE</a> : String = "hide"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-<tr class="hideInheritedProtectedConstant">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="framework/core/AbstractLayoutItem.html#SHOW">SHOW</a> : String = "show"<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td>
-</tr>
-</table>
-</div>
-<script type="text/javascript" language="javascript">
-<!--
-showHideInherited();
---></script>
-<div class="MainContent">
-<a name="propertyDetail"></a>
-<div class="detailSectionHeader">Property detail</div>
-<a name="maxContentWidth"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">maxContentWidth</td><td class="detailHeaderType">property</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>maxContentWidth:uint</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get maxContentWidth():uint</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maxContentWidth(value:uint):void</code>
-<br>
-</div>
-<a name="maxItemsPerRow"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">maxItemsPerRow</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>maxItemsPerRow:uint</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get maxItemsPerRow():uint</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maxItemsPerRow(value:uint):void</code>
-<br>
-</div>
-<a name="numLayoutRows"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">numLayoutRows</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>numLayoutRows:uint</code>&nbsp;&nbsp;[read-only]<span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numLayoutRows():uint</code>
-<br>
-</div>
-<a name="methodDetail"></a>
-<div class="detailSectionHeader">Method detail</div>
-<a name="createParser()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">createParser</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>protected override function createParser():<a href="framework/core/parser/ILayoutParser.html">ILayoutParser</a></code>
-<p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code><a href="framework/core/parser/ILayoutParser.html">ILayoutParser</a></code></td>
-</tr>
-</table>
-</div>
-<a name="toString()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public override function toString():String</code>
-<p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>String</code></td>
-</tr>
-</table>
-</div>
-<br>
-<br>
-<hr>
-<br>
-<p></p>
-<center class="copyright"> 
-</center>
-</div>
-</body>
-</html>
-<!-- -->
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?org/as3commons/ui/layout/HLayout.html&amp;org/as3commons/ui/layout/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">HLayout</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("HLayout"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">org.as3commons.ui.layout</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  HLayout</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">HLayout  <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> <a href="../../../../org/as3commons/ui/layout/framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a> <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> <a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a> <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> <a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a> <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr><tr><td class="classHeaderTableLabel">Implements</td><td> <a href="../../../../org/as3commons/ui/layout/framework/IHLayout.html">IHLayout</a></td></tr></table><p></p><p></p><p></p>
+	 Horizontal multiline layout.
+	 
+	 <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><div class="showHideLinks"><div id="hideInheritedProperty" class="hideInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(false,'Property');"><img class="showHideLinkImage" src="../../../../images/expanded.gif"> Hide Inherited Public Properties</a></div><div id="showInheritedProperty" class="showInheritedProperty"><a class="showHideLink" href="#propertySummary" onclick="javascript:setInheritedVisible(true,'Property');"><img class="showHideLinkImage" src="../../../../images/collapsed.gif"> Show Inherited Public Properties</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#cell" class="signatureLink">cell</a> : <a href="../../../../org/as3commons/ui/layout/framework/core/cell/ICell.html">ICell</a><div class="summaryTableDescription">[read-only] 
+		 The cell of the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#contentRect" class="signatureLink">contentRect</a> : Rectangle<div class="summaryTableDescription">[read-only] 
+		 
+		 The spacing rect of the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#hAlign" class="signatureLink">hAlign</a> : String<div class="summaryTableDescription">
+		 
+		 Horizontal align.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractMultilineLayout.html#hGap" class="signatureLink">hGap</a> : uint<div class="summaryTableDescription">
+		 
+		 Horizontal space between items.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#hideCallback" class="signatureLink">hideCallback</a> : Function<div class="summaryTableDescription">
+		 
+		 Sets a custom hide callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#id" class="signatureLink">id</a> : String<div class="summaryTableDescription">
+		 
+		 The id of the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#inLayout" class="signatureLink">inLayout</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 
+		 true if the layout item is not excluded from its parent layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#marginX" class="signatureLink">marginX</a> : int<div class="summaryTableDescription">
+		 
+		 Horizontal margin.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#marginY" class="signatureLink">marginY</a> : int<div class="summaryTableDescription">
+		 
+		 Vertical margin.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#maxContentWidth" class="signatureLink">maxContentWidth</a> : uint<div class="summaryTableDescription">
+		 
+		 Max width of the layout.</div></td><td class="summaryTableOwnerCol">HLayout</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#maxItemsPerRow" class="signatureLink">maxItemsPerRow</a> : uint<div class="summaryTableDescription">
+		 
+		 Max number of items per row.</div></td><td class="summaryTableOwnerCol">HLayout</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#minHeight" class="signatureLink">minHeight</a> : uint<div class="summaryTableDescription">
+		 
+		 The min height of the layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#minWidth" class="signatureLink">minWidth</a> : uint<div class="summaryTableDescription">
+		 
+		 The min width of the layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#numItems" class="signatureLink">numItems</a> : uint<div class="summaryTableDescription">[read-only] 
+		 
+		 Returns the number of items added to the layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#numLayoutRows" class="signatureLink">numLayoutRows</a> : uint<div class="summaryTableDescription">[read-only] 
+		 
+		 The number of rows created by the layout.</div></td><td class="summaryTableOwnerCol">HLayout</td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#offsetX" class="signatureLink">offsetX</a> : int<div class="summaryTableDescription">
+		 
+		 Horizontal offset.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#offsetY" class="signatureLink">offsetY</a> : int<div class="summaryTableDescription">
+		 
+		 Vertical offset.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#position" class="signatureLink">position</a> : Point<div class="summaryTableDescription">[read-only] 
+		 
+		 The origin of the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#renderCallback" class="signatureLink">renderCallback</a> : Function<div class="summaryTableDescription">
+		 
+		 Sets a custom render callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#showCallback" class="signatureLink">showCallback</a> : Function<div class="summaryTableDescription">
+		 
+		 Sets a custom show callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#vAlign" class="signatureLink">vAlign</a> : String<div class="summaryTableDescription">
+		 
+		 Vertical align.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractMultilineLayout.html#vGap" class="signatureLink">vGap</a> : uint<div class="summaryTableDescription">
+		 
+		 Vertical space between items.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractMultilineLayout.html">AbstractMultilineLayout</a></td></tr><tr class="hideInheritedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#visibleRect" class="signatureLink">visibleRect</a> : Rectangle<div class="summaryTableDescription">[read-only] 
+		 
+		 The rect of the visible content.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr></table></div><a name="protectedPropertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Properties</div><div class="showHideLinks"><div id="hideInheritedProtectedProperty" class="hideInheritedProtectedProperty"><a class="showHideLink" href="#protectedPropertySummary" onclick="javascript:setInheritedVisible(false,'ProtectedProperty');"><img class="showHideLinkImage" src="../../../../images/expanded.gif"> Hide Inherited Protected Properties</a></div><div id="showInheritedProtectedProperty" class="showInheritedProtectedProperty"><a class="showHideLink" href="#protectedPropertySummary" onclick="javascript:setInheritedVisible(true,'ProtectedProperty');"><img class="showHideLinkImage" src="../../../../images/collapsed.gif"> Show Inherited Protected Properties</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable hideInheritedProtectedProperty" id="summaryTableProtectedProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_cell" class="signatureLink">_cell</a> : <a href="../../../../org/as3commons/ui/layout/framework/core/cell/ICell.html">ICell</a><div class="summaryTableDescription">
+		 The layout item cell.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_hAlign" class="signatureLink">_hAlign</a> : String = left<div class="summaryTableDescription">
+		 Horizontal align.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_hideCallback" class="signatureLink">_hideCallback</a> : Function<div class="summaryTableDescription">
+		 Custom hide callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_inLayout" class="signatureLink">_inLayout</a> : Boolean = true<div class="summaryTableDescription">
+		 true if the layout item is not excluded from its parent layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_marginX" class="signatureLink">_marginX</a> : int<div class="summaryTableDescription">
+		 Horizontal margin.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_marginY" class="signatureLink">_marginY</a> : int<div class="summaryTableDescription">
+		 Vertical margin.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_offsetX" class="signatureLink">_offsetX</a> : int<div class="summaryTableDescription">
+		 Horizontal offset.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_offsetY" class="signatureLink">_offsetY</a> : int<div class="summaryTableDescription">
+		 Vertical offset.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_renderCallback" class="signatureLink">_renderCallback</a> : Function<div class="summaryTableDescription">
+		 Custom render callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_showCallback" class="signatureLink">_showCallback</a> : Function<div class="summaryTableDescription">
+		 Custom show callback.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_showOrHide" class="signatureLink">_showOrHide</a> : String = false<div class="summaryTableDescription">
+		 Flag to indicate if the item should be shown or hidden in the next layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedProperty"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#_vAlign" class="signatureLink">_vAlign</a> : String = top<div class="summaryTableDescription">
+		 Vertical align.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><div class="showHideLinks"><div id="hideInheritedMethod" class="hideInheritedMethod"><a class="showHideLink" href="#methodSummary" onclick="javascript:setInheritedVisible(false,'Method');"><img class="showHideLinkImage" src="../../../../images/expanded.gif"> Hide Inherited Public Methods</a></div><div id="showInheritedMethod" class="showInheritedMethod"><a class="showHideLink" href="#methodSummary" onclick="javascript:setInheritedVisible(true,'Method');"><img class="showHideLinkImage" src="../../../../images/collapsed.gif"> Show Inherited Public Methods</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#add()" class="signatureLink">add</a>(... args):void</div><div class="summaryTableDescription">
+		 
+		 Adds the given list of items to the layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#addAll()" class="signatureLink">addAll</a>(container:Sprite):void</div><div class="summaryTableDescription">
+		 
+		 Adds all display objects of the given container to the layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#createRenderConfig()" class="signatureLink">createRenderConfig</a>(parentRenderConfig:<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a> = null):<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a></div><div class="summaryTableDescription">
+		 Creates or clones a render config.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#exclude()" class="signatureLink">exclude</a>(renderConfig:<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a>):void</div><div class="summaryTableDescription">
+		 Excludes the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#excludeFromLayout()" class="signatureLink">excludeFromLayout</a>(hide:Boolean = true):void</div><div class="summaryTableDescription">
+		 
+		 Excludes an item from being considered in a layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#getCellConfig()" class="signatureLink">getCellConfig</a>(hIndex:int = -1, vIndex:int = -1):<a href="../../../../org/as3commons/ui/layout/CellConfig.html">CellConfig</a></div><div class="summaryTableDescription">
+		 
+		 Returns the cell config for the cell specified by hIndex and vIndex.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#getLayoutItem()" class="signatureLink">getLayoutItem</a>(... args):<a href="../../../../org/as3commons/ui/layout/framework/ILayoutItem.html">ILayoutItem</a></div><div class="summaryTableDescription">
+		 
+		 Returns a layout item by a given key or list of keys.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#includeInLayout()" class="signatureLink">includeInLayout</a>(show:Boolean = true):void</div><div class="summaryTableDescription">
+		 
+		 Includes an item again in a layout.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#iterator()" class="signatureLink">iterator</a>(cursor:*):IIterator</div><div class="summaryTableDescription">
+		 </div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#layout()" class="signatureLink">layout</a>(container:Sprite, relayout:Boolean = false):void</div><div class="summaryTableDescription">
+		 
+		 Executed the layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#parse()" class="signatureLink">parse</a>(renderConfig:<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a>):void</div><div class="summaryTableDescription">
+		 Parses the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#recursiveIterator()" class="signatureLink">recursiveIterator</a>():IRecursiveIterator</div><div class="summaryTableDescription">
+		 
+		 Returns an IRecursiveIterator over all added items.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#remove()" class="signatureLink">remove</a>(key:*):void</div><div class="summaryTableDescription">
+		 
+		 Removes an item from the layout by the given key.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#setCellConfig()" class="signatureLink">setCellConfig</a>(cellConfig:<a href="../../../../org/as3commons/ui/layout/CellConfig.html">CellConfig</a>, hIndex:int = -1, vIndex:int = -1):void</div><div class="summaryTableDescription">
+		 
+		 Sets a cell config affecting all cells specified by hIndex and vIndex.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#toString()" class="signatureLink">toString</a>():String</div><div class="summaryTableDescription">[override] 
+		 
+		 Info
+		 </div></td><td class="summaryTableOwnerCol">HLayout</td></tr></table></div><a name="protectedMethodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Methods </div><div class="showHideLinks"><div id="hideInheritedProtectedMethod" class="hideInheritedProtectedMethod"><a class="showHideLink" href="#protectedMethodSummary" onclick="javascript:setInheritedVisible(false,'ProtectedMethod');"><img class="showHideLinkImage" src="../../../../images/expanded.gif"> Show Inherited Protected Methods</a></div><div id="showInheritedProtectedMethod" class="showInheritedProtectedMethod"><a class="showHideLink" href="#protectedMethodSummary" onclick="javascript:setInheritedVisible(true,'ProtectedMethod');"><img class="showHideLinkImage" src="../../../../images/collapsed.gif"> Show Inherited Protected Methods</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProtectedMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#createParser()" class="signatureLink">createParser</a>():<a href="../../../../org/as3commons/ui/layout/framework/core/parser/ILayoutParser.html">ILayoutParser</a></div><div class="summaryTableDescription">[override] 
+		 
+		 Creates a layout parser specific to the particular layout.</div></td><td class="summaryTableOwnerCol">HLayout</td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#excludeLayoutItem()" class="signatureLink">excludeLayoutItem</a>(renderConfig:<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a>):void</div><div class="summaryTableDescription">[override] 
+		 
+		 Performs operations to exclude the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr><tr class="hideInheritedProtectedMethod"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html#parseLayoutItem()" class="signatureLink">parseLayoutItem</a>(renderConfig:<a href="../../../../org/as3commons/ui/layout/framework/core/config/RenderConfig.html">RenderConfig</a>):void</div><div class="summaryTableDescription">[override] 
+		 
+		 Parses the layout item.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayout.html">AbstractLayout</a></td></tr></table></div><a name="protectedConstantSummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Constants</div><div class="showHideLinks"><div id="hideInheritedProtectedConstant" class="hideInheritedProtectedConstant"><a class="showHideLink" href="#protectedConstantSummary" onclick="javascript:setInheritedVisible(false,'ProtectedConstant');"><img class="showHideLinkImage" src="../../../../images/expanded.gif"> Hide Inherited Protected Constants</a></div><div id="showInheritedProtectedConstant" class="showInheritedProtectedConstant"><a class="showHideLink" href="#protectedConstantSummary" onclick="javascript:setInheritedVisible(true,'ProtectedConstant');"><img class="showHideLinkImage" src="../../../../images/collapsed.gif"> Show Inherited Protected Constants</a></div></div><table cellspacing="0" cellpadding="3" class="summaryTable hideInheritedProtectedConstant" id="summaryTableProtectedConstant"><tr><th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class="hideInheritedProtectedConstant"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#FALSE" class="signatureLink">FALSE</a> : String = false<div class="summaryTableDescription">
+		 Constant to describe that an object should be neither shown nor hidden in the next layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedConstant"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#HIDE" class="signatureLink">HIDE</a> : String = hide<div class="summaryTableDescription">
+		 Constant to describe that an object should be hidden in the next layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr><tr class="hideInheritedProtectedConstant"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img src="../../../../images/inheritedSummary.gif" alt="Inherited" title="Inherited" class="inheritedSummaryImage"></td><td class="summaryTableSignatureCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html#SHOW" class="signatureLink">SHOW</a> : String = show<div class="summaryTableDescription">
+		 Constant to describe that an object should be shown in the next layout procedure.</div></td><td class="summaryTableOwnerCol"><a href="../../../../org/as3commons/ui/layout/framework/core/AbstractLayoutItem.html">AbstractLayoutItem</a></td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="maxContentWidth"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">maxContentWidth</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>maxContentWidth:uint</code><p></p><p></p><p>
+		 
+		 Max width of the layout.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get maxContentWidth():uint</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maxContentWidth(value:uint):void</code><br/></div><a name="propertyDetail"></a><a name="maxItemsPerRow"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">maxItemsPerRow</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>maxItemsPerRow:uint</code><p></p><p></p><p>
+		 
+		 Max number of items per row.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get maxItemsPerRow():uint</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maxItemsPerRow(value:uint):void</code><br/></div><a name="propertyDetail"></a><a name="numLayoutRows"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">numLayoutRows</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>numLayoutRows:uint</code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+		 
+		 The number of rows created by the layout.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numLayoutRows():uint</code><br/></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="createParser()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">createParser</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code>override protected function createParser():<a href="../../../../org/as3commons/ui/layout/framework/core/parser/ILayoutParser.html">ILayoutParser</a></code><p></p><p></p><p>
+		 
+		 Creates a layout parser specific to the particular layout.
+		 
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../../org/as3commons/ui/layout/framework/core/parser/ILayoutParser.html">ILayoutParser</a></code> &mdash; The layout parser.
+		 </td></tr></table></div><a name="toString()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function toString():String</code><p></p><p></p><p>
+		 
+		 Info
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Montag Mai 30 2011, 03:46 PM +02:00  </center></div></body></html><!--<br/>Montag Mai 30 2011, 03:46 PM +02:00  -->
