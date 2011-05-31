@@ -15,7 +15,9 @@ import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 import flash.display.Sprite;
 
 internal class Component extends Sprite {
+	private var _lcAdapter : SimpleAdapter;
 	public function Component(lifeCycle : LifeCycle) {
-		lifeCycle.registerComponent(this, new SimpleAdapter());
+		_lcAdapter = new SimpleAdapter();
+		lifeCycle.registerComponent(this, _lcAdapter);
 	}
 }
