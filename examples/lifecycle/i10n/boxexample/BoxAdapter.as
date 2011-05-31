@@ -9,7 +9,7 @@ package lifecycle.i10n.boxexample {
 		}
 
 		public function validate(displayObject : DisplayObject, properties : ISet) : void {
-			Box(displayObject).update(properties);
+			Box(displayObject).update();
 		}
 	}
 }

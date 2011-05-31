@@ -27,7 +27,7 @@ package lifecycle.i10n.boxexample {
 			I10N.invalidate(this);
 		}
 
-		public function update(properties : ISet) : void {
+		public function update() : void {
 			drawBackground();
 			drawBorder();
 		}
