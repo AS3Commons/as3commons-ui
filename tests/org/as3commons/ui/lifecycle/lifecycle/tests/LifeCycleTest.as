@@ -117,8 +117,10 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				assertEquals(1, LifeCycleWatcher.initCalls.length);
-				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.initCalls));
+				assertEquals(2, LifeCycleWatcher.initCalls.length);
+				assertEquals(1, LifeCycleWatcher.drawCalls.length);
+				assertTrue(ArrayUtils.arraysEqual([s, s], LifeCycleWatcher.initCalls));
+				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.drawCalls));
 			}
 		}
 
@@ -153,8 +155,10 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				assertEquals(1, LifeCycleWatcher.initCalls.length);
-				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.initCalls));
+				assertEquals(2, LifeCycleWatcher.initCalls.length);
+				assertEquals(1, LifeCycleWatcher.drawCalls.length);
+				assertTrue(ArrayUtils.arraysEqual([s, s], LifeCycleWatcher.initCalls));
+				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.drawCalls));
 			}
 		}
 
@@ -189,8 +193,10 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				assertEquals(0, LifeCycleWatcher.initCalls.length);
-				assertTrue(ArrayUtils.arraysEqual([], LifeCycleWatcher.initCalls));
+				assertEquals(2, LifeCycleWatcher.initCalls.length);
+				assertEquals(0, LifeCycleWatcher.drawCalls.length);
+				assertTrue(ArrayUtils.arraysEqual([s, s], LifeCycleWatcher.initCalls));
+				assertTrue(ArrayUtils.arraysEqual([], LifeCycleWatcher.drawCalls));
 			}
 		}
 

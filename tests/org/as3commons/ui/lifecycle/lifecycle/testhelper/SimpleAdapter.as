@@ -8,6 +8,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 	public class SimpleAdapter extends LifeCycleAdapter {
 		
 		private var _initCalls : uint;
+		private var _drawCalls : uint;
 		private var _prepareUpdateCalls : uint;
 		private var _updateCalls : uint;
 		private var _cleanUpCalls : uint;
@@ -15,6 +16,11 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		override protected function onInit() : void {
 			_initCalls++;
 			LifeCycleWatcher.init(_component);
+		}
+
+		override protected function onDraw() : void {
+			_drawCalls++;
+			LifeCycleWatcher.draw(_component);
 		}
 
 		override protected function onPrepareUpdate() : void {
@@ -34,6 +40,10 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 
 		public function get initCalls() : uint {
 			return _initCalls;
+		}
+
+		public function get drawCalls() : uint {
+			return _drawCalls;
 		}
 
 		public function get prepareUpdateCalls() : uint {

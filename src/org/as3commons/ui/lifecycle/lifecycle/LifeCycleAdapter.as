@@ -1,5 +1,6 @@
 package org.as3commons.ui.lifecycle.lifecycle {
 
+	import flash.events.Event;
 	import org.as3commons.collections.LinkedSet;
 	import org.as3commons.collections.Set;
 	import org.as3commons.collections.framework.IIterator;
@@ -21,6 +22,11 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Callback for the init event.
 		 */
 		protected var _initHandler : Function;
+
+		/**
+		 * Callback for the prepare update event.
+		 */
+		protected var _drawHandler : Function;
 
 		/**
 		 * Callback for the prepare update event.
@@ -143,6 +149,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function cleanUp() : void {
+			_component.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			_i10n.stopValidation(_component);
 
 			if (_cleanUpHandler != null) {
@@ -157,6 +164,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		public function set initHandler(initHandler : Function) : void {
 			_initHandler = initHandler;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function set drawHandler(drawHandler : Function) : void {
+			_drawHandler = drawHandler;
 		}
 
 		/**
@@ -193,6 +207,14 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		as3commons_ui function setUp_internal(i10n : Invalidation, component : DisplayObject) : void {
 			_i10n = i10n;
 			_component = component;
+			
+			if (_component.stage) {
+				initComponent();
+			} else {
+				_component.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			}
+			
+			
 			i10n.invalidate(_component);
 		}
 
@@ -233,10 +255,10 @@ package org.as3commons.ui.lifecycle.lifecycle {
 				_invalidProperties.clear();
 				
 			} else {
-				if (_initHandler != null) {
-					_initHandler(this);
+				if (_drawHandler != null) {
+					_drawHandler(this);
 				} else {
-					onInit();
+					onDraw();
 				}
 				_initialized = true;
 			}
@@ -250,6 +272,12 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Default init hook.
 		 */
 		protected function onInit() : void {
+		}
+
+		/**
+		 * Default draw hook.
+		 */
+		protected function onDraw() : void {
 		}
 
 		/**
@@ -268,6 +296,29 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Default clean up hook.
 		 */
 		protected function onCleanUp() : void {
+		}
+		
+		/*
+		 * Private
+		 */
+
+		/**
+		 * Handler for the component's <code>Event.ADDED_TO_STAGE</code> event.
+		 */
+		private function addedToStageHandler(event : Event) : void {
+			_component.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			initComponent();
+		}
+
+		/**
+		 * Calls the init callback.
+		 */
+		private function initComponent() : void {
+			if (_initHandler != null) {
+				_initHandler(this);
+			} else {
+				onInit();
+			}
 		}
 
 	}

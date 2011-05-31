@@ -104,9 +104,21 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * 
 		 * <p>If specified, this callback is invoked instead of the protected <code>onInit()</code> hook.</p>
 		 * 
+		 * <p>Since the init hook is triggered at the time of registration, a custom handler must be set
+		 * before the component has been registered.</p>
+		 * 
 		 * @param initHandler The init callback.
 		 */
 		function set initHandler(initHandler : Function) : void;
+		
+		/**
+		 * Sets a custom callback for the draw event.
+		 * 
+		 * <p>If specified, this callback is invoked instead of the protected <code>onDraw()</code> hook.</p>
+		 * 
+		 * @param initHandler The draw callback.
+		 */
+		function set drawHandler(drawHandler : Function) : void;
 		
 		/**
 		 * Sets a custom callback for the prepare update event.

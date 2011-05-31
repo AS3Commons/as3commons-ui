@@ -36,9 +36,11 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		
 		protected function validateLifeCycle(
 			initCalls : Array,
+			drawCalls : Array,
 			updateCalls : Array
 		) : void {
 			assertTrue(ArrayUtils.arraysEqual(initCalls, LifeCycleWatcher.initCalls));
+			assertTrue(ArrayUtils.arraysEqual(drawCalls, LifeCycleWatcher.drawCalls));
 			assertTrue(ArrayUtils.arraysEqual(updateCalls, LifeCycleWatcher.updateCalls));
 			LifeCycleWatcher.clearCalls();
 		}
@@ -73,12 +75,16 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var adapter : SimpleAdapter = new SimpleAdapter();
 			_lc.registerComponent(s, adapter);
 			
+			validateLifeCycle([], [], []);
+
 			StageProxy.root.addChild(s);
+
+			validateLifeCycle([s], [], []);
 
 			setUpExitFrame(complete, adapter);
 			
 			function complete(event : Event, adapter : SimpleAdapter) : void {
-				validateLifeCycle([s], []);
+				validateLifeCycle([], [s], []);
 			}
 		}
 
@@ -87,12 +93,17 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 
 			var adapter : SimpleAdapter = new SimpleAdapter();
+
+			validateLifeCycle([], [], []);
+
 			_lc.registerComponent(s, adapter);
+
+			validateLifeCycle([s], [], []);
 
 			setUpExitFrame(complete, adapter);
 			
 			function complete(event : Event, adapter : SimpleAdapter) : void {
-				validateLifeCycle([s], []);
+				validateLifeCycle([], [s], []);
 			}
 		}
 
@@ -107,10 +118,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s3 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s3"));
 			_lc.registerComponent(s3, new SimpleAdapter());
 
+			validateLifeCycle([s, s2, s3], [], []);
+
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s, s2, s3], []);
+				validateLifeCycle([], [s, s2, s3], []);
 			}
 		}
 
@@ -128,15 +141,19 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s4 : DisplayObject = new TestDisplayObject("s4");
 			_lc.registerComponent(s4, new SimpleAdapter());
 			
+			validateLifeCycle([], [], []);
+
 			StageProxy.root.addChild(s2);
 			StageProxy.root.addChild(s4);
 			StageProxy.root.addChild(s);
 			StageProxy.root.addChild(s3);
 
+			validateLifeCycle([s2, s4, s, s3], [], []);
+
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s2, s4, s, s3], []);
+				validateLifeCycle([], [s2, s4, s, s3], []);
 			}
 		}
 
@@ -157,10 +174,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s3, new SimpleAdapter());
 			_lc.registerComponent(s4, new SimpleAdapter());
 
+			validateLifeCycle([s, s2, s3, s4], [], []);
+
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s, s2, s3, s4], []);
+				validateLifeCycle([], [s, s2, s3, s4], []);
 			}
 		}
 
@@ -185,12 +204,16 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s3, new SimpleAdapter());
 			_lc.registerComponent(s4, new SimpleAdapter());
 
+			validateLifeCycle([], [], []);
+
 			StageProxy.root.addChild(s);
+
+			validateLifeCycle([s, s2, s4, s3], [], []);
 
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s, s2, s4, s3], []);
+				validateLifeCycle([], [s, s2, s4, s3], []);
 			}
 		}
 
@@ -217,10 +240,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s3, new SimpleAdapter());
 			_lc.registerComponent(s4, new SimpleAdapter());
 
+			validateLifeCycle([s, s2, s3, s4], [], []);
+
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s, s2, s3, s4], []);
+				validateLifeCycle([], [s, s2, s3, s4], []);
 			}
 		}
 
@@ -248,10 +273,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s4, new SimpleAdapter());
 			s2.addChild(s4);
 
+			validateLifeCycle([s, s2, s3, s4], [], []);
+
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([s, s2, s3, s4], []);
+				validateLifeCycle([], [s, s2, s3, s4], []);
 			}
 		}
 
@@ -263,7 +290,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 		}
 
 		[Test(async)]
@@ -274,14 +301,14 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("test");
 
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["test"], []);
 			}
 		}
@@ -294,24 +321,24 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s],[]);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("test");
 			adapter.validateNow();
 
-			validateLifeCycle([], [s]);
+			validateLifeCycle([], [], [s]);
 			validateInvalidProperties(["test"], []);
 		}
 
 		[Test(async)]
 		public function testPrepareUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("test");
 
@@ -323,7 +350,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["test"], []);
 			}
 		}
@@ -331,12 +358,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testPrepareUpdate_invalidateAll():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate();
 
@@ -349,7 +376,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties([Invalidation.ALL_PROPERTIES], []);
 			}
 		}
@@ -357,12 +384,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testPrepareUpdate_invalidPropertiesCleanedUp():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -386,7 +413,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.isInvalid("property2"));
 				assertFalse(adapter.isInvalid("property3"));
 
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -394,12 +421,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testPrepareUpdate_invalidPropertiesCleanedUp2():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate();
 
@@ -417,12 +444,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate();
 
@@ -437,7 +464,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.isInvalid("test"));
 				assertFalse(adapter.shouldUpdate("test"));
 
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties([Invalidation.ALL_PROPERTIES], []);
 			}
 		}
@@ -445,12 +472,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testUpdate_withUpdateKinds():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate();
 
@@ -468,7 +495,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties([Invalidation.ALL_PROPERTIES], ["update", "update2"]);
 			}
 		}
@@ -476,12 +503,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testUpdate_updatedKindsCleanedUp():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -516,7 +543,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.shouldUpdate("update2"));
 				assertFalse(adapter.shouldUpdate("update3"));
 
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["property", "property2"], ["update", "update2"]);
 			}
 		}
@@ -524,12 +551,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testInvalidate_inPrepareUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -544,7 +571,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertEquals(2, adapter.prepareUpdateCalls);
 				assertEquals(2, adapter.updateCalls);
 
-				validateLifeCycle([], [s, s]);
+				validateLifeCycle([], [], [s, s]);
 				validateInvalidProperties(["property", "property2", "property3"], []);
 			}
 		}
@@ -552,12 +579,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testInvalidate_inUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -572,7 +599,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertEquals(2, adapter.prepareUpdateCalls);
 				assertEquals(2, adapter.updateCalls);
 
-				validateLifeCycle([], [s, s]);
+				validateLifeCycle([], [], [s, s]);
 				validateInvalidProperties(["property", "property2", "property3"], []);
 			}
 		}
@@ -580,17 +607,17 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testInvalidateOther_inPrepareUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
 			_lc.registerComponent(s2, adapter2);
 
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -607,7 +634,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertEquals(1, adapter2.prepareUpdateCalls);
 				assertEquals(1, adapter2.updateCalls);
 
-				validateLifeCycle([], [s, s2]);
+				validateLifeCycle([], [], [s, s2]);
 				validateInvalidProperties(["property", "property2", "property3"], []);
 			}
 		}
@@ -615,17 +642,17 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testInvalidateOther_inUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
 			_lc.registerComponent(s2, adapter2);
 
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -642,7 +669,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertEquals(1, adapter2.prepareUpdateCalls);
 				assertEquals(1, adapter2.updateCalls);
 
-				validateLifeCycle([], [s, s2]);
+				validateLifeCycle([], [], [s, s2]);
 				validateInvalidProperties(["property", "property2", "property3"], []);
 			}
 		}
@@ -650,12 +677,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testValidateNow_inPrepareUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -667,7 +694,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -675,12 +702,12 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testValidateNow_inUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s, adapter);
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			
 			adapter.invalidate("property");
 			adapter.invalidate("property2");
@@ -692,7 +719,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s]);
+				validateLifeCycle([], [], [s]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -700,17 +727,17 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testValidateNowOther_inPrepareUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, prepareUpdate, null);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
 			_lc.registerComponent(s2, adapter2);
 
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -722,7 +749,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s]);
+				validateLifeCycle([], [], [s2, s]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -730,17 +757,17 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		[Test(async)]
 		public function testValidateNowOther_inUpdate():void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
 			_lc.registerComponent(s2, adapter2);
 
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -752,7 +779,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2]);
+				validateLifeCycle([], [], [s, s2]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -772,7 +799,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -780,7 +807,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s]);
+				validateLifeCycle([], [], [s2, s]);
 				validateInvalidProperties(["property2", "property"], []);
 			}
 		}
@@ -800,7 +827,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			adapter2.validateNow();
 			adapter.validateNow();
 
-			validateLifeCycle([s2, s], []);
+			validateLifeCycle([s, s2], [s2, s], []);
 			
 			adapter2.invalidate("property2");
 			adapter.invalidate("property");
@@ -808,7 +835,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s]);
+				validateLifeCycle([], [], [s2, s]);
 				validateInvalidProperties(["property2", "property"], []);
 			}
 		}
@@ -820,7 +847,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s2, adapter2);
 			
 			adapter.autoUpdateBefore(s2);
@@ -828,7 +855,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			adapter2.validateNow();
 			adapter.validateNow();
 
-			validateLifeCycle([s2, s], []);
+			validateLifeCycle([s, s2], [s2, s], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -840,7 +867,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s]);
+				validateLifeCycle([], [], [s2, s]);
 				validateInvalidProperties(["property2", "property", "property3"], []);
 			}
 		}
@@ -852,7 +879,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			_lc.registerComponent(s, adapter);
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, update);
+			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, update);
 			_lc.registerComponent(s2, adapter2);
 			
 			adapter.autoUpdateBefore(s2);
@@ -860,7 +887,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			adapter2.validateNow();
 			adapter.validateNow();
 
-			validateLifeCycle([s2, s], []);
+			validateLifeCycle([s, s2], [s2, s], []);
 			
 			adapter.invalidate("property");
 			adapter2.invalidate("property2");
@@ -873,7 +900,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			}
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s, s2, s]);
+				validateLifeCycle([], [], [s2, s, s2, s]);
 				validateInvalidProperties(["property2", "property", "property3", "property4", "property3"], []);
 			}
 		}
@@ -893,7 +920,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			adapter.validateNow();
 			adapter2.validateNow();
 
-			validateLifeCycle([s, s2], []);
+			validateLifeCycle([s, s2], [s, s2], []);
 			
 			adapter.removeAutoUpdateBefore(s2);
 			
@@ -903,7 +930,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2]);
+				validateLifeCycle([], [], [s, s2]);
 				validateInvalidProperties(["property", "property2"], []);
 			}
 		}
@@ -914,22 +941,27 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 
 			var adapter : LifeCycleAdapter = new LifeCycleAdapter();
 			adapter.initHandler = init;
+			adapter.drawHandler = draw;
 			adapter.prepareUpdateHandler = prepareUpdate;
 			adapter.updateHandler = update;
 			adapter.cleanUpHandler = cleanUp;
 			
-			_lc.registerComponent(s, adapter);
 			var calls : Array = new Array();
+			_lc.registerComponent(s, adapter);
 
 			adapter.validateNow();
 			adapter.invalidate();
 			
 			setUpExitFrame(complete);
 			
-			
 			function init(theAdapter : LifeCycleAdapter) : void {
 				assertStrictlyEquals(adapter, theAdapter);
 				calls.push("init");
+			}
+			
+			function draw(theAdapter : LifeCycleAdapter) : void {
+				assertStrictlyEquals(adapter, theAdapter);
+				calls.push("draw");
 			}
 			
 			function prepareUpdate(theAdapter : LifeCycleAdapter) : void {
@@ -950,7 +982,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			function complete(event : Event, data : * = null) : void {
 				adapter.cleanUp();
 				
-				assertTrue(calls, ArrayUtils.arraysEqual(["init", "prepareUpdate", "update", "cleanUp"], calls));
+				assertTrue(calls, ArrayUtils.arraysEqual(["init", "draw", "prepareUpdate", "update", "cleanUp"], calls));
 			}
 		}
 
@@ -964,7 +996,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			adapter.validateNow();
 
-			validateLifeCycle([s], []);
+			validateLifeCycle([s], [s], []);
 			validateInvalidProperties([], []);
 
 			adapter.invalidate();
@@ -977,7 +1009,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			function complete(event : Event, data : * = null) : void {
 				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.cleanUpCalls));
-				validateLifeCycle([], []);
+				validateLifeCycle([], [], []);
 			}
 		}
 
@@ -991,13 +1023,13 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			adapter.cleanUp();
 			
-			validateLifeCycle([], []);
+			validateLifeCycle([s], [], []);
 			validateInvalidProperties([], []);
 
 			setUpExitFrame(complete);
 			
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], []);
+				validateLifeCycle([], [], []);
 				validateInvalidProperties([], []);
 			}
 		}
