@@ -1,5 +1,4 @@
 package lifecycle.i10n.boxexample {
-	import org.as3commons.collections.framework.ISet;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 
