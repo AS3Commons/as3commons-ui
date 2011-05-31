@@ -90,6 +90,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function autoUpdateBefore(child : DisplayObject) : void {
+			if (child == _component) return;
+			
 			_autoUpdates.add(child);
 		}
 
