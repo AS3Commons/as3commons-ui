@@ -1,4 +1,4 @@
-package lifecycle.i10n.basicexample {
+package lifecycle.i10n.boxexample {
 	import org.as3commons.ui.lifecycle.i10n.Invalidation;
 	import flash.display.Sprite;
 
