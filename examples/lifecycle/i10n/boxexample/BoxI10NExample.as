@@ -35,5 +35,4 @@ package lifecycle.i10n.boxexample {
 			box4.borderColor = 0x442200;
 		}
 	}
-
 }
