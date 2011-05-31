@@ -22,11 +22,7 @@ package lifecycle.i10n.boxexample {
 		}
 
 		public function update() : void {
-			draw();
-		}
-		
-		private function draw() : void {
-			trace (_name, "draw");
+			trace (_name, "update");
 			with (graphics) {
 				clear();
 				lineStyle(1, _borderColor);
