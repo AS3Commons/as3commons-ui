@@ -2,7 +2,9 @@ h2. AS3Commons UI - UI Related Algorithms and Managers
 
 Algorithms and managers to serve common UI releated tasks such as layouting, focus and keyboard management, popup handling, drag and drop control and so on. The project is an attempt to liberate such core functionality from the jaws of the big known frameworks. The library supports the development of user interfaces in pure ActionScript projects.
 
-The first version of UI comes already with a nifty layout package containing several layout algorithms: HGroup and VGroup (single line), HLayout and VLayout (multiline) as well as two table layouts.
+Version 0.1: The first version of UI comes already with a nifty layout package containing several layout algorithms: HGroup and VGroup (single line), HLayout and VLayout (multiline) as well as two table layouts.
+
+Version 0.2: Adds the Invalidation & LifeCycle package which provides a clean and simple implementation of a component life cycle (init, update, cleanUp).
 
 h3. References
 
