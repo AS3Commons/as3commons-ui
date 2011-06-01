@@ -9,6 +9,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		private static var _initCalls : Array = new Array();
 		private static var _drawCalls : Array = new Array();
+		private static var _initCompleteCalls : Array = new Array();
 		private static var _updateCalls : Array = new Array();
 		private static var _prepareUpdateCalls : Array = new Array();
 		private static var _invalidProperties : Array = new Array();
@@ -21,6 +22,10 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		public static function draw(displayObject : DisplayObject) : void {
 			_drawCalls.push(displayObject);
+		}
+		
+		public static function initComplete(displayObject : DisplayObject) : void {
+			_initCompleteCalls.push(displayObject);
 		}
 		
 		public static function update(displayObject : DisplayObject, updateKinds : Array) : void {
@@ -43,6 +48,10 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		public static function get drawCalls() : Array {
 			return _drawCalls;
+		}
+		
+		public static function get initCompleteCalls() : Array {
+			return _initCompleteCalls;
 		}
 		
 		public static function get updateCalls() : Array {
@@ -68,6 +77,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		public static function clearCalls() : void {
 			_initCalls = new Array();
 			_drawCalls = new Array();
+			_initCompleteCalls = new Array();
 			_updateCalls = new Array();
 			_prepareUpdateCalls = new Array();
 			_cleanUpCalls = new Array();

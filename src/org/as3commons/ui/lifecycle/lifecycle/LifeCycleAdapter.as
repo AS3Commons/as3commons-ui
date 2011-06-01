@@ -31,6 +31,11 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * Callback for the prepare update event.
 		 */
+		protected var _initCompleteHandler : Function;
+
+		/**
+		 * Callback for the prepare update event.
+		 */
 		protected var _prepareUpdateHandler : Function;
 
 		/**
@@ -95,6 +100,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * @inheritDoc
 		 */
+		public function get initialized() : Boolean {
+			return _initialized;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function autoUpdateBefore(child : DisplayObject) : void {
 			if (child == _component) return;
 			
@@ -112,6 +124,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function invalidate(property : String = null) : void {
+			if (!_initialized) return;
+			
 			_i10n.invalidate(_component, property);
 		}
 
@@ -176,6 +190,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * @inheritDoc
 		 */
+		public function get initCompleteHandler() : Function {
+			return _initCompleteHandler;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function set prepareUpdateHandler(prepareUpdateHandler : Function) : void {
 			_prepareUpdateHandler = prepareUpdateHandler;
 		}
@@ -213,9 +234,6 @@ package org.as3commons.ui.lifecycle.lifecycle {
 			} else {
 				_component.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			}
-			
-			
-			i10n.invalidate(_component);
 		}
 
 		/**
@@ -261,6 +279,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 					onDraw();
 				}
 				_initialized = true;
+				onInitComplete();
 			}
 		}
 
@@ -278,6 +297,12 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Default draw hook.
 		 */
 		protected function onDraw() : void {
+		}
+
+		/**
+		 * Default init complete hook.
+		 */
+		protected function onInitComplete() : void {
 		}
 
 		/**
@@ -319,6 +344,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 			} else {
 				onInit();
 			}
+			
+			_i10n.invalidate(_component);
 		}
 
 	}

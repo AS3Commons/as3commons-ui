@@ -41,6 +41,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 		) : void {
 			assertTrue(ArrayUtils.arraysEqual(initCalls, LifeCycleWatcher.initCalls));
 			assertTrue(ArrayUtils.arraysEqual(drawCalls, LifeCycleWatcher.drawCalls));
+			assertTrue(ArrayUtils.arraysEqual(drawCalls, LifeCycleWatcher.initCompleteCalls));
 			assertTrue(ArrayUtils.arraysEqual(updateCalls, LifeCycleWatcher.updateCalls));
 			LifeCycleWatcher.clearCalls();
 		}
@@ -279,6 +280,26 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			
 			function complete(event : Event, data : * = null) : void {
 				validateLifeCycle([], [s, s2, s3, s4], []);
+			}
+		}
+
+		[Test(async)]
+		public function testInit_setInitializedPropertyToTrue():void {
+			var s : DisplayObject = new TestDisplayObject("s");
+
+			var adapter : SimpleAdapter = new SimpleAdapter();
+			_lc.registerComponent(s, adapter);
+			
+			assertFalse(adapter.initialized);
+
+			StageProxy.root.addChild(s);
+
+			assertFalse(adapter.initialized);
+
+			setUpExitFrame(complete, adapter);
+			
+			function complete(event : Event, adapter : SimpleAdapter) : void {
+				assertTrue(adapter.initialized);
 			}
 		}
 
@@ -1010,6 +1031,27 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			function complete(event : Event, data : * = null) : void {
 				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.cleanUpCalls));
 				validateLifeCycle([], [], []);
+			}
+		}
+
+		[Test(async)]
+		public function testCleanUp_doesNotSetInitializedToTrue():void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+
+			var adapter : SimpleAdapter = new SimpleAdapter();
+			
+			_lc.registerComponent(s, adapter);
+			
+			assertFalse(adapter.initialized);
+			
+			adapter.cleanUp();
+			
+			assertFalse(adapter.initialized);
+
+			setUpExitFrame(complete);
+			
+			function complete(event : Event, data : * = null) : void {
+				assertFalse(adapter.initialized);
 			}
 		}
 

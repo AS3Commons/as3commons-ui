@@ -15,6 +15,19 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		function get component() : DisplayObject;
 
 		/**
+		 * Flag to indicate if the component has already been initialized.
+		 * 
+		 * <p><code>initialized</code> will be <code>true</code> if both the appropriate
+		 * <code>init()</code> and <code>draw()</code> methods have been called and the
+		 * next attempt to invalidate the component will start an update cycle rather
+		 * than triggering <code>init()</code> and <code>draw()</code>.</p>
+		 * 
+		 * <p>The property might be used to determine if the initial state of the
+		 * component has been drawn and if necessary child objects are available.</p>
+		 */
+		function get initialized() : Boolean;
+		
+		/**
 		 * Registers a component to be updated right before an update is performed.
 		 * 
 		 * @param child The component to auto update.
@@ -120,6 +133,15 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		function set drawHandler(drawHandler : Function) : void;
 		
+		/**
+		 * Sets a custom callback for the init complete event.
+		 * 
+		 * <p>If specified, this callback is invoked instead of the protected <code>onInitComplete()</code> hook.</p>
+		 * 
+		 * @param initCompleteHandler The init complete callback.
+		 */
+		function get initCompleteHandler() : Function;
+
 		/**
 		 * Sets a custom callback for the prepare update event.
 		 * 

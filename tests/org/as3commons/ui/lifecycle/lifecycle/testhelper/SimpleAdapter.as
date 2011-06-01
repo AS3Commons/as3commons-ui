@@ -9,6 +9,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		private var _initCalls : uint;
 		private var _drawCalls : uint;
+		private var _initCompleteCalls : uint;
 		private var _prepareUpdateCalls : uint;
 		private var _updateCalls : uint;
 		private var _cleanUpCalls : uint;
@@ -21,6 +22,11 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		override protected function onDraw() : void {
 			_drawCalls++;
 			LifeCycleWatcher.draw(_component);
+		}
+
+		override protected function onInitComplete() : void {
+			_initCompleteCalls++;
+			LifeCycleWatcher.initComplete(_component);
 		}
 
 		override protected function onPrepareUpdate() : void {
@@ -44,6 +50,10 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 
 		public function get drawCalls() : uint {
 			return _drawCalls;
+		}
+
+		public function get initCompleteCalls() : uint {
+			return _initCompleteCalls;
 		}
 
 		public function get prepareUpdateCalls() : uint {
