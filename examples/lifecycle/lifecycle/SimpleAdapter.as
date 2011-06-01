@@ -6,6 +6,10 @@ package lifecycle.lifecycle {
 			Dummy(_component).init();
 		}
 
+		override protected function onDraw() : void {
+			Dummy(_component).draw();
+		}
+
 		override protected function onPrepareUpdate() : void {
 			Dummy(_component).prepareUpdate();
 		}
@@ -23,6 +27,9 @@ package lifecycle.lifecycle {
 import flash.display.Sprite;
 internal class Dummy extends Sprite {
 	internal function init() : void {
+		// init something e.g. styles
+	}
+	internal function draw() : void {
 		// draw something
 	}
 	internal function prepareUpdate() : void {
