@@ -16,6 +16,7 @@ h3. References
 
 * "Layouts documentation":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/
 * "Layouts showcase":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/showcase/
+* "Invalidation & LifeCycle documentation":http://sibirjak.com/osflash/projects/as3commons-ui/invalidation-lifecycle/
 * "Project Homepage":http://sibirjak.com/osflash/projects/as3commons-ui/ (Overview, Features, Documentation, Examples)
 * "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
 * "Wiki":https://github.com/AS3Commons/as3commons-ui/wiki
