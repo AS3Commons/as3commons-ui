@@ -53,7 +53,9 @@ package popup.popup {
 		}
 
 		private function removeHandler() : void {
-			_popUpManager.removePopUp(_popUpManager.popUpOnTop);
+			var window : Window = _popUpManager.popUpOnTop as Window;
+			window.removeEventListener(MouseEvent.MOUSE_DOWN, windowClickHandler);
+			_popUpManager.removePopUp(window);
 			enableButtons();
 		}
 
