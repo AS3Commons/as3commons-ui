@@ -197,6 +197,7 @@ package {
 			}
 			
 			if (properties["visible"] === false) button.visible = false;
+			if (properties["enabled"] === false) button.enabled = false;
 
 			register(button, properties);
 
