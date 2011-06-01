@@ -4,7 +4,7 @@
 	<property file="build/build.env" />
 
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.2" />
+	<property name="VERSION" value="0.2.1" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
