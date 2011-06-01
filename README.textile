@@ -8,7 +8,7 @@ h3. References
 
 *Downloads*
 
-* "Downloads":https://github.com/AS3Commons/as3commons-ui/downloads (ZIP, SWC)
+* "Downloads":https://github.com/AS3Commons/as3commons-ui/downloads (ZIP with src, examples and tests, SWC)
 
 *Documentation*
 
@@ -17,10 +17,6 @@ h3. References
 * "Project Homepage":http://sibirjak.com/osflash/projects/as3commons-ui/ (Overview, Features, Documentation, Examples)
 * "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
 * "Wiki":https://github.com/AS3Commons/as3commons-ui/wiki
-
-*Examples Source Code*
-
-Checkout the "examples branch":https://github.com/AS3Commons/as3commons-ui/tree/examples for the source code.
 
 *Other resources*
 
