@@ -5,6 +5,7 @@ package {
 	import com.sibirjak.asdpc.core.IView;
 	import com.sibirjak.asdpc.core.View;
 	import com.sibirjak.asdpc.core.constants.Position;
+	import com.sibirjak.asdpc.core.managers.StageProxy;
 	import com.sibirjak.asdpc.textfield.Label;
 	import com.sibirjak.asdpc.textfield.TextInput;
 	import com.sibirjak.asdpc.textfield.TextInputEvent;
@@ -16,6 +17,7 @@ package {
 	import com.sibirjak.asdpcbeta.radiobutton.RadioButton;
 	import com.sibirjak.asdpcbeta.radiobutton.RadioGroup;
 	import com.sibirjak.asdpcbeta.slider.Slider;
+	import com.sibirjak.asdpcbeta.window.Window;
 
 	import org.as3commons.collections.LinkedMap;
 	import org.as3commons.collections.framework.IIterator;
@@ -25,6 +27,7 @@ package {
 
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
@@ -36,6 +39,10 @@ package {
 		protected const DOCUMENT : String = "document";
 
 		public function ControlPanelBase() {
+			if (parent && parent is Stage) {
+				com.sibirjak.asdpc.core.managers.StageProxy.stage = parent as Stage;
+			}
+
 			_radioGroups = new LinkedMap();
 			_viewIDs = new LinkedMap();
 		}
@@ -188,6 +195,8 @@ package {
 					});
 				}
 			}
+			
+			if (properties["visible"] === false) button.visible = false;
 
 			register(button, properties);
 
@@ -376,6 +385,21 @@ package {
 			if (properties["enabled"] != null) checkBox.enabled = properties["enabled"];
 			
 			return checkBox;
+		}
+		
+		protected function window(properties : Object) : Window {
+			var window : Window = new Window();
+			
+			window.title = properties["title"];
+			
+			if (properties["minimise"] === false) {
+				window.setStyles([
+					Window.style.minimiseButton, false,
+					Window.style.minimiseOnDoubleClick, false
+				]);
+			}
+			
+			return window;
 		}
 		
 		/*
