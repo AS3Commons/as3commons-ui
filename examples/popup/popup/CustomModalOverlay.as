@@ -24,15 +24,16 @@ package popup.popup {
 		
 		private function addHandler() : void {
 			var window : Window = window({
-				title: "PopUp " + ++_windowId
+				x: 100, y: 40, w: 260, h: 120,
+				title: "PopUp " + ++_windowId,
+				minimised: true
 			});
-			window.x = 100;
-			window.y = 40;
 			window.document = new WinContent();
 			window.addEventListener("close", closeHandler);
 			window.addEventListener(WindowEvent.MINIMISED, minimiseHandler);
 			
 			_popUpManager.createPopUp(window, false, true);
+			window.restore();
 		}
 
 		private function closeHandler(event : Event) : void {
@@ -54,7 +55,7 @@ import flash.events.Event;
 internal class WinContent extends ControlPanelBase {
 	override protected function draw() : void {
 		hgroup(
-			"minWidth", _width, "minHeight", _height - 10,
+			"minWidth", _width, "minHeight", _height - 5,
 			"hAlign", Align.CENTER, "vAlign", Align.BOTTOM,
 			labelButton({
 				label: "close",

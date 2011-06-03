@@ -400,6 +400,15 @@ package {
 				]);
 			}
 			
+			if (properties["minimised"] === true) window.minimised = true;
+			
+			if (properties.hasOwnProperty("w") && properties.hasOwnProperty("h")) {
+				window.setSize(properties["w"], properties["h"]);
+			}
+			
+			if (properties.hasOwnProperty("x")) window.x = properties["x"];
+			if (properties.hasOwnProperty("y")) window.y = properties["y"];
+			
 			return window;
 		}
 		
