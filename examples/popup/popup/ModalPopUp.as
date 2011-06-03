@@ -1,9 +1,8 @@
 package popup.popup {
-	import com.sibirjak.asdpcbeta.window.WindowEvent;
 	import com.sibirjak.asdpcbeta.window.Window;
+	import com.sibirjak.asdpcbeta.window.WindowEvent;
 	import org.as3commons.ui.popup.PopUpManager;
 	import flash.display.Sprite;
-	import flash.events.Event;
 
 	public class ModalPopUp extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;
@@ -28,17 +27,12 @@ package popup.popup {
 				minimised: true
 			});
 			window.document = new WinContent();
-			window.addEventListener("close", closeHandler);
 			window.addEventListener(WindowEvent.MINIMISED, minimiseHandler);
 			
 			_popUpManager.createPopUp(window, false, true);
 			window.restore();
 		}
 
-		private function closeHandler(event : Event) : void {
-			Window(event.currentTarget).minimise();
-		}
-		
 		private function minimiseHandler(event : WindowEvent) : void {
 			Window(event.currentTarget).removeEventListener(WindowEvent.MINIMISED, minimiseHandler);
 			_popUpManager.removePopUp(_popUpManager.popUpOnTop);
@@ -46,9 +40,9 @@ package popup.popup {
 	}
 }
 
+import com.sibirjak.asdpcbeta.window.Window;
 import org.as3commons.ui.layout.constants.Align;
 import org.as3commons.ui.layout.shortcut.hgroup;
-import flash.events.Event;
 
 internal class WinContent extends ControlPanelBase {
 	override protected function draw() : void {
@@ -58,7 +52,7 @@ internal class WinContent extends ControlPanelBase {
 			labelButton({
 				label: "close",
 				click: function() : void {
-					dispatchEvent(new Event("close", true));
+					Window(parent).minimise();
 				}
 			})
 			

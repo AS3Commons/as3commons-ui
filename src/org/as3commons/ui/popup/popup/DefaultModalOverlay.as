@@ -1,11 +1,11 @@
 package org.as3commons.ui.popup.popup {
 
-	import flash.display.Shape;
+	import flash.display.Sprite;
 
 	/**
 	 * @author Jens Struwe 02.02.2011
 	 */
-	public class DefaultModalOverlay extends Shape	 {
+	public class DefaultModalOverlay extends Sprite	 {
 
 		public function DefaultModalOverlay() {
 			with (graphics) {

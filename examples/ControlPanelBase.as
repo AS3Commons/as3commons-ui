@@ -148,8 +148,8 @@ package {
 		}
 
 		protected function labelButton(properties : Object) : Button {
-			properties["w"] = 60;
-			properties["h"] = 20;
+			if (!properties.hasOwnProperty("w")) properties["w"] = 60;
+			if (!properties.hasOwnProperty("h")) properties["h"] = 20;
 			return button(properties);
 		}
 

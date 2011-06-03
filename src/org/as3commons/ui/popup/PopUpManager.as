@@ -71,6 +71,10 @@ package org.as3commons.ui.popup {
 		public function bringToFront(displayObject : DisplayObject) : void {
 			if (!_popUps.hasKey(displayObject)) return;
 
+			var popUpData : PopUpData = _popUps.itemFor(displayObject);
+			if (popUpData.isModal) {
+				_container.setChildIndex(popUpData.modalOverlay, _container.numChildren - 1);
+			}
 			_container.setChildIndex(displayObject, _container.numChildren - 1);
 		}
 
@@ -83,7 +87,7 @@ package org.as3commons.ui.popup {
 			if (!_popUps.hasKey(displayObject)) return;
 			
 			var popUpData : PopUpData = _popUps.removeKey(displayObject);
-			if (popUpData.modalOverlay) {
+			if (popUpData.isModal) {
 				_container.removeChild(popUpData.modalOverlay);
 				_numModalPopUps--;			
 			}
