@@ -14,19 +14,19 @@ package layer.placement.bounds {
 			_placements = new Array();
 			
 			addBox(
-				70, 70,
+				90, 90,
 				PlacementAnchor.TOP_LEFT, PlacementAnchor.BOTTOM_RIGHT
 			);
 			addBox(
-				stage.stageWidth - 130, 70,
+				stage.stageWidth - 150, 90,
 				PlacementAnchor.TOP_RIGHT, PlacementAnchor.BOTTOM_LEFT
 			);
 			addBox(
-				stage.stageWidth - 130, stage.stageHeight - 130,
+				stage.stageWidth - 150, stage.stageHeight - 150,
 				PlacementAnchor.BOTTOM_RIGHT, PlacementAnchor.TOP_LEFT
 			);
 			addBox(
-				70, stage.stageHeight - 130,
+				90, stage.stageHeight - 150,
 				PlacementAnchor.BOTTOM_LEFT, PlacementAnchor.TOP_RIGHT
 			);
 

@@ -22,7 +22,6 @@ package org.as3commons.ui.layer {
 
 		private var _offset : Point;
 		private var _bounds : Rectangle;
-		
 		private var _placeCallback : Function;
 
 		public function Placement(source : DisplayObject = null, layer : DisplayObject = null) {
