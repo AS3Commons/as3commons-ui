@@ -1,10 +1,10 @@
-package popup.popup {
+package layer.popup {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpcbeta.window.Window;
 	import com.sibirjak.asdpcbeta.window.WindowEvent;
-	import org.as3commons.ui.popup.PopUpManager;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import org.as3commons.ui.layer.PopUpManager;
 
 	public class MultipleModalPopUps extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;

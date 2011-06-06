@@ -1,4 +1,4 @@
-package org.as3commons.ui.popup.popup {
+package org.as3commons.ui.layer.popup {
 
 	import flash.display.Sprite;
 

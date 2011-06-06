@@ -1,11 +1,11 @@
-package org.as3commons.ui.popup {
-
-	import org.as3commons.collections.LinkedMap;
-	import org.as3commons.ui.popup.popup.DefaultModalOverlay;
-	import org.as3commons.ui.popup.popup.PopUpData;
+package org.as3commons.ui.layer {
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import org.as3commons.collections.LinkedMap;
+	import org.as3commons.ui.layer.popup.DefaultModalOverlay;
+	import org.as3commons.ui.layer.popup.PopUpData;
+
 
 	/**
 	 * @author Jens Struwe 02.02.2011

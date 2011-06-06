@@ -1,9 +1,9 @@
-package popup.popup {
+package layer.popup {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpcbeta.window.Window;
-	import org.as3commons.ui.layout.shortcut.hgroup;
-	import org.as3commons.ui.popup.PopUpManager;
 	import flash.display.Sprite;
+	import org.as3commons.ui.layer.PopUpManager;
+	import org.as3commons.ui.layout.shortcut.hgroup;
 
 	public class SimplePopUp extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;
