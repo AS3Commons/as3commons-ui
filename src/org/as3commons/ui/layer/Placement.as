@@ -1,10 +1,11 @@
 package org.as3commons.ui.layer {
 
-	import flash.display.DisplayObject;
-	import flash.geom.Point;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layer.placement.PlacementUtils;
 
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	/**
 	 * @author Jens Struwe 06.06.2011
@@ -20,6 +21,16 @@ package org.as3commons.ui.layer {
 		private var _layerLocal : Point;
 
 		private var _offset : Point;
+		private var _bounds : Rectangle;
+		
+		private var _placeCallback : Function;
+
+		public function Placement(source : DisplayObject = null, layer : DisplayObject = null) {
+			_source = source;
+			_layer = layer;
+			
+			_offset = new Point();
+		}
 		
 		public function set source(source : DisplayObject) : void {
 			_source = source;
@@ -61,7 +72,19 @@ package org.as3commons.ui.layer {
 			return _offset;
 		}
 
-		public function place() : void {
+		public function set bounds(bounds : Rectangle) : void {
+			_bounds = bounds;
+		}
+
+		public function get bounds() : Rectangle {
+			return _bounds;
+		}
+
+		public function set placeCallback(placeCallback : Function) : void {
+			_placeCallback = placeCallback;
+		}
+
+		public function place(moveLayer : Boolean = true) : void {
 			// layer global
 			_layerGlobal = PlacementUtils.localToGlobal(_source);
 
@@ -79,8 +102,27 @@ package org.as3commons.ui.layer {
 				_layerGlobal.y += _offset.y; 
 			}
 			
+			if (_bounds) {
+				// right
+				_layerGlobal.x = Math.min(_layerGlobal.x, _bounds.right - _layer.width);
+				// bottom
+				_layerGlobal.y = Math.min(_layerGlobal.y, _bounds.bottom - _layer.height);
+				// top
+				_layerGlobal.y = Math.max(_layerGlobal.y, _bounds.y);
+				// left
+				_layerGlobal.x = Math.max(_layerGlobal.x, _bounds.x);
+			}
+			
 			// layer local
 			_layerLocal = PlacementUtils.globalToLocal(_layerGlobal, _layer);
+			
+			// move layer
+			if (_placeCallback != null) {
+				_placeCallback(_layer, _layerLocal);
+			} else if (moveLayer) {
+				_layer.x = _layerLocal.x;
+				_layer.y = _layerLocal.y;
+			}
 		}
 
 		public function get layerGlobal() : Point {

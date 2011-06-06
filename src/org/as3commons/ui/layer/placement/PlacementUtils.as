@@ -38,7 +38,7 @@ package org.as3commons.ui.layer.placement {
 			} else if (PlacementAnchor.isCenter(anchor)) {
 				point.x = Math.round(displayObject.width / 2);
 			} else {
-				point.x = displayObject.height;
+				point.x = displayObject.width;
 			}
 
 			if (PlacementAnchor.isTop(anchor)) {
