@@ -4,9 +4,8 @@ package layer.placement.common {
 	import com.sibirjak.asdpcbeta.checkbox.CheckBox;
 	import com.sibirjak.asdpcbeta.radiobutton.RadioButton;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
-	import org.as3commons.ui.layout.VGroup;
+	import org.as3commons.ui.layout.HLayout;
 	import org.as3commons.ui.layout.shortcut.hlayout;
-	import org.as3commons.ui.layout.shortcut.vgroup;
 	import flash.events.Event;
 
 	public class BoxAnchorControls extends ControlPanelBase {
@@ -14,31 +13,35 @@ package layer.placement.common {
 		private var _placement : Class;
 		[Embed(source="assets/placement_selected.png")]
 		private var _placementSelected : Class;
+		private var _buttonSize : uint = 22;
 
-		public function BoxAnchorControls() {
-			var v : VGroup = vgroup(
-				"gap", 4,
-				hlayout(
-					"maxItemsPerRow", 3,
-					radioGroup(
-						"placement",
-						function(placementAnchor : uint) : void {
-							dispatchEvent(new Event("anchor", true));
-						}
-					),
-					anchorButton(PlacementAnchor.TOP_LEFT),
-					anchorButton(PlacementAnchor.TOP),
-					anchorButton(PlacementAnchor.TOP_RIGHT),
-					anchorButton(PlacementAnchor.LEFT),
-					anchorButton(PlacementAnchor.CENTER),
-					anchorButton(PlacementAnchor.RIGHT),
-					anchorButton(PlacementAnchor.BOTTOM_LEFT),
-					anchorButton(PlacementAnchor.BOTTOM),
-					anchorButton(PlacementAnchor.BOTTOM_RIGHT)
-				)
+		public function BoxAnchorControls(color : uint, alpha : Number) {
+			var h : HLayout = hlayout(
+				"maxItemsPerRow", 3,
+				radioGroup(
+					"placement",
+					function(placementAnchor : uint) : void {
+						dispatchEvent(new Event("anchor", true));
+					}
+				),
+				anchorButton(PlacementAnchor.TOP_LEFT),
+				anchorButton(PlacementAnchor.TOP),
+				anchorButton(PlacementAnchor.TOP_RIGHT),
+				anchorButton(PlacementAnchor.LEFT),
+				anchorButton(PlacementAnchor.CENTER),
+				anchorButton(PlacementAnchor.RIGHT),
+				anchorButton(PlacementAnchor.BOTTOM_LEFT),
+				anchorButton(PlacementAnchor.BOTTOM),
+				anchorButton(PlacementAnchor.BOTTOM_RIGHT)
 			);
-			v.layout(this);
-			setSize(v.visibleRect.width, v.visibleRect.height);
+			h.layout(this);
+			setSize(h.visibleRect.width, h.visibleRect.height);
+
+			with (graphics) {
+				lineStyle(1, 0x666666);
+				beginFill(color, alpha);
+				drawRect(_buttonSize/2, _buttonSize/2, _width - _buttonSize, _height - _buttonSize);
+			}
 		}
 		
 		public function get placementAnchor() : uint {
@@ -52,9 +55,9 @@ package layer.placement.common {
 				selected: value == PlacementAnchor.TOP_LEFT,
 				diff: 0
 			});
-			radio.setSize(16, 16);
+			radio.setSize(_buttonSize, _buttonSize);
 			radio.setStyles([
-				Button.style.upSkin, ButtonSkin,
+				Button.style.upSkin, null,
 				Button.style.upIconSkin, _placement,
 				Button.style.overIconSkin, _placement,
 				Button.style.downIconSkin, _placement,

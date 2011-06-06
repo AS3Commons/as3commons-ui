@@ -14,12 +14,14 @@ package layer.placement.anchors {
 				headline("Source", 100),
 				display(
 					"id", "sourceControls",
-					new BoxAnchorControls()
+					"offsetX", -5, "offsetY", -8,
+					new BoxAnchorControls(0xDDDDDD, 1)
 				),
 				headline("Layer", 100),
 				display(
 					"id", "layerControls",
-					new BoxAnchorControls()
+					"offsetX", -5, "offsetY", -8,
+					new BoxAnchorControls(0x004499, .5)
 				),
 				headline("Offset", 100),
 				display(
