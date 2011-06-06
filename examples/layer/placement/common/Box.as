@@ -1,7 +1,10 @@
 package layer.placement.common {
+	import org.as3commons.ui.layer.placement.PlacementUtils;
+	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import flash.display.GradientType;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 
 	public class Box extends Sprite {
 		private var _width : uint;
@@ -11,6 +14,7 @@ package layer.placement.common {
 		private var _color : uint;
 		private var _alpha : Number;
 		private var _borderColor : uint;
+		private var _placementAnchor : uint = PlacementAnchor.TOP_LEFT;
 		
 		public function Box(
 			width : uint, height : uint, x : int, y : int,
@@ -51,19 +55,21 @@ package layer.placement.common {
 
 			// anchors
 			var a : uint = 4;
+			var a2 : uint = 8;
+			var i : uint;
+			var point : Point;
 			with (graphics) {
-				beginFill(_borderColor);
-				drawRect(-a/2, -a/2, a, a);
-				drawRect(Math.round(_width/2) - a/2, -a/2, a, a);
-				drawRect(width - a/2, -a/2, a, a);
-
-				drawRect(-a/2, Math.round(_height/2) - a/2, a, a);
-				drawRect(Math.round(_width/2) - a/2, Math.round(_height/2) - a/2, a, a);
-				drawRect(width - a/2, Math.round(_height/2) - a/2, a, a);
-
-				drawRect(-a/2, _height - a/2, a, a);
-				drawRect(Math.round(_width/2) - a/2, _height - a/2, a, a);
-				drawRect(width - a/2, _height - a/2, a, a);
+				for (i; i < PlacementAnchor.anchors.length; i++) {
+					// any
+					beginFill(_borderColor);
+					point = PlacementUtils.anchorToLocal(PlacementAnchor.anchors[i], this);
+					drawRect(point.x - a/2, point.y - a/2, a, a);
+					endFill();
+					// selected
+					if (PlacementAnchor.anchors[i] == _placementAnchor) {
+						drawRect(point.x - a2/2, point.y - a2/2, a2, a2);
+					}
+				}
 			}
 		}
 		
@@ -97,6 +103,15 @@ package layer.placement.common {
 
 		override public function get y() : Number {
 			return _y;
+		}
+
+		public function set placementAnchor(placementAnchor : uint) : void {
+			_placementAnchor = placementAnchor;
+			BoxI10N.i10n.invalidate(this);
+		}
+
+		public function get placementAnchor() : uint {
+			return _placementAnchor;
 		}
 	}
 }
