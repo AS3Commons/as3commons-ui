@@ -1,12 +1,14 @@
 package layer.placement.common {
-	import org.as3commons.ui.layer.placement.PlacementUtils;
+	import common.ColorUtil;
+	import common.UII10N;
+	import common.UIView;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
+	import org.as3commons.ui.layer.placement.PlacementUtils;
 	import flash.display.GradientType;
-	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 
-	public class Box extends Sprite {
+	public class Box extends UIView {
 		private var _width : uint;
 		private var _height : uint;
 		private var _x : int;
@@ -27,15 +29,15 @@ package layer.placement.common {
 			_color = color;
 			_alpha = alpha;
 			_borderColor = borderColor;
-			BoxI10N.i10n.invalidate(this);
+			UII10N.i10n.invalidate(this);
 		}
 		
-		public function draw() : void {
-			// position
-			x = _x;
-			y = _y;
-			
+		override public function draw() : void {
 			graphics.clear();
+			
+			// position
+			super.x = _x;
+			super.y = _y;
 			
 			// background
 			var matrix : Matrix = new Matrix();
@@ -75,7 +77,7 @@ package layer.placement.common {
 		
 		override public function set width(width : Number) : void {
 			_width = width;
-			BoxI10N.i10n.invalidate(this);
+			UII10N.i10n.invalidate(this);
 		}
 
 		override public function get width() : Number {
@@ -84,30 +86,34 @@ package layer.placement.common {
 
 		override public function set height(height : Number) : void {
 			_height = height;
-			BoxI10N.i10n.invalidate(this);
+			UII10N.i10n.invalidate(this);
 		}
 
 		override public function get height() : Number {
 			return _height;
 		}
 		
-		public function moveTo(x : int, y : int) : void {
+		override public function set x(x : Number) : void {
 			_x = x;
-			_y = y;
-			BoxI10N.i10n.invalidate(this);
+			UII10N.i10n.invalidate(this);
 		}
 		
 		override public function get x() : Number {
 			return _x;
 		}
 
+		override public function set y(y : Number) : void {
+			_y = y;
+			UII10N.i10n.invalidate(this);
+		}
+		
 		override public function get y() : Number {
 			return _y;
 		}
 
 		public function set placementAnchor(placementAnchor : uint) : void {
 			_placementAnchor = placementAnchor;
-			BoxI10N.i10n.invalidate(this);
+			UII10N.i10n.invalidate(this);
 		}
 
 		public function get placementAnchor() : uint {

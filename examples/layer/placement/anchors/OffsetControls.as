@@ -1,8 +1,9 @@
-package layer.placement.common {
+package layer.placement.anchors {
 	import com.sibirjak.asdpcbeta.slider.Slider;
+	import common.ControlPanelBase;
+	import flash.events.Event;
 	import org.as3commons.ui.layout.VGroup;
 	import org.as3commons.ui.layout.shortcut.vgroup;
-	import flash.events.Event;
 
 	public class OffsetControls extends ControlPanelBase {
 		private var _v : VGroup;

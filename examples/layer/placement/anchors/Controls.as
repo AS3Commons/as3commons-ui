@@ -1,6 +1,5 @@
 package layer.placement.anchors {
-	import layer.placement.common.BoxAnchorControls;
-	import layer.placement.common.OffsetControls;
+	import common.ControlPanelBase;
 	import org.as3commons.ui.layout.VGroup;
 	import org.as3commons.ui.layout.shortcut.display;
 	import org.as3commons.ui.layout.shortcut.vgroup;

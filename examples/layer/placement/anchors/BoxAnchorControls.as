@@ -1,12 +1,13 @@
-package layer.placement.common {
+package layer.placement.anchors {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.skins.ButtonSkin;
 	import com.sibirjak.asdpcbeta.checkbox.CheckBox;
 	import com.sibirjak.asdpcbeta.radiobutton.RadioButton;
+	import common.ControlPanelBase;
+	import flash.events.Event;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layout.HLayout;
 	import org.as3commons.ui.layout.shortcut.hlayout;
-	import flash.events.Event;
 
 	public class BoxAnchorControls extends ControlPanelBase {
 		[Embed(source="assets/placement.png")]
