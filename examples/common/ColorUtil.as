@@ -1,4 +1,4 @@
-package {
+package common{
 
 	public class ColorUtil {
 		public static function getGradient(hex : Number, amount : uint = 20, direction : String = "bright_to_dark") : Array {

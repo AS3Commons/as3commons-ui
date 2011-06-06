@@ -1,4 +1,4 @@
-package {
+package common{
 
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.ButtonEvent;
