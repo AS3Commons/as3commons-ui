@@ -19,6 +19,7 @@ package org.as3commons.ui.layout.framework {
 	import org.as3commons.collections.framework.IRecursiveIterator;
 	import org.as3commons.ui.layout.CellConfig;
 
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 
 	/**
@@ -108,6 +109,23 @@ package org.as3commons.ui.layout.framework {
 		 */
 		function getLayoutItem(...args) : ILayoutItem;
 		
+		/**
+		 * Returns a display object by a given key or list of keys.
+		 * 
+		 * <p>This is a convenient method to return a display object added
+		 * to the layout. The method utilizes <code>getLayoutItem()</code>
+		 * and casts the result to <code>DisplayObject</code> if possible.</p>
+		 * 
+		 * <p>A single key may be an id (String) or a display object or
+		 * an <code>ILayoutItem</code>.</p>
+		 * 
+		 * <p>If multiple arguments are given, the method tries to find the
+		 * display object hierarchically.</p>
+		 * 
+		 * @return The display object found or <code>null</code>.
+		 */
+		function getDisplayObject(...args) : DisplayObject;
+
 		/**
 		 * Returns an <code>IRecursiveIterator</code> over all added items.
 		 * 

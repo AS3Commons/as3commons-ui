@@ -215,6 +215,15 @@ package org.as3commons.ui.layout.framework.core {
 		/**
 		 * @inheritDoc
 		 */
+		public function getDisplayObject(...args) : DisplayObject {
+			var layoutItem : ILayoutItem = getLayoutItem.apply(this, args);
+			if (layoutItem && layoutItem is Display) return Display(layoutItem).displayObject;
+			return null;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function recursiveIterator() : IRecursiveIterator {
 			return new RecursiveIterator(this);
 		}
