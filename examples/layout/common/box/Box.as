@@ -1,8 +1,7 @@
 package layout.common.box {
-
 	import com.sibirjak.jakute.JCSS;
 	import com.sibirjak.jakute.JCSS_Sprite;
-
+	import common.ColorUtil;
 	import flash.display.GradientType;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;

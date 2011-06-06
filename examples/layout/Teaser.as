@@ -1,25 +1,16 @@
 package layout {
-
-	import layout.common.box.Box;
-
 	import com.gskinner.motion.GTween;
 	import com.gskinner.motion.easing.Sine;
-
-	import org.as3commons.ui.layout.HGroup;
-	import org.as3commons.ui.layout.framework.ILayout;
-	import org.as3commons.ui.layout.shortcut.cellconfig;
-	import org.as3commons.ui.layout.shortcut.dyntable;
-	import org.as3commons.ui.layout.shortcut.hgroup;
-	import org.as3commons.ui.layout.shortcut.hlayout;
-	import org.as3commons.ui.layout.shortcut.table;
-	import org.as3commons.ui.layout.shortcut.vgroup;
-	import org.as3commons.ui.layout.shortcut.vlayout;
-
+	import common.ControlPanelBase;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
+	import layout.common.box.Box;
+	import org.as3commons.ui.layout.HGroup;
+	import org.as3commons.ui.layout.framework.ILayout;
+	import org.as3commons.ui.layout.shortcut.*;
+
 	public class Teaser extends ControlPanelBase {
-		
 		private var _container : Sprite;
 		private var _tweens : Dictionary;
 		

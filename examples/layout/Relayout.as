@@ -1,4 +1,5 @@
 package layout {
+	import common.ControlPanelBase;
 	import layout.common.box.Box;
 	import org.as3commons.ui.layout.framework.*;
 	import org.as3commons.ui.layout.shortcut.*;

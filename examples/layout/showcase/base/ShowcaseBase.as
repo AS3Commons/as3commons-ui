@@ -1,20 +1,13 @@
 package layout.showcase.base {
-
-	import layout.showcase.base.pinbar.PinBar;
-	import layout.showcase.base.tabs.AbstractTab;
-	import layout.showcase.base.tabs.AlignTab;
-	import layout.showcase.base.tabs.BoxesTab;
-	import layout.showcase.base.tabs.CellTab;
-	import layout.showcase.base.tabs.SizeTab;
-
 	import com.sibirjak.asdpc.core.constants.Position;
 	import com.sibirjak.asdpcbeta.window.Window;
 	import com.sibirjak.asdpcbeta.window.core.WindowPosition;
-
+	import common.ControlPanelBase;
+	import flash.display.Sprite;
+	import layout.showcase.base.pinbar.PinBar;
+	import layout.showcase.base.tabs.*;
 	import org.as3commons.ui.layout.debugger.LayoutDebugger;
 	import org.as3commons.ui.layout.framework.ILayout;
-
-	import flash.display.Sprite;
 
 	public class ShowcaseBase extends ControlPanelBase {
 		

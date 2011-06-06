@@ -1,4 +1,5 @@
 package layout {
+	import common.ControlPanelBase;
 	import layout.common.box.Box;
 	import com.gskinner.motion.GTween;
 	import com.gskinner.motion.easing.Sine;

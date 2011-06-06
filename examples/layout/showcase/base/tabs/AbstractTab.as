@@ -1,11 +1,10 @@
 package layout.showcase.base.tabs {
 
+	import common.ControlPanelBase;
+	import flash.display.Sprite;
 	import layout.showcase.base.ShowcaseConfig;
-
 	import org.as3commons.ui.layout.debugger.LayoutDebugger;
 	import org.as3commons.ui.layout.framework.ILayout;
-
-	import flash.display.Sprite;
 
 	/**
 	 * @author Jens Struwe 29.03.2011
