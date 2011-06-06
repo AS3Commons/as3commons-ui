@@ -11,12 +11,18 @@ package layer.placement {
 		private var _placement : Placement;
 		
 		public function PlacementExample() {
+			// source container
+			var container : Sprite = new Sprite();
+			container.x = 100;
+			container.y = 300;
+			addChild(container);
+
 			// source
-			_source = new Box(150, 150, 150, 150, 0xDDDDDD, 1, 0x999999);
-			addChild(_source);
+			_source = new Box(150, 150, 50, -150, 0xDDDDDD, 1, 0x999999);
+			container.addChild(_source);
 
 			// layer container
-			var container : Sprite = new Sprite();
+			container = new Sprite();
 			container.x = 200;
 			container.y = 200;
 			addChild(container);
