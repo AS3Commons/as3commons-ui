@@ -3,17 +3,17 @@ package org.as3commons.ui.layer.placement {
 	/**
 	 * @author Jens Struwe 06.06.2011
 	 */
-	public class PlacementRules {
+	public class PlacementAnchor {
 		
-		public static const TOP_LEFT : uint = _TOP + _LEFT;
-		public static const TOP : uint = _TOP + _CENTER;
-		public static const TOP_RIGHT : uint = _TOP + _RIGHT;
-		public static const LEFT : uint = _MIDDLE + _LEFT;
-		public static const CENTER : uint = _MIDDLE + _CENTER;
-		public static const RIGHT : uint = _MIDDLE + _RIGHT;
-		public static const BOTTOM_LEFT : uint = _BOTTOM + _LEFT;
-		public static const BOTTOM : uint = _BOTTOM + _CENTER;
-		public static const BOTTOM_RIGHT : uint = _BOTTOM + _RIGHT;
+		public static const TOP_LEFT : uint = 1 + 8;
+		public static const TOP : uint = 1 + 16;
+		public static const TOP_RIGHT : uint = 1 + 32;
+		public static const LEFT : uint = 2 + 8;
+		public static const CENTER : uint = 2 + 16;
+		public static const RIGHT : uint = 2 + 32;
+		public static const BOTTOM_LEFT : uint = 4 + 8;
+		public static const BOTTOM : uint = 4 + 16;
+		public static const BOTTOM_RIGHT : uint = 4 + 32;
 		
 		private static const _TOP : uint = 1;
 		private static const _MIDDLE : uint = 2;
@@ -21,6 +21,12 @@ package org.as3commons.ui.layer.placement {
 		private static const _LEFT : uint = 8;
 		private static const _CENTER : uint = 16;
 		private static const _RIGHT : uint = 32;
+		
+		public static const anchors : Array = [
+			TOP_LEFT, TOP, TOP_RIGHT,
+			LEFT, CENTER, RIGHT,
+			BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT
+		];
 		
 		public static function isTop(placement : uint) : Boolean {
 			return (placement & _TOP) == _TOP;

@@ -1,10 +1,10 @@
 package org.as3commons.ui.layer {
 
-	import org.as3commons.ui.layer.placement.PlacementRules;
-	import org.as3commons.ui.utils.UIUtils;
-
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
+	import org.as3commons.ui.layer.placement.PlacementAnchor;
+	import org.as3commons.ui.layer.placement.PlacementUtils;
+
 
 	/**
 	 * @author Jens Struwe 06.06.2011
@@ -12,74 +12,75 @@ package org.as3commons.ui.layer {
 	public class Placement {
 		
 		private var _source : DisplayObject;
-		private var _sourceAnchor : uint;
+		private var _sourceAnchor : uint = PlacementAnchor.TOP_LEFT;
 
 		private var _layer : DisplayObject;
-		private var _layerAnchor : uint;
+		private var _layerAnchor : uint = PlacementAnchor.TOP_LEFT;
 		private var _layerGlobal : Point;
 		private var _layerLocal : Point;
+
+		private var _offset : Point;
 		
 		public function set source(source : DisplayObject) : void {
 			_source = source;
+		}
+
+		public function get source() : DisplayObject {
+			return _source;
 		}
 
 		public function set layer(layer : DisplayObject) : void {
 			_layer = layer;
 		}
 
+		public function get layer() : DisplayObject {
+			return _layer;
+		}
+
 		public function set sourceAnchor(sourceAnchor : uint) : void {
 			_sourceAnchor = sourceAnchor;
+		}
+
+		public function get sourceAnchor() : uint {
+			return _sourceAnchor;
 		}
 
 		public function set layerAnchor(layerAnchor : uint) : void {
 			_layerAnchor = layerAnchor;
 		}
 		
-		public function place() : void {
-			var sourceGlobal : Point = UIUtils.localToGlobal(_source);
-			_layerGlobal = new Point();
-			
-			/*
-			 * layer x
-			 */
+		public function get layerAnchor() : uint {
+			return _layerAnchor;
+		}
 
-			if (PlacementRules.isLeft(_sourceAnchor)) {
-				_layerGlobal.x = sourceGlobal.x;
-			} else if (PlacementRules.isCenter(_sourceAnchor)) {
-				_layerGlobal.x = sourceGlobal.x + Math.round(_source.width / 2);
-			} else {
-				_layerGlobal.x = sourceGlobal.x + _source.width;
+		public function set offset(offset : Point) : void {
+			_offset = offset;
+		}
+		
+		public function get offset() : Point {
+			return _offset;
+		}
+
+		public function place() : void {
+			// layer global
+			_layerGlobal = PlacementUtils.localToGlobal(_source);
+
+			var sourceAnchorLocal : Point = PlacementUtils.anchorToLocal(_sourceAnchor, _source);
+			_layerGlobal.x += sourceAnchorLocal.x;
+			_layerGlobal.y += sourceAnchorLocal.y;
+			
+			var layerAnchorLocal : Point = PlacementUtils.anchorToLocal(_layerAnchor, _layer);
+			_layerGlobal.x -= layerAnchorLocal.x;
+			_layerGlobal.y -= layerAnchorLocal.y;
+			
+			// offset
+			if (_offset) {
+				_layerGlobal.x += _offset.x; 
+				_layerGlobal.y += _offset.y; 
 			}
 			
-			if (PlacementRules.isLeft(_layerAnchor)) {
-				// keep source origin
-			} else if (PlacementRules.isCenter(_layerAnchor)) {
-				_layerGlobal.x -= Math.round(_layer.width / 2);
-			} else {
-				_layerGlobal.x -= _layer.width;
-			}
-			
-			/*
-			 * layer y
-			 */
-			
-			if (PlacementRules.isTop(_sourceAnchor)) {
-				_layerGlobal.y = sourceGlobal.y;
-			} else if (PlacementRules.isMiddle(_sourceAnchor)) {
-				_layerGlobal.y = sourceGlobal.y + Math.round(_source.height / 2);
-			} else {
-				_layerGlobal.y = sourceGlobal.y + _source.height;
-			}
-			
-			if (PlacementRules.isTop(_layerAnchor)) {
-				// keep source origin
-			} else if (PlacementRules.isMiddle(_layerAnchor)) {
-				_layerGlobal.y -= Math.round(_layer.height / 2);
-			} else {
-				_layerGlobal.y -= _layer.height;
-			}
-			
-			_layerLocal = UIUtils.globalToLocal(_layerGlobal, _layer);
+			// layer local
+			_layerLocal = PlacementUtils.globalToLocal(_layerGlobal, _layer);
 		}
 
 		public function get layerGlobal() : Point {
@@ -90,13 +91,5 @@ package org.as3commons.ui.layer {
 			return _layerLocal;
 		}
 
-		public function get sourceAnchor() : uint {
-			return _sourceAnchor;
-		}
-
-		public function get layerAnchor() : uint {
-			return _layerAnchor;
-		}
-		
 	}
 }
