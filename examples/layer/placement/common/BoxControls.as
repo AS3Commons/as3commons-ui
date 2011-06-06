@@ -30,10 +30,10 @@ package layer.placement.common {
 				
 				sliderWithLabel({
 					width: 46,
-					minValue: 50,
-					maxValue: 150,
+					minValue: 40,
+					maxValue: 120,
 					value: _box.width,
-					snapInterval: 5,
+					snapInterval: 10,
 					change: function(width : uint) : void {
 						_box.width = width;
 						sizeCallback();
@@ -42,10 +42,10 @@ package layer.placement.common {
 			
 				sliderWithLabel({
 					width: 46,
-					minValue: 50,
-					maxValue: 150,
+					minValue: 40,
+					maxValue: 120,
 					value: _box.height,
-					snapInterval: 5,
+					snapInterval: 10,
 					change: function(height : uint) : void {
 						_box.height = height;
 						sizeCallback();

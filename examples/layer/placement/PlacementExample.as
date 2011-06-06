@@ -18,7 +18,7 @@ package layer.placement {
 			addChild(container);
 
 			// source
-			_source = new Box(150, 150, 50, -150, 0xDDDDDD, 1, 0x999999);
+			_source = new Box(120, 120, 20, -180, 0xDDDDDD, 1, 0x999999);
 			container.addChild(_source);
 
 			// layer container
@@ -28,7 +28,7 @@ package layer.placement {
 			addChild(container);
 
 			// layer
-			_layer = new Box(75, 75, 0, 0, 0x004499, .5, 0x666666);
+			_layer = new Box(60, 60, 0, 0, 0x004499, .5, 0x666666);
 			container.addChild(_layer);
 
 			// placement
@@ -38,7 +38,7 @@ package layer.placement {
 
 			// controls
 			vgroup(
-				"marginX", 470,
+				"marginX", 380,
 				new BoxControls(_source, "Source", setSourceAnchor, place),
 				new BoxControls(_layer, "Layer", setLayerAnchor, place)
 			).layout(this);
