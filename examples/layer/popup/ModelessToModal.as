@@ -1,6 +1,7 @@
 package layer.popup {
 	import com.sibirjak.asdpcbeta.window.Window;
 	import com.sibirjak.asdpcbeta.window.WindowEvent;
+	import common.ControlPanelBase;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import org.as3commons.ui.layer.PopUpManager;
@@ -8,7 +9,7 @@ package layer.popup {
 	public class ModelessToModal extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;
 		private var _windowId : uint;
-		private var _startPosition : uint;
+		private var _startPosition : uint = 20	;
 
 		public function ModelessToModal() {
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
@@ -24,7 +25,7 @@ package layer.popup {
 		
 		private function addHandler() : void {
 			_startPosition += 30;
-			if (_startPosition > 170) _startPosition = 30;
+			if (_startPosition > 140) _startPosition = 50;
 
 			var window : Window = window({
 				x: _startPosition * 2, y: _startPosition, w: 200, h: 120,
@@ -59,9 +60,10 @@ package layer.popup {
 }
 
 import com.sibirjak.asdpcbeta.window.Window;
+import common.ControlPanelBase;
+import flash.events.Event;
 import org.as3commons.ui.layout.constants.Align;
 import org.as3commons.ui.layout.shortcut.vgroup;
-import flash.events.Event;
 
 internal class WinContent extends ControlPanelBase {
 	override protected function draw() : void {

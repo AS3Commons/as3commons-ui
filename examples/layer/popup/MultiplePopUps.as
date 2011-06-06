@@ -1,6 +1,7 @@
 package layer.popup {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpcbeta.window.Window;
+	import common.ControlPanelBase;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import org.as3commons.ui.layer.PopUpManager;

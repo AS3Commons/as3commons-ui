@@ -1,6 +1,7 @@
 package layer.popup {
 	import com.sibirjak.asdpcbeta.window.Window;
 	import com.sibirjak.asdpcbeta.window.WindowEvent;
+	import common.ControlPanelBase;
 	import flash.display.Sprite;
 	import org.as3commons.ui.layer.PopUpManager;
 
@@ -22,7 +23,7 @@ package layer.popup {
 		
 		private function addHandler() : void {
 			var window : Window = window({
-				x: 100, y: 40, w: 260, h: 120,
+				x: 100, y: 80, w: 260, h: 120,
 				title: "PopUp " + ++_windowId,
 				minimised: true
 			});
@@ -41,6 +42,7 @@ package layer.popup {
 }
 
 import com.sibirjak.asdpcbeta.window.Window;
+import common.ControlPanelBase;
 import org.as3commons.ui.layout.constants.Align;
 import org.as3commons.ui.layout.shortcut.hgroup;
 

@@ -1,6 +1,7 @@
 package layer.popup {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpcbeta.window.Window;
+	import common.ControlPanelBase;
 	import flash.display.Sprite;
 	import org.as3commons.ui.layer.PopUpManager;
 	import org.as3commons.ui.layout.shortcut.hgroup;
@@ -40,7 +41,7 @@ package layer.popup {
 		private function showHideHandler(selected : Boolean) : void {
 			if (selected) {
 				_popUpManager.createPopUp(_window);
-				_window.x = _window.y = 50;
+				_window.x = _window.y = 80;
 			} else {
 				_popUpManager.removePopUp(_window);
 			}
