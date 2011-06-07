@@ -60,19 +60,15 @@ package layer.placement.autocorrectinfo {
 				drawRoundRect(0, backgroundY, _width, backgroundH, 6, 6);
 			}
 			
+			// nose
 			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) {
-				// nose
 				var noseX : int = _tipSize;
 				if (PlacementAnchor.isCenter(_placementAnchor)) noseX = (_width - _tipSize) / 2;
 				else if (PlacementAnchor.isRight(_placementAnchor)) noseX = _width - _tipSize * 2.5;
 				noseX -= _placementHShift;
 				noseX = Math.max(_tipSize, Math.min(noseX, _width - _tipSize * 2.5));
 				
-				var noseY : uint = _tipSize;
-				//if (PlacementAnchor.isMiddle(_sourcePlacementAnchor)) noseY = (_height - _tipSize) / 2;
-				//else
-				if (PlacementAnchor.isTop(_sourcePlacementAnchor)) noseY = _height - _tipSize;
-				
+				var noseY : uint = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _height - _tipSize : _tipSize;
 				var noseHeight : int = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _tipSize : -_tipSize;
 				
 				with (graphics) {

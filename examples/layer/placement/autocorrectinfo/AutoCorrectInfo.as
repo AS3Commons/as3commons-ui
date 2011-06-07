@@ -12,11 +12,11 @@ package layer.placement.autocorrectinfo {
 		private var _controls : Controls;
 
 		public function AutoCorrectInfo() {
-			DefaultValues.width = 130;
-			DefaultValues.height = 55;
+			DefaultValues.width = 100;
+			DefaultValues.height = 50;
 			DefaultValues.offsetX = -25;
 			DefaultValues.offsetY = 5;
-			DefaultValues.autoSwapHDiff = 40;
+			DefaultValues.autoSwapHDiff = 30;
 			DefaultValues.autoSwapVDiff = 10;
 			DefaultValues.minWidth = 40;
 			DefaultValues.minHeight = 40;
@@ -31,7 +31,7 @@ package layer.placement.autocorrectinfo {
 			}
 
 			// source
-			var source : Box = new Box(40, 40, 150, 200, 0xDDDDDD, 1, 0x999999, false, true);
+			var source : Box = new Box(40, 40, 100, 200, 0xDDDDDD, 1, 0x999999, false, true);
 			var dragBounds : Rectangle = bounds.clone();
 			dragBounds.inflate(55, 55);
 			source.dragBounds = dragBounds;
