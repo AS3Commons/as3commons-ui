@@ -142,15 +142,13 @@ package layer.placement.common {
 			var point : Point = new Point(event.stageX, event.stageY);
 			point.x -= _mousePosition.x;
 			point.y -= _mousePosition.y;
-			
+			point = parent.globalToLocal(point);
 			if (_dragBounds) {
 				point.x = Math.max(_dragBounds.left, point.x);
 				point.x = Math.min(_dragBounds.right - _width, point.x);
 				point.y = Math.max(_dragBounds.top, point.y);
 				point.y = Math.min(_dragBounds.bottom - _height, point.y);
 			}
-			
-			point = parent.globalToLocal(point);
 			x = point.x;
 			y = point.y;
 		}

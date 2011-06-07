@@ -13,7 +13,7 @@ package layer.placement.bounds {
 
 		override public function draw() : void {
 			// bounds
-			var bounds : Rectangle = new Rectangle(70, 70, stage.stageWidth - 240, stage.stageHeight - 140);
+			var bounds : Rectangle = new Rectangle(70, 70, stage.stageWidth - 240, stage.stageHeight - 160);
 			with (graphics) {
 				lineStyle(1, 0xCCCCCC);
 				drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
