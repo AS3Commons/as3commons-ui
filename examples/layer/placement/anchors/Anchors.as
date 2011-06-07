@@ -14,7 +14,7 @@ package layer.placement.anchors {
 			container.x = 50;
 			container.y = 300;
 			addChild(container);
-			var source : Box = new Box(160, 160, 50, -200, 0xDDDDDD, 1, 0x999999);
+			var source : Box = new Box(160, 160, 50, -200, 0xCCCCCC, 1, 0x999999, true);
 			container.addChild(source);
 
 			// layer
@@ -22,7 +22,7 @@ package layer.placement.anchors {
 			container.x = 200;
 			container.y = 200;
 			addChild(container);
-			var layer : Box = new Box(80, 80, 0, 0, 0x004499, .5, 0x666666);
+			var layer : Box = new Box(80, 80, 0, 0, 0x4488DD, .5, 0x666666, true);
 			container.addChild(layer);
 
 			// placement
@@ -31,7 +31,7 @@ package layer.placement.anchors {
 
 			// controls
 			_controls = new Controls();
-			_controls.x = 380;
+			_controls.x = 390;
 			addEventListener("anchor", anchorChangedHandler);
 			addEventListener("offset", offsetChangedHandler);
 			addChild(_controls);

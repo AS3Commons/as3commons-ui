@@ -1,4 +1,4 @@
-package layer.placement.bounds {
+package layer.placement.autoswap {
 	import common.UIView;
 	import layer.placement.common.Box;
 	import org.as3commons.ui.layer.Placement;
@@ -7,7 +7,7 @@ package layer.placement.bounds {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
-	public class Bounds extends UIView {
+	public class AutoSwap extends UIView {
 		private var _placement : Placement;
 		private var _controls : Controls;
 
@@ -40,6 +40,7 @@ package layer.placement.bounds {
 			_controls.x = stage.stageWidth - 80;
 			addEventListener("anchor", anchorChangedHandler);
 			addEventListener("offset", offsetChangedHandler);
+			addEventListener("autoswap", autoSwapChangedHandler);
 			addChild(_controls);
 		}
 
@@ -71,6 +72,13 @@ package layer.placement.bounds {
 		private function offsetChangedHandler(event : Event) : void {
 			_placement.offset.x = _controls.offsetX;
 			_placement.offset.y = _controls.offsetY;
+			_placement.place();
+		}
+
+		private function autoSwapChangedHandler(event : Event) : void {
+			_placement.autoSwapAnchors = _controls.autoSwapAnchors;
+			_placement.autoSwapAnchorsHDiff = _controls.autoSwapHDiff;
+			_placement.autoSwapAnchorsVDiff = _controls.autoSwapVDiff;
 			_placement.place();
 		}
 

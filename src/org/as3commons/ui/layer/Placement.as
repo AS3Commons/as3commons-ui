@@ -1,5 +1,6 @@
 package org.as3commons.ui.layer {
 
+	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layer.placement.PlacementUtils;
 
@@ -23,6 +24,9 @@ package org.as3commons.ui.layer {
 		private var _offset : Point;
 		private var _bounds : Rectangle;
 		private var _placeCallback : Function;
+		private var _autoSwapAnchors : Boolean;
+		private var _autoSwapAnchorsHDiff : uint;
+		private var _autoSwapAnchorsVDiff : uint;
 
 		public function Placement(source : DisplayObject = null, layer : DisplayObject = null) {
 			_source = source;
@@ -82,42 +86,93 @@ package org.as3commons.ui.layer {
 		public function set placeCallback(placeCallback : Function) : void {
 			_placeCallback = placeCallback;
 		}
+		
+		public function set autoSwapAnchors(autoSwapAnchors : Boolean) : void {
+			_autoSwapAnchors = autoSwapAnchors;
+		}
+
+		public function get autoSwapAnchors() : Boolean {
+			return _autoSwapAnchors;
+		}
+
+		public function set autoSwapAnchorsHDiff(diff : uint) : void {
+			_autoSwapAnchorsHDiff = diff;
+		}
+
+		public function get autoSwapAnchorsHDiff() : uint {
+			return _autoSwapAnchorsHDiff;
+		}
+
+		public function set autoSwapAnchorsVDiff(diff : uint) : void {
+			_autoSwapAnchorsVDiff = diff;
+		}
+
+		public function get autoSwapAnchorsVDiff() : uint {
+			return _autoSwapAnchorsVDiff;
+		}
 
 		public function place(moveLayer : Boolean = true) : void {
-			// layer global
-			_layerGlobal = PlacementUtils.localToGlobal(_source);
-
-			var sourceAnchorLocal : Point = PlacementUtils.anchorToLocal(_sourceAnchor, _source);
-			_layerGlobal.x += sourceAnchorLocal.x;
-			_layerGlobal.y += sourceAnchorLocal.y;
-			
-			var layerAnchorLocal : Point = PlacementUtils.anchorToLocal(_layerAnchor, _layer);
-			_layerGlobal.x -= layerAnchorLocal.x;
-			_layerGlobal.y -= layerAnchorLocal.y;
-			
-			// offset
-			if (_offset) {
-				_layerGlobal.x += _offset.x; 
-				_layerGlobal.y += _offset.y; 
-			}
+			var sourceAnchor : uint = _sourceAnchor;
+			var layerAnchor : uint = _layerAnchor;
+			var offset : Point = _offset.clone();
+			var layerLocal : Point = getLayerLocal(sourceAnchor, layerAnchor, offset);
 			
 			if (_bounds) {
+				if (_autoSwapAnchors) {
+					// right overlap
+					if (layerLocal.x + _layer.width - _autoSwapAnchorsHDiff > _bounds.right) {
+						if (PlacementAnchor.isRight(sourceAnchor) && PlacementAnchor.isLeft(layerAnchor)) {
+							sourceAnchor = swapHorizontal(sourceAnchor);
+							layerAnchor = swapHorizontal(layerAnchor);
+							offset.x = - offset.x;
+						}
+						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
+					// left overlap
+					} else if (layerLocal.x + _autoSwapAnchorsHDiff < _bounds.left) {
+						if (PlacementAnchor.isLeft(sourceAnchor) && PlacementAnchor.isRight(layerAnchor)) {
+							sourceAnchor = swapHorizontal(sourceAnchor);
+							layerAnchor = swapHorizontal(layerAnchor);
+							offset.x = - offset.x;
+						}
+						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
+					}
+					
+					// bottom overlap
+					if (layerLocal.y + _layer.height - _autoSwapAnchorsVDiff > _bounds.bottom) {
+						if (PlacementAnchor.isBottom(sourceAnchor) && PlacementAnchor.isTop(layerAnchor)) {
+							sourceAnchor = swapVertical(sourceAnchor);
+							layerAnchor = swapVertical(layerAnchor);
+							offset.y = - offset.y;
+						}
+						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
+					// top overlap
+					} else if (layerLocal.y + _autoSwapAnchorsVDiff < _bounds.top) {
+						if (PlacementAnchor.isTop(sourceAnchor) && PlacementAnchor.isBottom(layerAnchor)) {
+							sourceAnchor = swapVertical(sourceAnchor);
+							layerAnchor = swapVertical(layerAnchor);
+							offset.y = - offset.y;
+						}
+						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
+					}
+				}
+
 				// right
-				_layerGlobal.x = Math.min(_layerGlobal.x, _bounds.right - _layer.width);
+				layerLocal.x = Math.min(layerLocal.x, _bounds.right - _layer.width);
 				// bottom
-				_layerGlobal.y = Math.min(_layerGlobal.y, _bounds.bottom - _layer.height);
+				layerLocal.y = Math.min(layerLocal.y, _bounds.bottom - _layer.height);
 				// top
-				_layerGlobal.y = Math.max(_layerGlobal.y, _bounds.y);
+				layerLocal.y = Math.max(layerLocal.y, _bounds.y);
 				// left
-				_layerGlobal.x = Math.max(_layerGlobal.x, _bounds.x);
+				layerLocal.x = Math.max(layerLocal.x, _bounds.x);
 			}
 			
-			// layer local
-			_layerLocal = PlacementUtils.globalToLocal(_layerGlobal, _layer);
+			_layerLocal = layerLocal;
+			_layerGlobal = PlacementUtils.localToGlobal(_layer, _layerLocal);
 			
 			// move layer
 			if (_placeCallback != null) {
 				_placeCallback(_layer, _layerLocal);
+
 			} else if (moveLayer) {
 				_layer.x = _layerLocal.x;
 				_layer.y = _layerLocal.y;
@@ -130,6 +185,43 @@ package org.as3commons.ui.layer {
 
 		public function get layerLocal() : Point {
 			return _layerLocal;
+		}
+
+		private function getLayerGlobal(sourceAnchor : uint, layerAnchor : uint, offset : Point) : Point {
+			var layerGlobal : Point = PlacementUtils.localToGlobal(_source);
+
+			var sourceAnchorLocal : Point = PlacementUtils.anchorToLocal(sourceAnchor, _source);
+			layerGlobal.x += sourceAnchorLocal.x;
+			layerGlobal.y += sourceAnchorLocal.y;
+			
+			var layerAnchorLocal : Point = PlacementUtils.anchorToLocal(layerAnchor, _layer);
+			layerGlobal.x -= layerAnchorLocal.x;
+			layerGlobal.y -= layerAnchorLocal.y;
+			
+			if (_offset) {
+				layerGlobal.x += offset.x; 
+				layerGlobal.y += offset.y; 
+			}
+			
+			return layerGlobal;
+		}
+		
+		private function getLayerLocal(sourceAnchor : uint, layerAnchor : uint, offset : Point) : Point {
+			return PlacementUtils.globalToLocal(getLayerGlobal(sourceAnchor, layerAnchor, offset), _layer);
+		}
+		
+		private function swapHorizontal(anchor : uint) : uint {
+			var diff : int = PlacementAnchor.as3commons_ui::POSITION_LEFT - PlacementAnchor.as3commons_ui::POSITION_RIGHT;
+			if (PlacementAnchor.isLeft(anchor)) diff *= -1;
+			anchor += diff;
+			return anchor;
+		}
+
+		private function swapVertical(anchor : uint) : uint {
+			var diff : int = PlacementAnchor.as3commons_ui::POSITION_TOP - PlacementAnchor.as3commons_ui::POSITION_BOTTOM;
+			if (PlacementAnchor.isTop(anchor)) diff *= -1;
+			anchor += diff;
+			return anchor;
 		}
 
 	}

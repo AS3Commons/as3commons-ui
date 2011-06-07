@@ -1,4 +1,4 @@
-package layer.placement.anchors {
+package layer.placement.common {
 	import com.sibirjak.asdpcbeta.slider.Slider;
 	import common.ControlPanelBase;
 	import flash.events.Event;
@@ -13,19 +13,19 @@ package layer.placement.anchors {
 				"gap", 4,
 				sliderWithLabel({
 					id: "offsetX",
-					width: 46,
+					width: 36,
 					minValue: -20, maxValue: 20, value: 0,
 					snapInterval: 5,
-					change: function(offsetX : uint) : void {
+					change: function(offsetX : int) : void {
 						dispatchEvent(new Event("offset", true));
 					}
 				}),
 				sliderWithLabel({
 					id: "offsetY",
-					width: 46,
+					width: 36,
 					minValue: -20, maxValue: 20, value: 0,
 					snapInterval: 5,
-					change: function(offsetY : uint) : void {
+					change: function(offsetY : int) : void {
 						dispatchEvent(new Event("offset", true));
 					}
 				})
@@ -34,11 +34,11 @@ package layer.placement.anchors {
 			setSize(_v.visibleRect.width, _v.visibleRect.height);
 		}
 
-		public function get offsetX() : uint {
+		public function get offsetX() : int {
 			return Slider(_v.getDisplayObject("offsetX")).value;
 		}
 		
-		public function get offsetY() : uint {
+		public function get offsetY() : int {
 			return Slider(_v.getDisplayObject("offsetY")).value;
 		}
 	}

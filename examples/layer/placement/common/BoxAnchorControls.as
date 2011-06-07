@@ -1,4 +1,4 @@
-package layer.placement.anchors {
+package layer.placement.common {
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.skins.ButtonSkin;
 	import com.sibirjak.asdpcbeta.checkbox.CheckBox;
@@ -14,9 +14,12 @@ package layer.placement.anchors {
 		private var _placement : Class;
 		[Embed(source="assets/placement_selected.png")]
 		private var _placementSelected : Class;
-		private var _buttonSize : uint = 22;
+		private var _buttonSize : uint = 18;
+		private var _defaultAnchor : uint;
 
-		public function BoxAnchorControls(color : uint, alpha : Number) {
+		public function BoxAnchorControls(color : uint, alpha : Number, anchor : uint) {
+			_defaultAnchor = anchor;
+			
 			var h : HLayout = hlayout(
 				"maxItemsPerRow", 3,
 				radioGroup(
@@ -39,7 +42,6 @@ package layer.placement.anchors {
 			setSize(h.visibleRect.width, h.visibleRect.height);
 
 			with (graphics) {
-				lineStyle(1, 0x666666);
 				beginFill(color, alpha);
 				drawRect(_buttonSize/2, _buttonSize/2, _width - _buttonSize, _height - _buttonSize);
 			}
@@ -53,7 +55,7 @@ package layer.placement.anchors {
 			var radio : RadioButton = radioButton({
 				group: "placement",
 				value: value,
-				selected: value == PlacementAnchor.TOP_LEFT,
+				selected: value == _defaultAnchor,
 				diff: 0
 			});
 			radio.setSize(_buttonSize, _buttonSize);

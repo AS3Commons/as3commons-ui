@@ -1,4 +1,6 @@
 package layer.placement.common {
+	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 	import common.ColorUtil;
 	import common.UII10N;
 	import common.UIView;
@@ -16,11 +18,13 @@ package layer.placement.common {
 		private var _color : uint;
 		private var _alpha : Number;
 		private var _borderColor : uint;
+		private var _showAnchors : Boolean;
 		private var _placementAnchor : uint = PlacementAnchor.TOP_LEFT;
 		
 		public function Box(
 			width : uint, height : uint, x : int, y : int,
-			color : uint, alpha : Number, borderColor : uint
+			color : uint, alpha : Number, borderColor : uint,
+			showAnchors : Boolean
 		) {
 			_width = width;
 			_height = height;
@@ -29,6 +33,7 @@ package layer.placement.common {
 			_color = color;
 			_alpha = alpha;
 			_borderColor = borderColor;
+			_showAnchors = showAnchors;
 			UII10N.i10n.invalidate(this);
 		}
 		
@@ -51,25 +56,29 @@ package layer.placement.common {
 			// border
 			with (graphics) {
 				endFill();
-				lineStyle(1, _borderColor);
+				//lineStyle(1, _borderColor);
 				drawRect(0, 0, _width, _height);
 			}
 
 			// anchors
-			var a : uint = 4;
-			var a2 : uint = 8;
-			var i : uint;
-			var point : Point;
-			with (graphics) {
-				for (i; i < PlacementAnchor.anchors.length; i++) {
-					// any
-					beginFill(_borderColor);
-					point = PlacementUtils.anchorToLocal(PlacementAnchor.anchors[i], this);
-					drawRect(point.x - a/2, point.y - a/2, a, a);
-					endFill();
-					// selected
-					if (PlacementAnchor.anchors[i] == _placementAnchor) {
-						drawRect(point.x - a2/2, point.y - a2/2, a2, a2);
+			if (_showAnchors) {
+				var a : uint = 4;
+				var a2 : uint = 7;
+				var i : uint;
+				var point : Point;
+				with (graphics) {
+					for (i; i < PlacementAnchor.anchors.length; i++) {
+						// any
+						beginFill(_borderColor);
+						point = PlacementUtils.anchorToLocal(PlacementAnchor.anchors[i], this);
+						drawRect(point.x - a/2, point.y - a/2, a, a);
+						endFill();
+						// selected
+						if (PlacementAnchor.anchors[i] == _placementAnchor) {
+							lineStyle(1, _borderColor);
+							drawRect(point.x - a2/2, point.y - a2/2, a2, a2);
+							lineStyle(undefined);
+						}
 					}
 				}
 			}
@@ -118,6 +127,36 @@ package layer.placement.common {
 
 		public function get placementAnchor() : uint {
 			return _placementAnchor;
+		}
+		
+		private var _mousePosition : Point;
+		private var _dragBounds : Rectangle;
+		
+		public function beginDrag(bounds : Rectangle = null) : void {
+			_dragBounds = bounds;
+			_mousePosition = new Point(mouseX, mouseY);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+		}
+
+		private function mouseMoveHandler(event : MouseEvent) : void {
+			var point : Point = new Point(event.stageX, event.stageY);
+			point.x -= _mousePosition.x;
+			point.y -= _mousePosition.y;
+			
+			if (_dragBounds) {
+				point.x = Math.max(_dragBounds.left, point.x);
+				point.x = Math.min(_dragBounds.right - _width, point.x);
+				point.y = Math.max(_dragBounds.top, point.y);
+				point.y = Math.min(_dragBounds.bottom - _height, point.y);
+			}
+			
+			point = parent.globalToLocal(point);
+			x = point.x;
+			y = point.y;
+		}
+		
+		override public function stopDrag() : void {
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 		}
 	}
 }

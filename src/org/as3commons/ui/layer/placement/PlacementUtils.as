@@ -8,8 +8,15 @@ package org.as3commons.ui.layer.placement {
 	 */
 	public class PlacementUtils {
 
-		public static function localToGlobal(displayObject : DisplayObject) : Point {
-			var point : Point = new Point(displayObject.x, displayObject.y);
+		/**
+		 * Returns the global stage position of the given display object.
+		 * 
+		 * <p>In difference to the built-in <code>localToGlobal()</code>, this
+		 * method also works with overridden x and y properties of a given display
+		 * object subclass.</p>
+		 */
+		public static function localToGlobal(displayObject : DisplayObject, local : Point = null) : Point {
+			var point : Point = local ? local.clone() : new Point(displayObject.x, displayObject.y);
 			var parent : DisplayObject = displayObject.parent;
 			while (parent) {
 				point.x += parent.x;
@@ -19,6 +26,13 @@ package org.as3commons.ui.layer.placement {
 			return point;
 		}
 
+		/**
+		 * Converts a stage position to a local position of the given display object.
+		 * 
+		 * <p>In difference to the built-in <code>globalToLocal()</code>, this
+		 * method also works with objects not having a parent yet. In that case the
+		 * method simply returns the given global position.</p>
+		 */
 		public static function globalToLocal(global : Point, displayObject : DisplayObject) : Point {
 			var point : Point = global.clone();
 			var parent : DisplayObject = displayObject.parent;
@@ -30,11 +44,14 @@ package org.as3commons.ui.layer.placement {
 			return point;
 		}
 
+		/**
+		 * Returns the local position of the given anchor.
+		 */
 		public static function anchorToLocal(anchor : uint, displayObject : DisplayObject) : Point {
 			var point : Point = new Point();
 
 			if (PlacementAnchor.isLeft(anchor)) {
-				point.x = 0;
+				// 0
 			} else if (PlacementAnchor.isCenter(anchor)) {
 				point.x = Math.round(displayObject.width / 2);
 			} else {
@@ -42,7 +59,7 @@ package org.as3commons.ui.layer.placement {
 			}
 
 			if (PlacementAnchor.isTop(anchor)) {
-				point.y = 0;
+				// 0
 			} else if (PlacementAnchor.isMiddle(anchor)) {
 				point.y = Math.round(displayObject.height / 2);
 			} else {
