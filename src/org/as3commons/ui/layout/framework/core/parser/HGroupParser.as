@@ -15,6 +15,7 @@
  */
 package org.as3commons.ui.layout.framework.core.parser {
 
+	import org.as3commons.ui.layout.CellConfig;
 	import org.as3commons.ui.layout.framework.core.row.HRow;
 
 	/**
@@ -29,6 +30,13 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 */
 		public function HGroupParser() {
 			_RowType = HRow;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		override protected function getCellConfig(index : int) : CellConfig {
+			return _layout.getCellConfig(index);
 		}
 
 	}

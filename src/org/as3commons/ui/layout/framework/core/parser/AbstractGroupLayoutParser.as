@@ -15,6 +15,7 @@
  */
 package org.as3commons.ui.layout.framework.core.parser {
 
+	import org.as3commons.ui.layout.CellConfig;
 	import org.as3commons.ui.layout.framework.IGroupLayout;
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
 	import org.as3commons.ui.layout.framework.core.config.CellConfigMerge;
@@ -40,7 +41,7 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 * @inheritDoc
 		 */
 		override public function parseCell(cell : ICell) : void {
-			CellConfigMerge.merge(cell.config, _layout.getCellConfig(_layoutCell.row.numItems));
+			CellConfigMerge.merge(cell.config, getCellConfig(_layoutCell.row.numItems));
 			cell.measure();
 
 			// skip empty cells
@@ -52,6 +53,17 @@ package org.as3commons.ui.layout.framework.core.parser {
 		/*
 		 * Protected
 		 */
+		
+		/**
+		 * Returns a cell config object.
+		 * 
+		 * @param index Index of the cell.
+		 * @return Cell config for the cell at the given index.
+		 */
+		protected function getCellConfig(index : int) : CellConfig {
+			// hook
+			return null;
+		}
 		 
 		/**
 		 * @inheritDoc
