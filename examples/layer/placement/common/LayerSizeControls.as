@@ -8,14 +8,14 @@ package layer.placement.common {
 		private var _layerHeight : uint;
 
 		public function LayerSizeControls(callback : Function) {
-			_layerWidth = DefaultLayerSize.width;
-			_layerHeight =DefaultLayerSize.height;
+			_layerWidth = DefaultValues.width;
+			_layerHeight = DefaultValues.height;
 
 			var v : VGroup = vgroup(
 				"gap", 4,
 				sliderWithLabel({
 					width: 36,
-					minValue: 15, maxValue: 140, value: _layerWidth,
+					minValue: DefaultValues.minWidth, maxValue: 140, value: _layerWidth,
 					snapInterval: 10,
 					change: function(width : uint) : void {
 						_layerWidth = width;
@@ -24,7 +24,7 @@ package layer.placement.common {
 				}),
 				sliderWithLabel({
 					width: 36,
-					minValue: 15, maxValue: 140, value: _layerHeight,
+					minValue: DefaultValues.minHeight, maxValue: 140, value: _layerHeight,
 					snapInterval: 10,
 					change: function(height : uint) : void {
 						_layerHeight = height;

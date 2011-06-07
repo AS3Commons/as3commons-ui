@@ -4,7 +4,6 @@ package layer.placement.autoswap {
 	import org.as3commons.ui.layer.Placement;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
 	public class AutoSwap extends UIView {
@@ -20,12 +19,14 @@ package layer.placement.autoswap {
 			}
 
 			// source
-			var source : Box = new Box(40, 40, 200, 200, 0xDDDDDD, 1, 0x999999, false);
-			source.addEventListener(MouseEvent.MOUSE_DOWN, sourceDownHandler);
+			var source : Box = new Box(40, 40, 200, 200, 0xDDDDDD, 1, 0x999999, false, true);
+			var dragBounds : Rectangle = bounds.clone();
+			dragBounds.inflate(55, 55);
+			source.dragBounds = dragBounds;
 			addChild(source);
 
 			// layer
-			var layer : Box = new Box(40, 15, 0, 0, 0x004499, .5, 0x666666, false);
+			var layer : Box = new Box(40, 15, 0, 0, 0x004499, .5, 0x666666, false, false);
 			addChild(layer);
 
 			// placement
@@ -41,26 +42,8 @@ package layer.placement.autoswap {
 			addEventListener("anchor", anchorChangedHandler);
 			addEventListener("offset", offsetChangedHandler);
 			addEventListener("autoswap", autoSwapChangedHandler);
+			addEventListener("layerposition", layerPositionChangedHandler);
 			addChild(_controls);
-		}
-
-		private function sourceDownHandler(event : MouseEvent) : void {
-			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
-			var bounds : Rectangle = _placement.bounds.clone();
-			bounds.inflate(55, 55);
-			Box(_placement.source).beginDrag(bounds);
-		}
-
-		private function mouseMoveHandler(event : MouseEvent) : void {
-			_placement.place();
-		}
-
-		private function mouseUpHandler(event : MouseEvent) : void {
-			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
-			Box(_placement.source).stopDrag();
-			_placement.place();
 		}
 
 		private function anchorChangedHandler(event : Event) : void {
@@ -76,9 +59,14 @@ package layer.placement.autoswap {
 		}
 
 		private function autoSwapChangedHandler(event : Event) : void {
-			_placement.autoSwapAnchors = _controls.autoSwapAnchors;
+			_placement.autoSwapAnchorsH = _controls.autoSwapAnchorsH;
 			_placement.autoSwapAnchorsHDiff = _controls.autoSwapHDiff;
+			_placement.autoSwapAnchorsV = _controls.autoSwapAnchorsV;
 			_placement.autoSwapAnchorsVDiff = _controls.autoSwapVDiff;
+			_placement.place();
+		}
+
+		private function layerPositionChangedHandler(event : Event) : void {
 			_placement.place();
 		}
 

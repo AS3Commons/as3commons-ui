@@ -1,6 +1,7 @@
-package layer.placement.bounds {
+package layer.placement.autocorrectinfo {
 	import common.ControlPanelBase;
 	import layer.placement.common.*;
+	import layer.placement.common.OffsetControls;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layout.VGroup;
 	import org.as3commons.ui.layout.shortcut.*;
@@ -29,6 +30,11 @@ package layer.placement.bounds {
 				display(
 					"id", "offsetControls",
 					new OffsetControls()
+				),
+				headline("Swap", 100),
+				display(
+					"id", "autoSwapControls",
+					new AutoSwapControls()
 				)
 			);
 			_v.layout(this);
@@ -49,6 +55,22 @@ package layer.placement.bounds {
 		
 		public function get offsetY() : int {
 			return OffsetControls(_v.getDisplayObject("offsetControls")).offsetY;
+		}
+
+		public function get autoSwapAnchorsH() : Boolean {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapH;
+		}
+
+		public function get autoSwapHDiff() : uint {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapHDiff;
+		}
+
+		public function get autoSwapAnchorsV() : Boolean {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapV;
+		}
+
+		public function get autoSwapVDiff() : uint {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapVDiff;
 		}
 	}
 }

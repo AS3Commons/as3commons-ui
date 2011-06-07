@@ -14,7 +14,7 @@ package layer.placement.common {
 				sliderWithLabel({
 					id: "offsetX",
 					width: 36,
-					minValue: -20, maxValue: 20, value: 0,
+					minValue: -30, maxValue: 30, value: DefaultValues.offsetX,
 					snapInterval: 5,
 					change: function(offsetX : int) : void {
 						dispatchEvent(new Event("offset", true));
@@ -23,7 +23,7 @@ package layer.placement.common {
 				sliderWithLabel({
 					id: "offsetY",
 					width: 36,
-					minValue: -20, maxValue: 20, value: 0,
+					minValue: -30, maxValue: 30, value: DefaultValues.offsetY,
 					snapInterval: 5,
 					change: function(offsetY : int) : void {
 						dispatchEvent(new Event("offset", true));

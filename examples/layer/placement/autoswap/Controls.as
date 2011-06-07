@@ -11,19 +11,18 @@ package layer.placement.autoswap {
 		
 		public function Controls(callback : Function) {
 			_v = vgroup(
-				"gap", 4,
-				cellconfig("vIndex", 5, "marginY", 5),
-				cellconfig("vIndex", 7, "marginY", 5),
+				"gap", 5,
+				cellconfig("vIndex", 1, "marginX", -3, "marginY", -5),
+				cellconfig("vIndex", 2, "marginY", -5),
+				cellconfig("vIndex", 3, "marginX", -3, "marginY", -5),
 				headline("Source", 100),
 				display(
 					"id", "sourceControls",
-					"offsetX", -2, "offsetY", -4,
 					new BoxAnchorControls(0xCCCCCC, 1, PlacementAnchor.TOP_RIGHT)
 				),
 				headline("Layer", 100),
 				display(
 					"id", "layerControls",
-					"offsetX", -2, "offsetY", -4,
 					new BoxAnchorControls(0x4488DD, .5, PlacementAnchor.BOTTOM_LEFT)
 				),
 				new LayerSizeControls(callback),
@@ -58,12 +57,16 @@ package layer.placement.autoswap {
 			return OffsetControls(_v.getDisplayObject("offsetControls")).offsetY;
 		}
 
-		public function get autoSwapAnchors() : Boolean {
-			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwap;
+		public function get autoSwapAnchorsH() : Boolean {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapH;
 		}
 
 		public function get autoSwapHDiff() : uint {
 			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapHDiff;
+		}
+
+		public function get autoSwapAnchorsV() : Boolean {
+			return AutoSwapControls(_v.getDisplayObject("autoSwapControls")).autoSwapV;
 		}
 
 		public function get autoSwapVDiff() : uint {

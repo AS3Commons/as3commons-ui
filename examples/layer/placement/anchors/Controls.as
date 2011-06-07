@@ -10,17 +10,19 @@ package layer.placement.anchors {
 		
 		public function Controls() {
 			_v = vgroup(
-				"gap", 4,
+				"gap", 5,
+				cellconfig("vIndex", 1, "marginX", -3, "marginY", -5),
+				cellconfig("vIndex", 2, "marginY", -5),
+				cellconfig("vIndex", 3, "marginX", -3, "marginY", -5),
+				cellconfig("vIndex", 4, "marginY", -5),
 				headline("Source", 100),
 				display(
 					"id", "sourceControls",
-					"offsetX", -2, "offsetY", -4,
 					new BoxAnchorControls(0xCCCCCC, 1, PlacementAnchor.TOP_LEFT)
 				),
 				headline("Layer", 100),
 				display(
 					"id", "layerControls",
-					"offsetX", -2, "offsetY", -4,
 					new BoxAnchorControls(0x4488DD, .5, PlacementAnchor.TOP_LEFT)
 				),
 				headline("Offset", 100),

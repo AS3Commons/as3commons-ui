@@ -1,62 +1,66 @@
 package layer.placement.common {
-	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 	import common.ColorUtil;
 	import common.UII10N;
 	import common.UIView;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layer.placement.PlacementUtils;
 	import flash.display.GradientType;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	public class Box extends UIView {
-		private var _width : uint;
-		private var _height : uint;
-		private var _x : int;
-		private var _y : int;
-		private var _color : uint;
-		private var _alpha : Number;
-		private var _borderColor : uint;
-		private var _showAnchors : Boolean;
-		private var _placementAnchor : uint = PlacementAnchor.TOP_LEFT;
+		protected var _width : uint;
+		protected var _height : uint;
+		protected var _x : int;
+		protected var _y : int;
+		protected var _color : uint;
+		protected var _alpha : Number;
+		protected var _borderColor : uint;
+		protected var _showAnchors : Boolean;
+		protected var _dragEnabled : Boolean;
+		protected var _placementAnchor : uint = PlacementAnchor.TOP_LEFT;
+		private var _mousePosition : Point;
+		private var _dragBounds : Rectangle;
 		
 		public function Box(
 			width : uint, height : uint, x : int, y : int,
 			color : uint, alpha : Number, borderColor : uint,
-			showAnchors : Boolean
+			showAnchors : Boolean, dragEnabled : Boolean
 		) {
-			_width = width;
-			_height = height;
+			_width = width || DefaultValues.width;
+			_height = height || DefaultValues.height;
 			_x = x;
 			_y = y;
 			_color = color;
 			_alpha = alpha;
 			_borderColor = borderColor;
 			_showAnchors = showAnchors;
+			_dragEnabled = dragEnabled;
 			UII10N.i10n.invalidate(this);
+			
+			if (dragEnabled) {
+				addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+			}
 		}
-		
+
 		override public function draw() : void {
 			graphics.clear();
 			
 			// position
-			super.x = _x;
-			super.y = _y;
+			setPosition();
 			
 			// background
-			var matrix : Matrix = new Matrix();
-			matrix.createGradientBox(_width, _height, Math.PI / 180 * 45, 0, 0);
-			var gradient : Array = gradient = ColorUtil.getGradient(_color);
+			setGradientFill();
 			with (graphics) {
-				beginGradientFill(GradientType.LINEAR, gradient, [_alpha, _alpha], [0, 255], matrix);
 				drawRect(0, 0, _width, _height);
 			}
 			
 			// border
 			with (graphics) {
 				endFill();
-				//lineStyle(1, _borderColor);
 				drawRect(0, 0, _width, _height);
 			}
 
@@ -120,6 +124,10 @@ package layer.placement.common {
 			return _y;
 		}
 
+		public function set dragBounds(dragBounds : Rectangle) : void {
+			_dragBounds = dragBounds;
+		}
+
 		public function set placementAnchor(placementAnchor : uint) : void {
 			_placementAnchor = placementAnchor;
 			UII10N.i10n.invalidate(this);
@@ -129,15 +137,31 @@ package layer.placement.common {
 			return _placementAnchor;
 		}
 		
-		private var _mousePosition : Point;
-		private var _dragBounds : Rectangle;
+		protected function setPosition() : void {
+			super.x = _x;
+			super.y = _y;
+		}
 		
-		public function beginDrag(bounds : Rectangle = null) : void {
-			_dragBounds = bounds;
+		protected function setGradientFill() : void {
+			var matrix : Matrix = new Matrix();
+			matrix.createGradientBox(_width, _height, Math.PI / 180 * 45, 0, 0);
+			var gradient : Array = ColorUtil.getGradient(_color);
+			with (graphics) {
+				beginGradientFill(GradientType.LINEAR, gradient, [_alpha, _alpha], [0, 255], matrix);
+			}
+		}
+
+		private function mouseDownHandler(event : MouseEvent) : void {
 			_mousePosition = new Point(mouseX, mouseY);
+			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 		}
 
+		private function mouseUpHandler(event : MouseEvent) : void {
+			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+		}
+		
 		private function mouseMoveHandler(event : MouseEvent) : void {
 			var point : Point = new Point(event.stageX, event.stageY);
 			point.x -= _mousePosition.x;
@@ -151,10 +175,7 @@ package layer.placement.common {
 			}
 			x = point.x;
 			y = point.y;
-		}
-		
-		override public function stopDrag() : void {
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+			dispatchEvent(new Event("layerposition", true));
 		}
 	}
 }
