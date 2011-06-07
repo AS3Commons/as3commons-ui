@@ -6,7 +6,6 @@ package layout {
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	import layout.common.box.Box;
-	import org.as3commons.ui.layout.HGroup;
 	import org.as3commons.ui.layout.framework.ILayout;
 	import org.as3commons.ui.layout.shortcut.*;
 
@@ -14,7 +13,7 @@ package layout {
 		private var _container : Sprite;
 		private var _tweens : Dictionary;
 		
-		public function Teaser() {
+		override protected function draw() : void {
 			_tweens = new Dictionary();
 			_container = new Sprite();
 			_container.visible = false;
@@ -32,7 +31,7 @@ package layout {
 			
 			_container.mask = mask;
 			
-			var h : HGroup = hgroup(
+			hgroup(
 				radioGroup("layouts", layoutChange),
 				
 				radioButton({
@@ -83,19 +82,16 @@ package layout {
 					),
 					label: "DynTable"
 				})
-
-			);
-			
-			
-			h.layout(this);
+			).layout(this);
 		}
 		
 		private function layoutChange(l : ILayout) : void {
-			_container.visible = true;
+			if (_container.visible) l.renderCallback = renderCallback;
 			l.marginY = 30;
-			l.renderCallback = renderCallback;
 			l.addAll(_container);
 			l.layout(_container);
+
+			_container.visible = true;
 		}
 
 		private function renderCallback(o : DisplayObject, x : int, y : int) : void {
