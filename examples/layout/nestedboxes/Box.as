@@ -1,9 +1,7 @@
 package layout.nestedboxes {
-
 	import org.as3commons.ui.layout.VGroup;
 	import org.as3commons.ui.layout.shortcut.hlayout;
 	import org.as3commons.ui.layout.shortcut.vgroup;
-
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -17,7 +15,6 @@ package layout.nestedboxes {
 		private var _gap : uint = 10;
 		
 		public function Box(...args) {
-			
 			// label
 			var label : TextField = new TextField();
 			label.defaultTextFormat = new TextFormat("_sans", 9);

@@ -159,7 +159,7 @@ package layout.common.box {
 			// gradient
 			var matrix : Matrix = new Matrix();
 			matrix.createGradientBox(_width, _height, Math.PI / 180 * 45, 0, 0);
-			var gradient : Array = gradient = ColorUtil.getGradient(jcss_getStyle("color"));
+			var gradient : Array = ColorUtil.getGradient(jcss_getStyle("color"));
 
 			with (graphics) {
 				clear();
