@@ -15,7 +15,7 @@ package layer.placement.anchors {
 			container.x = 50;
 			container.y = 300;
 			addChild(container);
-			var source : Box = new Box(160, 160, 50, -200, 0xCCCCCC, 1, 0x999999, true, false);
+			var source : Box = new Box(160, 160, 60, -190, 0xCCCCCC, 1, 0x999999, true, false);
 			container.addChild(source);
 
 			// layer
