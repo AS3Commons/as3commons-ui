@@ -250,6 +250,7 @@ package org.as3commons.ui.lifecycle.i10n {
 			
 			// Abort if the item already has been processed during willValidate.
 			if (_queue.removeKey(queueItem.displayObject)) {
+				queueItem.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 				var properties : ISet = queueItem.getProperties();
 				if (!properties) properties = new Set();
 				invokeAdapters(adapters, function(adapter : II10NApapter) : void {
