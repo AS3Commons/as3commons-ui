@@ -11,17 +11,17 @@ package layer.tooltip.advanced {
 
 		private function init(event : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			
+
 			// init bounds
 			var bounds : Rectangle = new Rectangle(20, 20, 400, 300);
 			with (graphics) {
 				lineStyle(1, 0xCCCCCC);
-				drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+				drawRect(bounds.x - 1, bounds.y - 1, bounds.width + 1, bounds.height + 1);
 			}
 			Globals.bounds = bounds;
 
 			// init tooltips
-			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
+			var container : Sprite = addChild(new Sprite()) as Sprite;
 			Globals.toolTipManager = new ToolTipManager(container);
 			Globals.toolTipManager.registerToolTip(
 				new BoxToolTipSelector(),
@@ -30,11 +30,12 @@ package layer.tooltip.advanced {
 			);
 
 			// add content
-			addChild(new Box(60, 60, 80, 40, 0xAAAAAA));
-			addChild(new Box(120, 230, 60, 60, 0x666666));
-			addChild(new Box(180, 100, 40, 80, 0xEE4400));
-			addChild(new Box(300, 50, 60, 60, 0x0044EE));
-			addChild(new Box(280, 180, 40, 40, 0x44CC44));
+			var items : Sprite = addChildAt(new Sprite(), 0) as Sprite;
+			items.addChild(new Box(60, 60, 80, 40, 0xAAAAAA));
+			items.addChild(new Box(120, 230, 60, 60, 0x666666));
+			items.addChild(new Box(180, 100, 40, 80, 0xEE4400));
+			items.addChild(new Box(300, 50, 60, 60, 0x0044EE));
+			items.addChild(new Box(280, 180, 40, 40, 0x44CC44));
 		}
 	}
 }

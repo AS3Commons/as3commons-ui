@@ -8,7 +8,6 @@ package org.as3commons.ui.layer.tooltip {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.utils.clearTimeout;
-	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 
 	/**
@@ -126,13 +125,8 @@ package org.as3commons.ui.layer.tooltip {
 		protected function startAutoHide() : void {
 			if (_autoHideAfter) {
 				clearTimeout(_hideDelay);
-				_hideDelay = setTimeout(onRemove2, _autoHideAfter, _layer);
+				_hideDelay = setTimeout(onRemove, _autoHideAfter, _layer);
 			}
-		}
-
-		protected function onRemove2(toolTip : DisplayObject) : void {
-			trace ("-- onAutoRemove", getTimer());
-			onRemove(toolTip);
 		}
 
 	}
