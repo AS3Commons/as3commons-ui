@@ -155,7 +155,17 @@ package org.as3commons.ui.lifecycle.i10n {
 		public function stopAllValidations() : void {
 			if (_stage) _stage.removeEventListener(Event.EXIT_FRAME, stageExitFrame);
 			_stage = null;
+			
+			var iterator : IIterator = _queue.iterator();
+			while (iterator.hasNext()) {
+				QueueItem(iterator.next()).displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			}
 			_queue.clear();
+
+			iterator = _schedule.iterator();
+			while (iterator.hasNext()) {
+				QueueItem(iterator.next()).displayObject.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			}
 			_schedule.clear();
 		}
 
