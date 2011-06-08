@@ -11,7 +11,6 @@ package layer.tooltip.animated {
 		private var _toolTipManager : ToolTipManager;
 		
 		public function AnimatedExample() {
-			trace();
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_toolTipManager = new ToolTipManager(container);
 			_toolTipManager.registerToolTip(
