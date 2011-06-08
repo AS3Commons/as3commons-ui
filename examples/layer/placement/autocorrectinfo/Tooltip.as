@@ -7,7 +7,7 @@ package layer.placement.autocorrectinfo {
 		private var _sourcePlacementAnchor : uint;
 		private var _placementHShift : int;
 		private var _placementVShift : int;
-		private var _tipSize : uint = 10;
+		private var _noseSize : uint = 10;
 
 		public function Tooltip(
 			width : uint, height : uint, x : int, y : int,
@@ -53,28 +53,28 @@ package layer.placement.autocorrectinfo {
 			// background
 			setGradientFill();
 			var backgroundY : uint = 0;
-			if (PlacementAnchor.isBottom(_sourcePlacementAnchor)) backgroundY = _tipSize;
+			if (PlacementAnchor.isBottom(_sourcePlacementAnchor)) backgroundY = _noseSize;
 			var backgroundH : uint = _height;
-			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) backgroundH -= _tipSize;
+			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) backgroundH -= _noseSize;
 			with (graphics) {
 				drawRoundRect(0, backgroundY, _width, backgroundH, 6, 6);
 			}
 			
 			// nose
 			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) {
-				var noseX : int = _tipSize;
-				if (PlacementAnchor.isCenter(_placementAnchor)) noseX = (_width - _tipSize) / 2;
-				else if (PlacementAnchor.isRight(_placementAnchor)) noseX = _width - _tipSize * 2.5;
+				var noseX : int = _noseSize;
+				if (PlacementAnchor.isCenter(_placementAnchor)) noseX = (_width - _noseSize) / 2;
+				else if (PlacementAnchor.isRight(_placementAnchor)) noseX = _width - _noseSize * 2.5;
 				noseX -= _placementHShift;
-				noseX = Math.max(_tipSize, Math.min(noseX, _width - _tipSize * 2.5));
+				noseX = Math.max(_noseSize, Math.min(noseX, _width - _noseSize * 2.5));
 				
-				var noseY : uint = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _height - _tipSize : _tipSize;
-				var noseHeight : int = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _tipSize : -_tipSize;
+				var noseY : uint = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _height - _noseSize : _noseSize;
+				var noseHeight : int = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _noseSize : -_noseSize;
 				
 				with (graphics) {
 					moveTo(noseX, noseY);
-					lineTo(noseX + _tipSize * .75, noseY + noseHeight);
-					lineTo(noseX + _tipSize * 1.5, noseY);
+					lineTo(noseX + _noseSize * .75, noseY + noseHeight);
+					lineTo(noseX + _noseSize * 1.5, noseY);
 					lineTo(noseX, noseY);
 				}
 			}
