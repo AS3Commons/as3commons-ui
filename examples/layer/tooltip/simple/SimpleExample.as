@@ -1,17 +1,18 @@
 package layer.tooltip.simple {
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
+	import common.UIView;
 	import layer.tooltip.common.SimpleAdapter;
 	import layer.tooltip.common.SimpleSelector;
 	import layer.tooltip.common.SimpleToolTip;
 	import layout.common.box.Box;
 	import org.as3commons.ui.layer.ToolTipManager;
 	import org.as3commons.ui.layout.shortcut.hlayout;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 
-	public class SimpleExample extends Sprite {
+	public class SimpleExample extends UIView {
 		private var _toolTipManager : ToolTipManager;
 		
-		public function SimpleExample() {
+		override public function draw() : void {
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_toolTipManager = new ToolTipManager(container);
 			_toolTipManager.registerToolTip(

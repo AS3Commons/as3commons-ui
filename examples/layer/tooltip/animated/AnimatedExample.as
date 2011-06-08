@@ -1,4 +1,5 @@
 package layer.tooltip.animated {
+	import common.UIView;
 	import layer.tooltip.common.SimpleSelector;
 	import layer.tooltip.common.SimpleToolTip;
 	import layout.common.box.Box;
@@ -7,10 +8,10 @@ package layer.tooltip.animated {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 
-	public class AnimatedExample extends Sprite {
+	public class AnimatedExample extends UIView {
 		private var _toolTipManager : ToolTipManager;
 		
-		public function AnimatedExample() {
+		override public function draw() : void {
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_toolTipManager = new ToolTipManager(container);
 			_toolTipManager.registerToolTip(
