@@ -29,7 +29,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		 * should be considered for the given display object.
 		 * 
 		 * @param displayObject The component to test.
-		 * @return <code>true</code>, if the mapped adapter should be applied to this component. 
+		 * @return <code>true</code> if the mapped adapter should be applied to this component. 
 		 */
 		function approve(displayObject : DisplayObject) : Boolean;
 

@@ -14,6 +14,10 @@ package org.as3commons.ui.layer.placement {
 		 * <p>In difference to the built-in <code>localToGlobal()</code>, this
 		 * method also works with overridden x and y properties of a given display
 		 * object subclass.</p>
+		 * 
+		 * @param displayObject The object to get its global position.
+		 * @param local Position used rather than the actual object's position.
+		 * @return The object's global position.
 		 */
 		public static function localToGlobal(displayObject : DisplayObject, local : Point = null) : Point {
 			var point : Point = local ? local.clone() : new Point(displayObject.x, displayObject.y);
@@ -32,6 +36,10 @@ package org.as3commons.ui.layer.placement {
 		 * <p>In difference to the built-in <code>globalToLocal()</code>, this
 		 * method also works with objects not having a parent yet. In that case the
 		 * method simply returns the given global position.</p>
+		 * 
+		 * @param global Position to convert.
+		 * @param displayObject The object to get its local position.
+		 * @return The object's local position.
 		 */
 		public static function globalToLocal(global : Point, displayObject : DisplayObject) : Point {
 			var point : Point = global.clone();
@@ -46,6 +54,10 @@ package org.as3commons.ui.layer.placement {
 
 		/**
 		 * Returns the local position of the given anchor.
+		 * 
+		 * @param anchor Anchor to convert into a position.
+		 * @param displayObject The object to apply the anchor to.
+		 * @return The anchor's local position.
 		 */
 		public static function anchorToLocal(anchor : uint, displayObject : DisplayObject) : Point {
 			var point : Point = new Point();
