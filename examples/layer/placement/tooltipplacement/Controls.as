@@ -1,4 +1,4 @@
-package layer.placement.tooltiplacement {
+package layer.placement.tooltipplacement {
 	import common.ControlPanelBase;
 	import layer.placement.common.*;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;

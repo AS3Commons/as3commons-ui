@@ -1,4 +1,4 @@
-package layer.placement.tooltiplacement {
+package layer.placement.tooltipplacement {
 	import common.UIView;
 	import layer.placement.common.Box;
 	import layer.placement.common.DefaultValues;
