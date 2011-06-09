@@ -1,13 +1,15 @@
-package layer.popup.alerttutorial.step1 {
+package layer.popup.alerttutorial.step2 {
+	import org.as3commons.ui.layer.PopUpManager;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
-	public class AlertTutorialStep1b extends Sprite {
+	public class AlertTutorialStep2 extends Sprite {
 		private var _tf : TextField;
+		private var _popUpManager : PopUpManager;
 		
-		public function AlertTutorialStep1b() {
+		public function AlertTutorialStep2() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -16,17 +18,21 @@ package layer.popup.alerttutorial.step1 {
 			
 			_tf = new TextField();
 			_tf.defaultTextFormat = new TextFormat("_sans", 11);
-			_tf.text = "Click the button";
+			_tf.text = "Click a button";
 			addChild(_tf);
+			
+			var container : Sprite = new Sprite();
+			addChild(container);
+			_popUpManager = new PopUpManager(container);
 			
 			var alert : AlertBox = new AlertBox(
 				"Popup",
-				"This is a simple popup window with only one button. Click it.",
-				[null, null, "tree"],
+				"This is a simple popup window. Click a button.",
+				["one", "two", "tree"],
 				info
 			);
 			alert.y = 30;
-			addChild(alert);
+			_popUpManager.createPopUp(alert);
 		}
 		
 		private function info(alert : AlertBox, event : String) : void {
