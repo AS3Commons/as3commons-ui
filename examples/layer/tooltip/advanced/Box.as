@@ -85,7 +85,14 @@ package layer.tooltip.advanced {
 		}
 		
 		private function showToolTip() : void {
-			Globals.toolTipManager.show(this, "Box" + _id + " " + ColorUtil.hexToString(_color));
+			var text : String = "Box" + _id + " " + ColorUtil.hexToString(_color);
+			if (_id == 2) {
+				text = "Box" + "\n\n"
+					+ "ID: " + _id + "\n"
+					+ "Color: " + ColorUtil.hexToString(_color) + "\n\n"
+					+ "Info: This is a large tooltip that will be autosized to a max width of 140 px.";
+			}
+			Globals.toolTipManager.show(this, text);
 		}
 
 		private function hideToolTip() : void {

@@ -33,7 +33,12 @@ package layer.tooltip.advanced {
 		}
 
 		internal function set text(text : String) : void {
+			_tf.wordWrap = false;
 			_tf.text = text;
+			if (_tf.textWidth > 140) {
+				_tf.width = 140;
+				_tf.wordWrap = true;
+			}
 		}
 
 		internal function setPlacementProperties(ownerAnchor : uint, toolTipAnchor : uint, hShift : int) : void {

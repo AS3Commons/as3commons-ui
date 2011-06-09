@@ -16,7 +16,7 @@ package layer.tooltip.advanced {
 			autoHideAfter = 2000;
 			bounds = Globals.bounds;
 			autoSwapAnchorsH = true;
-			autoSwapAnchorsHDiff = 20;
+			autoSwapAnchorsHDiff = 25;
 			autoSwapAnchorsV = true;
 			autoSwapAnchorsVDiff = 10;
 

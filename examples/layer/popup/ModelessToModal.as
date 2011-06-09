@@ -21,6 +21,8 @@ package layer.popup {
 					click: addHandler
 				})
 			);
+			
+			addHandler();
 		}
 		
 		private function addHandler() : void {
