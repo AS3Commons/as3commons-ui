@@ -1,4 +1,5 @@
 package layer.popup.alerttutorial.step2 {
+	import layer.popup.alerttutorial.step1.AlertBox;
 	import org.as3commons.ui.layer.PopUpManager;
 	import flash.display.Sprite;
 	import flash.events.Event;

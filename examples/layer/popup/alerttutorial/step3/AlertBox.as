@@ -1,4 +1,4 @@
-package layer.popup.alerttutorial.step2 {
+package layer.popup.alerttutorial.step3 {
 	import com.sibirjak.asdpc.button.*;
 	import org.as3commons.ui.layout.HGroup;
 	import org.as3commons.ui.layout.constants.Align;
@@ -12,6 +12,7 @@ package layer.popup.alerttutorial.step2 {
 		public static const ALERT_NO : String = "no";
 		public static const ALERT_CANCEL : String = "cancel";
 		private var _clickCallback : Function;
+		private var _clickOutsideCallback : Function;
 		
 		public function AlertBox(headline : String, text : String, buttons : Array, clickCallback : Function) {
 			_clickCallback = clickCallback;
@@ -65,6 +66,21 @@ package layer.popup.alerttutorial.step2 {
 			).layout(this);
 		}
 		
+		public function watchClickOutside(clickOutsideCallback : Function) : void {
+			_clickOutsideCallback = clickOutsideCallback;
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, stageClick);
+		}
+		
+		public function unwatchClickOutside() : void {
+			stage.removeEventListener(MouseEvent.MOUSE_DOWN, stageClick);
+		}
+		
+		private function stageClick(event : MouseEvent) : void {
+			if (!hitTestPoint(event.stageX, event.stageY)) {
+				_clickOutsideCallback(this);
+			}
+		}
+
 		private function createButton(label : String, eventType : String) : Button {
 			var button : Button = new Button();
 			button.setSize(60, 22);

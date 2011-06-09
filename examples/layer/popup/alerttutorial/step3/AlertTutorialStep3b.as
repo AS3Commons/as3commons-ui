@@ -1,5 +1,5 @@
 package layer.popup.alerttutorial.step3 {
-	import layer.popup.alerttutorial.step1.AlertBox;
+	import layer.popup.alerttutorial.step3.AlertBox;
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
@@ -7,11 +7,11 @@ package layer.popup.alerttutorial.step3 {
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class AlertTutorialStep3 extends Sprite {
+	public class AlertTutorialStep3b extends Sprite {
 		private var _popUpManager : PopUpManager;
 		private var _alertId : uint;
 		
-		public function AlertTutorialStep3() {
+		public function AlertTutorialStep3b() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -42,6 +42,11 @@ package layer.popup.alerttutorial.step3 {
 				alertClickCallback
 			);
 			_popUpManager.createPopUp(alert, true);
+
+			alert.watchClickOutside(function() : void {
+				alert.unwatchClickOutside();
+				_popUpManager.removePopUp(alert);
+			});
 		}
 		
 		private function confirmHandler(event : ButtonEvent) : void {
@@ -55,6 +60,7 @@ package layer.popup.alerttutorial.step3 {
 		}
 		
 		private function alertClickCallback(alert : AlertBox, event : String) : void {
+			alert.unwatchClickOutside();
 			_popUpManager.removePopUp(alert);
 		}
 	}

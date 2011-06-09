@@ -1,4 +1,5 @@
 package layer.popup.alerttutorial.step2 {
+	import layer.popup.alerttutorial.step1.AlertBox;
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
