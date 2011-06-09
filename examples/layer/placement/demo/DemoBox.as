@@ -1,4 +1,4 @@
-package layer.placement.autocorrect {
+package layer.placement.demo {
 	import common.ColorUtil;
 	import flash.display.GradientType;
 	import flash.display.Shape;
@@ -12,14 +12,14 @@ package layer.placement.autocorrect {
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 
-	public class AutoCorrectBox extends Sprite {
+	public class DemoBox extends Sprite {
 		private var _id : String;
 		private var _dragBounds : Rectangle;
 		private var _mousePosition : Point;
 		private var _tf : TextField;
 		private var _border : Shape;
 
-		public function AutoCorrectBox(
+		public function DemoBox(
 			id : String,
 			x : uint, y : uint, width : uint, height : uint,
 			color : uint, alpha : Number, dragBounds : Rectangle

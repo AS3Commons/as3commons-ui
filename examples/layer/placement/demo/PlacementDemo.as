@@ -1,15 +1,15 @@
-package layer.placement.autocorrect {
+package layer.placement.demo {
 	import org.as3commons.ui.layer.Placement;
 	import org.as3commons.ui.layer.placement.UsedPlacement;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
-	public class AutoCorrect extends Sprite {
+	public class PlacementDemo extends Sprite {
 		private var _placement : Placement;
 		private var _controls : Controls;
 		
-		public function AutoCorrect() {
+		public function PlacementDemo() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -23,11 +23,11 @@ package layer.placement.autocorrect {
 			}
 
 			// source
-			var source : AutoCorrectBox = new AutoCorrectBox("Source", 160, 150, 80, 80, 0xCCCCCC, 1, bounds);
+			var source : DemoBox = new DemoBox("Source", 160, 150, 80, 80, 0xCCCCCC, 1, bounds);
 			addChild(source);
 
 			// layer
-			var layer : AutoCorrectBox = new AutoCorrectBox("Layer", 0, 0, 50, 50, 0x4488DD, .5, null);
+			var layer : DemoBox = new DemoBox("Layer", 0, 0, 50, 50, 0x4488DD, .5, null);
 			layer.mouseEnabled = false;
 			addChild(layer);
 
@@ -59,7 +59,7 @@ package layer.placement.autocorrect {
 		
 		private function place() : void {
 			_placement.place();
-			var box : AutoCorrectBox = _placement.layer as AutoCorrectBox;
+			var box : DemoBox = _placement.layer as DemoBox;
 			var used : UsedPlacement = _placement.usedPlacement;
 			box.border = used.hShift != 0 || used.vShift != 0;
 			box.setInfo(used.hShift, used.vShift, used.hSwapped, used.vSwapped);
