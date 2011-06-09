@@ -34,6 +34,16 @@ package org.as3commons.ui.layer.placement {
 		 * bounds.</p>
 		 */
 		public var vShift : int;
+
+		/**
+		 * Indicates that anchors have been swapped horizontally.
+		 */
+		public var hSwapped : Boolean;
+
+		/**
+		 * Indicates that anchors have been swapped vertically.
+		 */
+		public var vSwapped : Boolean;
 	}
 
 }

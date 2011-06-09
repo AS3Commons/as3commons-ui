@@ -259,6 +259,7 @@ package org.as3commons.ui.layer.placement {
 							sourceAnchor = swapHorizontal(sourceAnchor);
 							layerAnchor = swapHorizontal(layerAnchor);
 							offset.x = - offset.x;
+							_usedPlacement.hSwapped = true;
 						}
 						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
 					// left overlap
@@ -267,6 +268,7 @@ package org.as3commons.ui.layer.placement {
 							sourceAnchor = swapHorizontal(sourceAnchor);
 							layerAnchor = swapHorizontal(layerAnchor);
 							offset.x = - offset.x;
+							_usedPlacement.hSwapped = true;
 						}
 						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
 					}
@@ -279,6 +281,7 @@ package org.as3commons.ui.layer.placement {
 							sourceAnchor = swapVertical(sourceAnchor);
 							layerAnchor = swapVertical(layerAnchor);
 							offset.y = - offset.y;
+							_usedPlacement.vSwapped = true;
 						}
 						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
 					// top overlap
@@ -287,6 +290,7 @@ package org.as3commons.ui.layer.placement {
 							sourceAnchor = swapVertical(sourceAnchor);
 							layerAnchor = swapVertical(layerAnchor);
 							offset.y = - offset.y;
+							_usedPlacement.vSwapped = true;
 						}
 						layerLocal = getLayerLocal(sourceAnchor, layerAnchor, offset);
 					}

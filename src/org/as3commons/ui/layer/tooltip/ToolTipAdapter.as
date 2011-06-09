@@ -202,11 +202,15 @@ package org.as3commons.ui.layer.tooltip {
 		 * 
 		 * <p>Called whenever a hidden tooltip should be shown.</p>
 		 * 
+		 * <p>If not overridden, the method will set the tooltips position right away.</p>
+		 * 
 		 * @param toolTip The tooltip.
 		 * @param local The tooltip's local position.
 		 */
 		protected function onShow(toolTip : DisplayObject, local : Point) : void {
 			// hook
+			toolTip.x = local.x;
+			toolTip.y = local.y;
 		}
 
 		/**
@@ -218,6 +222,8 @@ package org.as3commons.ui.layer.tooltip {
 		 * by invocation of <code>commitRemove()</code>. The adapter may call
 		 * that method synchronously or asynchronously. The latter case is appropriate
 		 * if some transitions should be performed before the tooltip leaves.</p>
+		 * 
+		 * <p>If not overridden, the method will commit the removal right away.</p>
 		 * 
 		 * @param toolTip The tooltip.
 		 */
