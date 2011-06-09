@@ -4,10 +4,10 @@ package layer.popup.alerttutorial.step1 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
-	public class AlertTutorial extends Sprite {
+	public class AlertTutorialStep1 extends Sprite {
 		private var _tf : TextField;
 		
-		public function AlertTutorial() {
+		public function AlertTutorialStep1() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -16,6 +16,7 @@ package layer.popup.alerttutorial.step1 {
 			
 			_tf = new TextField();
 			_tf.defaultTextFormat = new TextFormat("_sans", 11);
+			_tf.text = "Click a button";
 			addChild(_tf);
 			
 			var alert : AlertBox = new AlertBox(
@@ -24,7 +25,7 @@ package layer.popup.alerttutorial.step1 {
 				["one", "two", "tree"],
 				info
 			);
-			alert.y = 20;
+			alert.y = 30;
 			addChild(alert);
 		}
 		
