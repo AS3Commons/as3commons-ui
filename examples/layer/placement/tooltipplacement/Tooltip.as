@@ -1,75 +1,76 @@
 package layer.placement.tooltipplacement {
-	import common.UII10N;
-	import layer.placement.common.Box;
+	import common.ColorUtil;
+	import layer.placement.common.DefaultValues;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
+	import org.as3commons.ui.layer.placement.UsedPlacement;
+	import flash.display.GradientType;
+	import flash.display.Sprite;
+	import flash.geom.Matrix;
 
-	public class Tooltip extends Box {
-		private var _sourcePlacementAnchor : uint;
-		private var _placementHShift : int;
-		private var _placementVShift : int;
+	public class ToolTip extends Sprite {
+		private var _width : uint;
+		private var _height : uint;
+		private var _color : uint;
+		private var _alpha : Number;
+		private var _usedPlacement : UsedPlacement;
 		private var _noseSize : uint = 10;
 
-		public function Tooltip(
-			width : uint, height : uint, x : int, y : int,
-			color : uint, alpha : Number, borderColor : uint,
-			showAnchors : Boolean, dragEnabled : Boolean
+		public function ToolTip(
+			color : uint, alpha : Number
 		) {
-			super(width, height, x, y, color, alpha, borderColor, showAnchors, dragEnabled);
+			_color = color;
+			_alpha = alpha;
+
+			_width = DefaultValues.width;
+			_height = DefaultValues.height;
 		}
 
-		public function set sourcePlacementAnchor(sourcePlacementAnchor : uint) : void {
-			_sourcePlacementAnchor = sourcePlacementAnchor;
-			UII10N.i10n.invalidate(this);
-		}
-
-		public function get sourcePlacementAnchor() : uint {
-			return _sourcePlacementAnchor;
-		}
-
-		public function get placementHShift() : int {
-			return _placementHShift;
-		}
-
-		public function set placementHShift(shift : int) : void {
-			_placementHShift = shift;
-			UII10N.i10n.invalidate(this);
+		public function set usedPlacement(usedPlacement : UsedPlacement) : void {
+			_usedPlacement = usedPlacement;
+			draw();
 		}
 		
-		public function get placementVShift() : int {
-			return _placementVShift;
+		override public function get width() : Number {
+			return _width;
 		}
 
-		public function set placementVShift(shift : int) : void {
-			_placementVShift = shift;
-			UII10N.i10n.invalidate(this);
+		override public function get height() : Number {
+			return _height;
 		}
-		
-		override public function draw() : void {
+
+		public function setSize2(width : uint, height : uint) : void {
+			_width = width;
+			_height = height;
+			draw();
+		}
+
+		protected function draw() : void {
 			graphics.clear();
 			
-			// position
-			setPosition();
-			
 			// background
-			setGradientFill();
+			var matrix : Matrix = new Matrix();
+			matrix.createGradientBox(_width, _height, Math.PI / 180 * 45, 0, 0);
+			var gradient : Array = ColorUtil.getGradient(_color);
+
 			var backgroundY : uint = 0;
-			if (PlacementAnchor.isBottom(_sourcePlacementAnchor)) backgroundY = _noseSize;
+			if (PlacementAnchor.isBottom(_usedPlacement.sourceAnchor)) backgroundY = _noseSize;
 			var backgroundH : uint = _height;
-			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) backgroundH -= _noseSize;
+			if (!PlacementAnchor.isMiddle(_usedPlacement.sourceAnchor)) backgroundH -= _noseSize;
 			with (graphics) {
+				beginGradientFill(GradientType.LINEAR, gradient, [_alpha, _alpha], [0, 255], matrix);
 				drawRoundRect(0, backgroundY, _width, backgroundH, 6, 6);
 			}
 			
 			// nose
-			if (!PlacementAnchor.isMiddle(_sourcePlacementAnchor)) {
+			if (!PlacementAnchor.isMiddle(_usedPlacement.sourceAnchor)) {
 				var noseX : int = _noseSize;
-				if (PlacementAnchor.isCenter(_placementAnchor)) noseX = (_width - _noseSize) / 2;
-				else if (PlacementAnchor.isRight(_placementAnchor)) noseX = _width - _noseSize * 2.5;
-				noseX -= _placementHShift;
+				if (PlacementAnchor.isCenter(_usedPlacement.layerAnchor)) noseX = (_width - _noseSize) / 2;
+				else if (PlacementAnchor.isRight(_usedPlacement.layerAnchor)) noseX = _width - _noseSize * 2.5;
+				noseX -= _usedPlacement.hShift;
 				noseX = Math.max(_noseSize, Math.min(noseX, _width - _noseSize * 2.5));
 				
-				var noseY : uint = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _height - _noseSize : _noseSize;
-				var noseHeight : int = PlacementAnchor.isTop(_sourcePlacementAnchor) ? _noseSize : -_noseSize;
+				var noseY : uint = PlacementAnchor.isTop(_usedPlacement.sourceAnchor) ? _height - _noseSize : _noseSize;
+				var noseHeight : int = PlacementAnchor.isTop(_usedPlacement.sourceAnchor) ? _noseSize : -_noseSize;
 				
 				with (graphics) {
 					moveTo(noseX, noseY);

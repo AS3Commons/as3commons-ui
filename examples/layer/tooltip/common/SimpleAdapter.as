@@ -11,10 +11,5 @@ package layer.tooltip.common {
 		override protected function onContent(toolTip : DisplayObject, content : *) : void {
 			SimpleToolTip(toolTip).text = content;
 		}
-
-		override protected function onShow(toolTip : DisplayObject, localPosition : Point) : void {
-			SimpleToolTip(toolTip).x = localPosition.x;
-			SimpleToolTip(toolTip).y = localPosition.y;
-		}
 	}
 }

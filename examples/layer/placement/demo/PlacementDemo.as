@@ -15,6 +15,7 @@ package layer.placement.demo {
 
 		private function init(event : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+
 			// bounds
 			var bounds : Rectangle = new Rectangle(20, 20, 400, 300);
 			with (graphics) {

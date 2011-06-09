@@ -1,21 +1,30 @@
 package layer.placement.anchors {
-	import common.UIView;
 	import layer.placement.common.Box;
 	import org.as3commons.ui.layer.Placement;
+	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class Anchors extends UIView {
+	public class Anchors extends Sprite {
 		private var _placement : Placement;
 		private var _controls : Controls;
 		
-		override public function draw() : void {
+		public function Anchors() {
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+
+		private function init(event : Event) : void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+
 			// source
 			var container : Sprite = new Sprite();
 			container.x = 50;
 			container.y = 300;
 			addChild(container);
-			var source : Box = new Box(160, 160, 60, -190, 0xCCCCCC, 1, 0x999999, true, false);
+			var source : Box = new BoxWithAnchors(
+				160, 160, 60, -190, 0xCCCCCC, 1,
+				0x999999,PlacementAnchor.TOP_LEFT, null
+			);
 			container.addChild(source);
 
 			// layer
@@ -23,7 +32,10 @@ package layer.placement.anchors {
 			container.x = 200;
 			container.y = 200;
 			addChild(container);
-			var layer : Box = new Box(80, 80, 0, 0, 0x4488DD, .5, 0x666666, true, false);
+			var layer : Box = new BoxWithAnchors(
+				80, 80, 0, 0, 0x4488DD, .5,
+				0x666666, PlacementAnchor.TOP_LEFT, null
+			);
 			container.addChild(layer);
 
 			// placement

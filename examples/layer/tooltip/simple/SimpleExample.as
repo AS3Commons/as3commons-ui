@@ -1,5 +1,4 @@
 package layer.tooltip.simple {
-	import common.UIView;
 	import layer.tooltip.common.SimpleAdapter;
 	import layer.tooltip.common.SimpleSelector;
 	import layer.tooltip.common.SimpleToolTip;
@@ -7,12 +6,19 @@ package layer.tooltip.simple {
 	import org.as3commons.ui.layer.ToolTipManager;
 	import org.as3commons.ui.layout.shortcut.hlayout;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-	public class SimpleExample extends UIView {
+	public class SimpleExample extends Sprite {
 		private var _toolTipManager : ToolTipManager;
 		
-		override public function draw() : void {
+		public function SimpleExample() {
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+
+		private function init(event : Event) : void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_toolTipManager = new ToolTipManager(container);
 			_toolTipManager.registerToolTip(
