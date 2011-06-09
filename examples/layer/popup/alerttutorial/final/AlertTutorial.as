@@ -16,6 +16,7 @@ package layer.popup.alerttutorial.final {
 
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			Globals.popUpManager = new PopUpManager(container);
+			Globals.popUpManager.modalOverlay = ModalOverlay;
 			
 			var button1 : Button = new Button();
 			button1.setSize(70, 24);
