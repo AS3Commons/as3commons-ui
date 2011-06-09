@@ -1,7 +1,6 @@
-package layer.placement.autocorrectinfo {
+package layer.placement.tooltip {
 	import common.ControlPanelBase;
 	import layer.placement.common.*;
-	import layer.placement.common.OffsetControls;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
 	import org.as3commons.ui.layout.VGroup;
 	import org.as3commons.ui.layout.shortcut.*;

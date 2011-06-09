@@ -1,4 +1,4 @@
-package layer.placement.autocorrectinfo {
+package layer.placement.tooltip {
 	import common.UIView;
 	import layer.placement.common.Box;
 	import layer.placement.common.DefaultValues;
@@ -7,11 +7,11 @@ package layer.placement.autocorrectinfo {
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
-	public class AutoCorrectInfo extends UIView {
+	public class ToolTipPlacement extends UIView {
 		private var _placement : Placement;
 		private var _controls : Controls;
 
-		public function AutoCorrectInfo() {
+		public function ToolTipPlacement() {
 			DefaultValues.width = 100;
 			DefaultValues.height = 50;
 			DefaultValues.offsetX = -25;
