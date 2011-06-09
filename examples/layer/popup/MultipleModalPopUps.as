@@ -1,79 +1,53 @@
 package layer.popup {
-	import com.sibirjak.asdpc.button.Button;
-	import com.sibirjak.asdpcbeta.window.Window;
-	import com.sibirjak.asdpcbeta.window.WindowEvent;
 	import common.ControlPanelBase;
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import layer.popup.common.AlertBox;
+	import com.sibirjak.asdpc.button.Button;
+	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
-
+	import flash.display.Sprite;
+	
 	public class MultipleModalPopUps extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;
-		private var _windowId : uint;
+		private var _alertId : uint;
 		private var _startPosition : uint = 20;
-		private var _addButton : Button;
 
 		public function MultipleModalPopUps() {
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_popUpManager = new PopUpManager(container);
 			
-			_addButton = addChild(labelButton({
-				label: "add",
-				click: addHandler
-			})) as Button;
+			var addButton : Button = new Button();
+			addButton.setSize(50, 20);
+			addButton.label = "add";
+			addButton.addEventListener(ButtonEvent.CLICK, addHandler);
+			addChild(addButton);
 		}
 		
-		private function addHandler(event : Event = null) : void {
+		private function addHandler(event : ButtonEvent) : void {
+			addPopUp();
+		}
+		
+		private function alertCallback(alert : AlertBox, event : String) : void {
+			if (event == AlertBox.ALERT_CANCEL) removePopUp(alert);
+			else addPopUp();
+		}
+
+		private function addPopUp() : void {
 			_startPosition += 30;
 			if (_startPosition > 140) _startPosition = 50;
 
-			var window : Window = window({
-				x: _startPosition * 2, y: _startPosition, w: 200, h: 120,
-				title: "PopUp " + ++_windowId,
-				minimised: true
-			});
-			window.document = new WinContent();
-			window.addEventListener("add", addHandler);
-			window.addEventListener(WindowEvent.MINIMISED, minimiseHandler);
-			
-			_popUpManager.createPopUp(window, false, true);
-			window.restore();
+			var alert : AlertBox = new AlertBox(
+				"Popup " + ++_alertId,
+				"This is a modal popup window. Close this window by clicking the close button.",
+				["Add", null, "Close"],
+				alertCallback
+			);
+
+			alert.x = alert.y = _startPosition;
+			_popUpManager.createPopUp(alert, false, true);
 		}
 
-		private function minimiseHandler(event : WindowEvent) : void {
-			var window : Window = event.currentTarget as Window;
-			window.removeEventListener("add", addHandler);
-			window.removeEventListener(WindowEvent.MINIMISED, minimiseHandler);
-			_popUpManager.removePopUp(window);
+		private function removePopUp(alert : AlertBox) : void {
+			_popUpManager.removePopUp(alert);
 		}
-	}
-}
-
-import com.sibirjak.asdpcbeta.window.Window;
-import common.ControlPanelBase;
-import flash.events.Event;
-import org.as3commons.ui.layout.constants.Align;
-import org.as3commons.ui.layout.shortcut.vgroup;
-
-internal class WinContent extends ControlPanelBase {
-	override protected function draw() : void {
-		vgroup(
-			"minWidth", _width, "minHeight", _height - 5,
-			"marginX", 5, "vAlign", Align.BOTTOM, "gap", 5,
-			labelButton({
-				w: 46,
-				label: "add",
-				click: function() : void {
-					dispatchEvent(new Event("add", true));
-				}
-			}),
-			labelButton({
-				w: 46,
-				label: "close",
-				click: function() : void {
-					Window(parent).minimise();
-				}
-			})
-		).layout(this);
 	}
 }

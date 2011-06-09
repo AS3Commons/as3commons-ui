@@ -1,19 +1,20 @@
 package layer.popup {
 	import layer.popup.common.AlertBox;
+	import com.gskinner.motion.GTween;
+	import com.gskinner.motion.easing.Cubic;
+	import com.gskinner.motion.easing.Sine;
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
-	import org.as3commons.ui.layout.shortcut.hgroup;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class SimplePopUp extends Sprite {
+	public class AnimatedPopUp extends Sprite {
 		private var _popUpManager : PopUpManager;
 		private var _addButton : Button;
-		private var _centerButton : Button;
 		
-		public function SimplePopUp() {
+		public function AnimatedPopUp() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -29,14 +30,7 @@ package layer.popup {
 			_addButton.label = "show";
 			_addButton.selectedLabel = "hide";
 			_addButton.addEventListener(ButtonEvent.SELECTION_CHANGED, showHideHandler);
-			
-			_centerButton = new Button();
-			_centerButton.setSize(50, 20);
-			_centerButton.label = "center";
-			_centerButton.visible = false;
-			_centerButton.addEventListener(ButtonEvent.CLICK, centerHandler);
-
-			hgroup("gap", 6, _addButton, _centerButton).layout(this);
+			addChild(_addButton);
 		}
 		
 		private function showHideHandler(event : ButtonEvent) : void {
@@ -47,22 +41,51 @@ package layer.popup {
 					[null, null, "Close"],
 					removePopUp
 				);
-				alert.x = 40;
-				alert.y = 60;
-				_popUpManager.createPopUp(alert);
-				_centerButton.visible = true;
+				_popUpManager.createPopUp(alert, true);
+
+				var tween : GTween = new GTween();
+				tween.target = alert;
+				tween.ease = Sine.easeOut;
+				tween.duration = .15;
+	
+				// tween position
+				tween.setValue("x", alert.x);
+				tween.setValue("y", alert.y);
+				alert.x += alert.width/2;
+				alert.y += alert.height/2;
+				// tween scale
+				alert.scaleX = alert.scaleY = 0;
+				alert.scaleX = alert.scaleY = 0;
+				tween.setValue("scaleX", 1);
+				tween.setValue("scaleY", 1);
+				// tween alpha
+				alert.alpha = 0;
+				tween.setValue("alpha", 1);
+
 			} else {
 				removePopUp(_popUpManager.popUpOnTop);
 			}
 		}
 		
-		private function centerHandler(event : ButtonEvent) : void {
-			_popUpManager.center(_popUpManager.popUpOnTop);
-		}
-		
 		private function removePopUp(alert : DisplayObject, event : String = null) : void {
-			_popUpManager.removePopUp(alert);
-			_centerButton.visible = false;
+			var tween : GTween = new GTween();
+			tween.target = alert;
+			tween.ease = Cubic.easeIn;
+			tween.duration = .2;
+
+			// tween position
+			tween.setValue("x", alert.x + alert.width/2);
+			tween.setValue("y", alert.y + alert.height/2);
+			// tween scale
+			tween.setValue("scaleX", 0);
+			tween.setValue("scaleY", 0);
+			// tween alpha
+			tween.setValue("alpha", 0);
+			
+			tween.onComplete = function(tween : GTween) : void {
+				_popUpManager.removePopUp(alert);
+			};
+
 			_addButton.selected = false;
 		}
 	}

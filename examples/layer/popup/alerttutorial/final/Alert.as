@@ -17,7 +17,7 @@ package layer.popup.alerttutorial.final {
 				var tween : GTween = new GTween();
 				tween.target = alert;
 				tween.ease = Sine.easeOut;
-				tween.duration = .1;
+				tween.duration = .15;
 	
 				// tween position
 				tween.setValue("x", alert.x);
@@ -48,7 +48,7 @@ package layer.popup.alerttutorial.final {
 			var tween : GTween = new GTween();
 			tween.target = alert;
 			tween.ease = Cubic.easeIn;
-			tween.duration = .1;
+			tween.duration = .2;
 
 			// tween position
 			tween.setValue("x", alert.x + alert.width/2);

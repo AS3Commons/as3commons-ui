@@ -1,92 +1,103 @@
 package layer.popup {
-	import com.sibirjak.asdpcbeta.window.Window;
-	import com.sibirjak.asdpcbeta.window.WindowEvent;
 	import common.ControlPanelBase;
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import layer.popup.common.AlertBox;
+	import com.sibirjak.asdpc.button.Button;
+	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 
 	public class ModelessToModal extends ControlPanelBase {
 		private var _popUpManager : PopUpManager;
-		private var _windowId : uint;
+		private var _alertId : uint;
 		private var _startPosition : uint = 20	;
 
 		public function ModelessToModal() {
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_popUpManager = new PopUpManager(container);
+			_popUpManager.modalOverlay = ModalOverlay;
 
-			addChild(
-				labelButton({
-					label: "add",
-					click: addHandler
-				})
-			);
+			var addButton : Button = new Button();
+			addButton.setSize(50, 20);
+			addButton.label = "add";
+			addButton.addEventListener(ButtonEvent.CLICK, addHandler);
+			addChild(addButton);
 			
-			addHandler();
+			addPopUp();
 		}
 		
-		private function addHandler() : void {
+		private function addHandler(event : ButtonEvent) : void {
+			addPopUp();
+		}
+		
+		private function alertCallback(alert : AlertBox, event : String) : void {
+			if (event == AlertBox.ALERT_CANCEL) removePopUp(alert);
+			else if (event == "modal") _popUpManager.makeModal(alert);
+			else _popUpManager.makeModeless(alert);
+		}
+
+		private function alertClickHandler(event : MouseEvent) : void {
+			if (event.target is Button) return;
+			_popUpManager.bringToFront(event.currentTarget as AlertBox);
+		}
+		
+		private function addPopUp() : void {
 			_startPosition += 30;
 			if (_startPosition > 140) _startPosition = 50;
 
-			var window : Window = window({
-				x: _startPosition * 2, y: _startPosition, w: 200, h: 120,
-				title: "PopUp " + ++_windowId,
-				minimised: true
-			});
-			window.document = new WinContent();
-			window.addEventListener("modal", modalHandler);
-			window.addEventListener("modeless", modelessHandler);
-			window.addEventListener(WindowEvent.MINIMISED, minimiseHandler);
-			
-			_popUpManager.createPopUp(window);
-			window.restore();
+			var alert : AlertBox = new CustomAlertBox(
+				"Popup " + ++_alertId,
+				"This is a popup window. You may set this window to be modal or modeless. Close this window by clicking the close button.",
+				[null, null, "Close"],
+				alertCallback
+			);
+
+			alert.x = alert.y = _startPosition;
+			alert.addEventListener(MouseEvent.MOUSE_DOWN, alertClickHandler);
+			_popUpManager.createPopUp(alert);
 		}
 
-		private function modalHandler(event : Event) : void {
-			_popUpManager.makeModal(event.currentTarget as Window);
-		}
-		
-		private function modelessHandler(event : Event) : void {
-			_popUpManager.makeModeless(event.currentTarget as Window);
-		}
-		
-		private function minimiseHandler(event : WindowEvent) : void {
-			var window : Window = event.currentTarget as Window;
-			window.removeEventListener("modal", modalHandler);
-			window.removeEventListener("modeless", modelessHandler);
-			window.removeEventListener(WindowEvent.MINIMISED, minimiseHandler);
-			_popUpManager.removePopUp(window);
+		private function removePopUp(alert : AlertBox) : void {
+			_popUpManager.removePopUp(alert);
 		}
 	}
 }
 
-import com.sibirjak.asdpcbeta.window.Window;
-import common.ControlPanelBase;
-import flash.events.Event;
-import org.as3commons.ui.layout.constants.Align;
-import org.as3commons.ui.layout.shortcut.vgroup;
+import layer.popup.common.AlertBox;
+import com.sibirjak.asdpc.button.Button;
+import com.sibirjak.asdpc.button.ButtonEvent;
+import flash.display.Sprite;
 
-internal class WinContent extends ControlPanelBase {
-	override protected function draw() : void {
-		vgroup(
-			"minWidth", _width, "minHeight", _height - 5,
-			"marginX", 5, "vAlign", Align.BOTTOM, "gap", 5,
-			labelButton({
-				toggle: true,
-				label: "modal",
-				selectedlabel: "modeless",
-				change: function(selected : Boolean) : void {
-					if (selected) dispatchEvent(new Event("modal", true));
-					else dispatchEvent(new Event("modeless", true));
-				}
-			}),
-			labelButton({
-				label: "close",
-				click: function() : void {
-					Window(parent).minimise();
-				}
-			})
-		).layout(this);
+internal class ModalOverlay extends Sprite {
+	public function ModalOverlay() {
+		with (graphics) {
+			clear();
+			beginFill(0x000000, .3);
+			drawRect(0, 0, 100, 100);
+		}
+	}
+}
+
+internal class CustomAlertBox extends AlertBox {
+	public function CustomAlertBox(headline : String, text : String, buttons : Array, clickCallback : Function) {
+		super(headline, text, buttons, clickCallback);
+	}
+
+	override protected function getCustomButton() : Button {
+		var button : Button = new Button();
+		button.setSize(60, 22);
+		button.toggle = true;
+		button.label = "Modal";
+		button.selectedLabel = "Modeless";
+		button.addEventListener(ButtonEvent.SELECTION_CHANGED, buttonSelectedHandler);
+		return button;
+	}
+	
+	private function buttonSelectedHandler(event : ButtonEvent) : void {
+		if (Button(event.currentTarget).selected) {
+			_clickCallback(this, "modal");
+		} else {
+			_clickCallback(this, "modeless");
+		}
 	}
 }
