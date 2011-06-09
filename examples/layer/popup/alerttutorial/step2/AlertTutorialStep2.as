@@ -16,14 +16,13 @@ package layer.popup.alerttutorial.step2 {
 		private function init(event : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
+			_popUpManager = new PopUpManager(container);
+			
 			_tf = new TextField();
 			_tf.defaultTextFormat = new TextFormat("_sans", 11);
 			_tf.text = "Click a button";
 			addChild(_tf);
-			
-			var container : Sprite = new Sprite();
-			addChild(container);
-			_popUpManager = new PopUpManager(container);
 			
 			var alert : AlertBox = new AlertBox(
 				"Popup",
@@ -31,7 +30,8 @@ package layer.popup.alerttutorial.step2 {
 				["one", "two", "tree"],
 				info
 			);
-			alert.y = 30;
+			alert.x = 10;
+			alert.y = 40;
 			_popUpManager.createPopUp(alert);
 		}
 		
