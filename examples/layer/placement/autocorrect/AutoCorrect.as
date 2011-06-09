@@ -1,4 +1,4 @@
-package layer.placement.bounds {
+package layer.placement.autocorrect {
 	import common.UIView;
 	import layer.placement.common.Box;
 	import org.as3commons.ui.layer.Placement;
@@ -6,7 +6,7 @@ package layer.placement.bounds {
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
-	public class Bounds extends UIView {
+	public class AutoCorrect extends UIView {
 		private var _placement : Placement;
 		private var _controls : Controls;
 

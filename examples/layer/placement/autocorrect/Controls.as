@@ -1,4 +1,4 @@
-package layer.placement.bounds {
+package layer.placement.autocorrect {
 	import common.ControlPanelBase;
 	import layer.placement.common.*;
 	import org.as3commons.ui.layer.placement.PlacementAnchor;
