@@ -7,6 +7,8 @@ package layer.popup.alerttutorial.final {
 	import flash.events.Event;
 
 	public class AlertTutorial extends Sprite {
+		private var _alertId : uint;
+
 		public function AlertTutorial() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
@@ -33,7 +35,7 @@ package layer.popup.alerttutorial.final {
 		
 		private function noticeHandler(event : ButtonEvent) : void {
 			Alert.show(
-				"Notice", "The information provided by this message box may help you to better understand the system of alerts and popups.",
+				"Notice " + ++_alertId, "The information provided by this message box may help you to better understand the system of alerts and popups.",
 				[null, null, "Close"],
 				false, true,
 				alertClickCallback, true
@@ -42,7 +44,7 @@ package layer.popup.alerttutorial.final {
 		
 		private function confirmHandler(event : ButtonEvent) : void {
 			Alert.show(
-				"Confirm", "Please confirm, dismiss or cancel the progress. Note, this application will not delete files on your hard disk.",
+				"Confirm " + ++_alertId, "Please confirm, dismiss or cancel the progress. Note, this application will not delete files on your hard disk.",
 				["Yes", "No", "Cancel"],
 				true, false,
 				alertClickCallback, true
