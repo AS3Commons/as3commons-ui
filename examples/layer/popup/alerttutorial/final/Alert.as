@@ -36,7 +36,7 @@ package layer.popup.alerttutorial.final {
 			
 			if (hideOnClickOutside) {
 				alert.watchClickOutside(function() : void {
-					if (!alert.alpha == 1) return; // tween not finished yet
+					if (alert.alpha != 1) return; // tween not finished yet
 					hide(alert);
 				});
 			}
