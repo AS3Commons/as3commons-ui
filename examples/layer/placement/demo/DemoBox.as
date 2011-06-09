@@ -21,7 +21,7 @@ package layer.placement.demo {
 
 		public function DemoBox(
 			id : String,
-			x : uint, y : uint, width : uint, height : uint,
+			x : int, y : int, width : uint, height : uint,
 			color : uint, alpha : Number, dragBounds : Rectangle
 		) {
 			_id = id;
