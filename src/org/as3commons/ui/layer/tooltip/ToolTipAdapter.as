@@ -211,6 +211,7 @@ package org.as3commons.ui.layer.tooltip {
 			// hook
 			toolTip.x = local.x;
 			toolTip.y = local.y;
+			startAutoHide();
 		}
 
 		/**

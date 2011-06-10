@@ -49,10 +49,7 @@ package layer.tooltip.tooltiptutorial.final {
 
 		internal function draw() : void {
 			_tf.y = PlacementAnchor.isTop(_ownerAnchor) ? 2 : _noseSize + 2;
-			drawBackground();
-		}
 
-		private function drawBackground() : void {
 			graphics.clear();
 			
 			// fill
