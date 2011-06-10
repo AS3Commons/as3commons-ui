@@ -4,7 +4,7 @@
 	<property file="build/build.env" />
 
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.2.1" />
+	<property name="VERSION" value="0.3" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
@@ -85,6 +85,10 @@
 			<arg line="-package org.as3commons.ui.lifecycle.lifecycle 'LifeCycle (public).'" />
 			<arg line="-package org.as3commons.ui.lifecycle.lifecycle.core 'LifeCycle - Framework internal code (hidden).'" />
 			
+			<arg line="-package org.as3commons.ui.layer 'Layers (public).'" />
+			<arg line="-package org.as3commons.ui.layer.placement 'Layers - Placement classes (public).'" />
+			<arg line="-package org.as3commons.ui.layer.popup 'Layers - PopUpManager classes (public).'" />
+			<arg line="-package org.as3commons.ui.layer.tooltip 'Layers - ToolTipManager classes (public).'" />
 		</exec>
 
 		<copy file="${BUILD}/asdoc/asdoc.js" todir="${DOC}/apidoc" overwrite="true" />
