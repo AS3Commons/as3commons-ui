@@ -1,4 +1,4 @@
-package layer.tooltip.tooltiptutorial.step2 {
+package layer.tooltip.tooltiptutorial.step4 {
 	import layer.tooltip.tooltiptutorial.final.Box;
 	import layer.tooltip.tooltiptutorial.final.BoxToolTipSelector;
 	import layer.tooltip.tooltiptutorial.final.Globals;
@@ -8,8 +8,8 @@ package layer.tooltip.tooltiptutorial.step2 {
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
-	public class ToolTipTutorialStep2 extends Sprite {
-		public function ToolTipTutorialStep2() {
+	public class ToolTipTutorialStep4 extends Sprite {
+		public function ToolTipTutorialStep4() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
