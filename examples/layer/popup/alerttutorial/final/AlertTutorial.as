@@ -61,7 +61,7 @@ package layer.popup.alerttutorial.final {
 					alertClickCallback, false
 				);
 			} else {
-				Alert.hide(alert, false);
+				Alert.hide(alert, true);
 			}
 		}
 	}

@@ -1,17 +1,23 @@
 package layer.popup {
-	import common.ControlPanelBase;
 	import layer.popup.common.AlertBox;
 	import com.sibirjak.asdpc.button.Button;
 	import com.sibirjak.asdpc.button.ButtonEvent;
 	import org.as3commons.ui.layer.PopUpManager;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
-	public class MultipleModalPopUps extends ControlPanelBase {
+	public class MultipleModalPopUps extends Sprite {
 		private var _popUpManager : PopUpManager;
 		private var _alertId : uint;
 		private var _startPosition : uint = 20;
 
 		public function MultipleModalPopUps() {
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+
+		private function init(event : Event) : void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
 			var container : Sprite = stage.addChild(new Sprite()) as Sprite;
 			_popUpManager = new PopUpManager(container);
 			

@@ -1,7 +1,7 @@
 package layer.tooltip.individual {
-	import layer.tooltip.advanced.*;
 	import layer.tooltip.common.SimpleAdapter;
 	import layer.tooltip.common.SimpleToolTip;
+	import layer.tooltip.tooltiptutorial.final.*;
 	import org.as3commons.ui.layer.ToolTipManager;
 	import flash.display.Sprite;
 	import flash.events.Event;
