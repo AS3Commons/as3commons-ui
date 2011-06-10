@@ -86,28 +86,6 @@ package org.as3commons.ui.layer {
 		}
 
 		/**
-		 * Optional callback that is invoked after a placement has been executed.
-		 * 
-		 * <listing>
-				_placement.placeCallback = function(layer : DisplayObject, local : Point) : void {
-					layer.x = local.x;
-					layer.y = local.y;
-					// or any other custom code
-				};
-		 * </listing>
-		 */
-		public function set placeCallback(placeCallback : Function) : void {
-			_placeCallback = placeCallback;
-		}
-		
-		/**
-		 * @private
-		 */
-		public function get placeCallback() : Function {
-			return _placeCallback;
-		}
-		
-		/**
 		 * Calculates the position of the item to place (layer).
 		 * 
 		 * <p>If a <code>placeCallback</code> has been specified, this callback will

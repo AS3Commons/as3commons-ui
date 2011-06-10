@@ -6,6 +6,7 @@ package org.as3commons.ui.layer {
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 
 	/**
 	 * Popup management class.
@@ -22,6 +23,21 @@ package org.as3commons.ui.layer {
 		private var _container : Sprite;
 
 		/**
+		 * Modal overlay template.
+		 */
+		private var _ModalOverlay : Class;
+
+		/**
+		 * Callback invoked after a popup has been added or removed.
+		 */
+		private var _popUpCallback : Function;
+
+		/**
+		 * Callback invoked after a modal popup has been added or removed.
+		 */
+		private var _modalPopUpCallback : Function;
+
+		/**
 		 * Stage width.
 		 */
 		private var _width : uint;
@@ -31,11 +47,6 @@ package org.as3commons.ui.layer {
 		 */
 		private var _height : uint;
 		
-		/**
-		 * Modal overlay template.
-		 */
-		private var _ModalOverlay : Class;
-
 		/**
 		 * List of all popups added.
 		 */
@@ -71,6 +82,23 @@ package org.as3commons.ui.layer {
 		}
 
 		/**
+		 * Callback invoked after a popup has been added or removed.
+		 */
+		public function set popUpCallback(popUpCallback : Function) : void {
+			_popUpCallback = popUpCallback;
+		}
+
+		/**
+		 * Callback invoked after a modal popup has been added or removed.
+		 * 
+		 * <p>Also invoked when a modeless popup is turned into a modal one or
+		 * vice versa.</p>
+		 */
+		public function set modalPopUpCallback(modalPopUpCallback : Function) : void {
+			_modalPopUpCallback = modalPopUpCallback;
+		}
+
+		/**
 		 * Creates a popup.
 		 * 
 		 * @param displayObject The popup content.
@@ -92,14 +120,22 @@ package org.as3commons.ui.layer {
 			_container.addChild(displayObject);
 
 			if (centerPopUp) center(displayObject);
+			
+			if (_popUpCallback != null) _popUpCallback();
+			if (modal && _modalPopUpCallback != null) _modalPopUpCallback();
 		}
 
 		/**
 		 * <code>true</code> if popups are present.
 		 * 
+		 * <p>If a display object is given, the method will check if that
+		 * object is an active popup.</p>
+		 * 
+		 * @param displayObject The object to test if it is an active popup.
 		 * @return <code>true</code> if popups are present.
 		 */
-		public function hasPopUp() : Boolean {
+		public function hasPopUp(displayObject : DisplayObject = null) : Boolean {
+			if (displayObject) return _popUps.hasKey(displayObject);
 			return _popUps.size > 0;			
 		}
 
@@ -111,12 +147,50 @@ package org.as3commons.ui.layer {
 		}
 
 		/**
+		 * Number of modal popups added.
+		 */
+		public function get numModalPopUps() : uint {
+			return _numModalPopUps;
+		}
+
+		/**
 		 * <code>true</code> if at least one modal popup is present.
 		 * 
 		 * @return <code>true</code> if at least one modal popup is present.
 		 */
 		public function hasModalPopUp() : Boolean {
-			return _numModalPopUps > 0;			
+			return _numModalPopUps > 0;	
+		}
+
+		/**
+		 * Tests if an object is allowed to be focused.
+		 * 
+		 * <p>Checks if the object is placed underneath a modal popup and returns then <code>false</code>.</p>
+		 * 
+		 * @param displayObject The object to test.
+		 * @return <code>true</code> if the object can be focused.
+		 */
+		public function focusEnabled(displayObject : DisplayObject) : Boolean {
+			if (!displayObject) return false;
+			if (!displayObject.stage) return false;
+			
+			var center : Point = new Point(displayObject.width / 2, displayObject.height / 2);
+			var global : Point = displayObject.localToGlobal(center);
+			var objects : Array = displayObject.stage.getObjectsUnderPoint(global);
+			objects.reverse();
+			
+			for each (var object : DisplayObject in objects) {
+				// the object to test is reached
+				if (object == displayObject) return true;
+				
+				if (object.parent == _container) {
+					var data : PopUpData = _popUps.itemFor(object);
+					if (!data) return false; // overlay
+					if (data && data.isModal) return false; // modal pop up
+				}
+			}
+
+			return true;
 		}
 
 		/**
@@ -172,6 +246,9 @@ package org.as3commons.ui.layer {
 				_numModalPopUps--;			
 			}
 			_container.removeChild(displayObject);			
+
+			if (_popUpCallback != null) _popUpCallback();
+			if (popUpData.isModal && _modalPopUpCallback != null) _modalPopUpCallback();
 		}
 		
 		/**
@@ -191,6 +268,7 @@ package org.as3commons.ui.layer {
 			_container.addChildAt(overlay, _container.getChildIndex(displayObject));
 			popUpData.modalOverlay = overlay;
 			_numModalPopUps++;
+			if (_modalPopUpCallback != null) _modalPopUpCallback();
 		}
 		
 		/**
@@ -209,6 +287,7 @@ package org.as3commons.ui.layer {
 			_container.removeChild(popUpData.modalOverlay);
 			popUpData.modalOverlay = null;
 			_numModalPopUps--;
+			if (_modalPopUpCallback != null) _modalPopUpCallback();
 		}
 		
 		/*

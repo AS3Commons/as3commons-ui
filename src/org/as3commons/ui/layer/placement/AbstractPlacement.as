@@ -44,11 +44,6 @@ package org.as3commons.ui.layer.placement {
 		protected var _bounds : Rectangle;
 
 		/**
-		 * Place callback.
-		 */
-		protected var _placeCallback : Function;
-
-		/**
 		 * Horizontal anchor swap on bounds flag.
 		 */
 		protected var _autoSwapAnchorsH : Boolean;
@@ -322,10 +317,7 @@ package org.as3commons.ui.layer.placement {
 			_usedPlacement.layerAnchor = layerAnchor;
 			
 			// move layer
-			if (_placeCallback != null) {
-				_placeCallback(_layer, _layerLocal);
-
-			} else if (moveLayer) {
+			if (moveLayer) {
 				_layer.x = _layerLocal.x;
 				_layer.y = _layerLocal.y;
 			}
