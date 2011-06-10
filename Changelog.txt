@@ -1,13 +1,25 @@
+Version 0.3
+----------------------------------------------------------
+
+- [Layers][Dev] New package layers containing PopUpManager, ToolTipManager, Placement
+
+- [Invalidation][Bug] Objects still were watched for the added/removed event after a call to stopAllValidations()
+
+- [Invalidation][Bug] Objects processed successfully still were watched for the REMOVED_FROM_STAGE event.
+
+- [Layouts][Bug] HGroup and VGroup did not work with cellconfig objects (hIndex, vIndex)
+
+
 Version 0.2.1
 ----------------------------------------------------------
 
-- [LifeCycle][Dev] Improvements of Invalidation & LifeCycle
+- [Invalidation][Dev] Improvements of Invalidation & LifeCycle
 
 
 Version 0.2
 ----------------------------------------------------------
 
-- [LifeCycle][Dev] New package Invalidation & LifeCycle
+- [Invalidation][Dev] New package Invalidation & LifeCycle
 
 
 Version 0.1.3

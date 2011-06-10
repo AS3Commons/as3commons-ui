@@ -6,6 +6,8 @@ Version 0.1: The first version of UI comes already with a nifty layout package c
 
 Version 0.2: Adds the Invalidation & LifeCycle package which provides a clean and simple implementation of a component life cycle (init, update, cleanUp).
 
+Version 0.3: Layers package including the generic managers PopUpManager, ToolTipManager and the util Placement.
+
 h3. References
 
 *Downloads*
@@ -17,6 +19,8 @@ h3. References
 * "Layouts documentation":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/
 * "Layouts showcase":http://sibirjak.com/osflash/projects/as3commons-ui/layouts/showcase/
 * "Invalidation & LifeCycle documentation":http://sibirjak.com/osflash/projects/as3commons-ui/invalidation-lifecycle/
+* "Layers documentation":http://sibirjak.com/osflash/projects/as3commons-ui/layers/
+
 * "Project Homepage":http://sibirjak.com/osflash/projects/as3commons-ui/ (Overview, Features, Documentation, Examples)
 * "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
 * "Wiki":https://github.com/AS3Commons/as3commons-ui/wiki
