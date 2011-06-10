@@ -1,7 +1,11 @@
 package layer.tooltip.tooltiptutorial.step2 {
-	import layer.tooltip.tooltiptutorial.final.*;
-	import layer.tooltip.tooltiptutorial.step1.SimpleToolTip;
+	import layer.tooltip.tooltiptutorial.final.Box;
+	import layer.tooltip.tooltiptutorial.final.BoxToolTipSelector;
+	import layer.tooltip.tooltiptutorial.final.Globals;
+	import layer.tooltip.tooltiptutorial.step1.BoxToolTip;
+
 	import org.as3commons.ui.layer.ToolTipManager;
+
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
@@ -27,8 +31,8 @@ package layer.tooltip.tooltiptutorial.step2 {
 			Globals.toolTipManager = new ToolTipManager(container);
 			Globals.toolTipManager.registerToolTip(
 				new BoxToolTipSelector(),
-				new SimpleToolTipAdapter(),
-				new SimpleToolTip()
+				new BoxToolTipAdapter(),
+				new BoxToolTip()
 			);
 
 			// add content
