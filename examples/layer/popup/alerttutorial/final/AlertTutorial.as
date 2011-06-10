@@ -52,14 +52,16 @@ package layer.popup.alerttutorial.final {
 		}
 
 		private function alertClickCallback(alert : AlertBox, event : String) : void {
-			Alert.hide(alert);
 			if (event != AlertBox.ALERT_CANCEL) {
+				Alert.hide(alert, false);
 				Alert.show(
 					event.toUpperCase(), "The button \"" + event.toUpperCase() + "\" has been clicked. OK?",
 					[null, null, "OK"],
 					false, true,
 					alertClickCallback, false
 				);
+			} else {
+				Alert.hide(alert, false);
 			}
 		}
 	}

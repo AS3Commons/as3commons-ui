@@ -37,31 +37,36 @@ package layer.popup.alerttutorial.final {
 			if (hideOnClickOutside) {
 				alert.watchClickOutside(function() : void {
 					if (alert.alpha != 1) return; // tween not finished yet
-					hide(alert);
+					hide(alert, true);
 				});
 			}
 		}
 		
-		public static function hide(alert : AlertBox) : void {
+		public static function hide(alert : AlertBox, tweenOut : Boolean) : void {
 			alert.unwatchClickOutside();
 			
-			var tween : GTween = new GTween();
-			tween.target = alert;
-			tween.ease = Cubic.easeIn;
-			tween.duration = .2;
+			if (tweenOut) {
+				var tween : GTween = new GTween();
+				tween.target = alert;
+				tween.ease = Cubic.easeIn;
+				tween.duration = .2;
+	
+				// tween position
+				tween.setValue("x", alert.x + alert.width/2);
+				tween.setValue("y", alert.y + alert.height/2);
+				// tween scale
+				tween.setValue("scaleX", 0);
+				tween.setValue("scaleY", 0);
+				// tween alpha
+				tween.setValue("alpha", 0);
+				
+				tween.onComplete = function(tween : GTween) : void {
+					Globals.popUpManager.removePopUp(alert);
+				};
 
-			// tween position
-			tween.setValue("x", alert.x + alert.width/2);
-			tween.setValue("y", alert.y + alert.height/2);
-			// tween scale
-			tween.setValue("scaleX", 0);
-			tween.setValue("scaleY", 0);
-			// tween alpha
-			tween.setValue("alpha", 0);
-			
-			tween.onComplete = function(tween : GTween) : void {
+			} else {
 				Globals.popUpManager.removePopUp(alert);
-			};
+			}
 		}
 	}
 }
