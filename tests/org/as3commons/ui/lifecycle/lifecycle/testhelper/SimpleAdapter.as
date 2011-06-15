@@ -36,7 +36,8 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 
 		override protected function onUpdate() : void {
 			_updateCalls++;
-			LifeCycleWatcher.update(_component, _updateKinds.toArray());
+			var updateKinds : Array = _updateKinds ? _updateKinds.toArray() : [];
+			LifeCycleWatcher.update(_component, updateKinds);
 		}
 		
 		override protected function onCleanUp() : void {
