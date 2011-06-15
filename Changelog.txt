@@ -1,3 +1,16 @@
+Version 0.3.1
+----------------------------------------------------------
+
+- [Layer][Dev] Trying to register the same tooltip adapter with another component now throws an error.
+
+- [Layer][Dev] Added public getters for tooltip and owner to ToolTipAdapter.
+
+- [LifeCycle][Dev] Performance optimizations
+
+- [LifeCycle][Bug] Removing a single component from LifeCycle did not remove scheduled validations.
+
+
+
 Version 0.3
 ----------------------------------------------------------
 
