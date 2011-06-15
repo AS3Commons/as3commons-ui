@@ -17,7 +17,6 @@ package org.as3commons.ui.lifecycle.i10n {
 
 	import org.as3commons.collections.LinkedMap;
 	import org.as3commons.collections.LinkedSet;
-	import org.as3commons.collections.Set;
 	import org.as3commons.collections.framework.IIterator;
 	import org.as3commons.collections.framework.IMapIterator;
 	import org.as3commons.collections.framework.IOrderedMap;
@@ -262,7 +261,6 @@ package org.as3commons.ui.lifecycle.i10n {
 			if (_queue.removeKey(queueItem.displayObject)) {
 				queueItem.displayObject.removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 				var properties : ISet = queueItem.getProperties();
-				if (!properties) properties = new Set();
 				invokeAdapters(adapters, function(adapter : II10NApapter) : void {
 					adapter.validate(queueItem.displayObject, properties);
 				});

@@ -70,6 +70,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		public function unregisterComponent(component : DisplayObject) : void {
 			_registry.unregisterComponent(component);
+			_i10n.stopValidation(component);
 		}
 
 		/**

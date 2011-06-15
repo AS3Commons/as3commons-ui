@@ -97,8 +97,6 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * <code>LifeCycleAdapter</code> constructor.
 		 */
 		public function LifeCycleAdapter() {
-			_autoUpdates = new LinkedSet();
-			_updateKinds = new Set();
 		}
 		
 		/*
@@ -125,6 +123,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		public function autoUpdateBefore(child : DisplayObject) : void {
 			if (child == _component) return;
 			
+			if (!_autoUpdates) _autoUpdates = new LinkedSet();
 			_autoUpdates.add(child);
 		}
 
@@ -133,6 +132,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		public function removeAutoUpdateBefore(child : DisplayObject) : void {
 			_autoUpdates.remove(child);
+			if (!_autoUpdates.size) _autoUpdates = null;
 		}
 
 		/**
@@ -164,6 +164,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function scheduleUpdate(updateKind : String) : void {
+			if (!_updateKinds) _updateKinds = new Set();
 			_updateKinds.add(updateKind);
 		}
 		
@@ -171,6 +172,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function shouldUpdate(updateKind : String) : Boolean {
+			if (!_updateKinds) return false;
 			return _updateKinds.has(updateKind);
 		}
 
@@ -257,6 +259,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		as3commons_ui function willValidate_internal() : void {
 			if (!_initialized) return;
 			
+			if (!_autoUpdates) return;
 			var iterator : IIterator = _autoUpdates.iterator();
 			while (iterator.hasNext()) {
 				_i10n.validateNow(iterator.next());
@@ -284,8 +287,8 @@ package org.as3commons.ui.lifecycle.lifecycle {
 				}
 
 				// cleanup
-				_updateKinds.clear();
-				_invalidProperties.clear();
+				_updateKinds = null;
+				_invalidProperties = null;
 				
 			} else {
 				if (_drawHandler != null) {
