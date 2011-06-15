@@ -53,6 +53,7 @@ package org.as3commons.ui.layer {
 		 * @param toolTip The tooltip instance used with the given adapter.
 		 */
 		public function registerToolTip(selector : IToolTipSelector, adapter : ToolTipAdapter, toolTip : DisplayObject) : void {
+			if (adapter.toolTip) throw new Error ("You cannot reuse a tooltip adapter");
 			if (_selectors.hasKey(selector)) _selectors.replaceFor(selector, adapter);
 			else _selectors.add(selector, adapter);
 			

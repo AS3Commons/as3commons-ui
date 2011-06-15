@@ -36,6 +36,24 @@ package org.as3commons.ui.layer.tooltip {
 		}
 
 		/**
+		 * The tooltip.
+		 * 
+		 * <p>The property is first available within the <code>onToolTip()</code> hook.</p>
+		 */
+		public function get toolTip() : DisplayObject {
+			return _layer;
+		}
+
+		/**
+		 * The current tooltip's owner.
+		 * 
+		 * <p>The property is first available within the <code>onContent()</code> hook.</p>
+		 */
+		public function get owner() : DisplayObject {
+			return _source;
+		}
+
+		/**
 		 * Anchor of the tooltip owner.
 		 */
 		public function set ownerAnchor(ownerAnchor : uint) : void {
