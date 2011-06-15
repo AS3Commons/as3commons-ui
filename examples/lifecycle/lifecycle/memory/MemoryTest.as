@@ -40,8 +40,8 @@ package lifecycle.lifecycle.memory {
 		private function add() : void {
 			for (var i : uint; i < 50; i++) {
 				var component : MemoryBox = new MemoryBox();
-				component.x = Math.round(Math.random() * (stage.stageWidth - 10));
-				component.y = 20 + Math.round(Math.random() * (stage.stageHeight - 30));
+				component.x = Math.round(Math.random() * (stage.stageWidth - 30));
+				component.y = 30 + Math.round(Math.random() * (stage.stageHeight - 60));
 				addChild(component);
 				_components.add(component);
 			}
