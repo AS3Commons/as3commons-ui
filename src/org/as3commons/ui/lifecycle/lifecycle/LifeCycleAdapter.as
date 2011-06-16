@@ -357,13 +357,14 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Calls the init callback.
 		 */
 		private function initComponent() : void {
+			_i10n.invalidate(_component);
+
 			if (_initHandler != null) {
 				_initHandler(this);
 			} else {
 				onInit();
 			}
-			
-			_i10n.invalidate(_component);
+
 		}
 
 	}
