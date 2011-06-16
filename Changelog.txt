@@ -1,3 +1,14 @@
+Version 0.3.2-snapshot
+----------------------------------------------------------
+
+- [LifeCycle][Dev] Moved initial invalidation command before the init hook to enable an immediate validation by calling validateNow() within the init hook.
+
+- [Layouts][Dev] Layout items not on the stage are now added to the stage before their size is evaluated. This enables components to perform some dimensioning within Event.ADDED_TO_STAGE.
+
+- [Invalidation][Bug] Stopping validation for one object did stop the queue at all.
+
+
+
 Version 0.3.1
 ----------------------------------------------------------
 
