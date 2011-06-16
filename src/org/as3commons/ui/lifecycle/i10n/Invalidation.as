@@ -145,6 +145,7 @@ package org.as3commons.ui.lifecycle.i10n {
 			
 			if (!_queue.size && _stage) {
 				_stage.removeEventListener(Event.EXIT_FRAME, stageExitFrame);
+				_stage = null;
 			}
 		}
 
