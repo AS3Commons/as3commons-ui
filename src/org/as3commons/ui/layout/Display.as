@@ -73,8 +73,6 @@ package org.as3commons.ui.layout {
 		 * @inheritDoc
 		 */
 		override protected function excludeLayoutItem(renderConfig : RenderConfig) : void {
-			if (_displayObject.parent != renderConfig.container) renderConfig.container.addChild(_displayObject);
-
 			if (renderConfig.hide) {
 				if (renderConfig.hideCallback != null) renderConfig.hideCallback(_displayObject);
 				else _displayObject.visible = false;

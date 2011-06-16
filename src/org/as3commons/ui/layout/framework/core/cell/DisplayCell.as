@@ -70,8 +70,6 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * @inheritDoc
 		 */
 		override protected function renderCellContent(position : Point) : void {
-			if (_displayObject.parent != renderConfig.container) renderConfig.container.addChild(_displayObject);
-
 			if (renderConfig.show) {
 				if (renderConfig.showCallback != null) renderConfig.showCallback(_displayObject);
 				else _displayObject.visible = true;

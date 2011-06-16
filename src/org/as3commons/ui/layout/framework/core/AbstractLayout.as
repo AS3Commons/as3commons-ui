@@ -319,6 +319,17 @@ package org.as3commons.ui.layout.framework.core {
 				
 				layoutItemRenderConfig = layoutItem.createRenderConfig(renderConfig);
 				
+				// if our layout item is a display object, we want to
+				// add it to the container if not done before. We need to
+				// do this here in order to enable the object to set some dimensions
+				// after it has been added to the stage.
+				if (layoutItem is Display) {
+					var displayObject : DisplayObject = Display(layoutItem).displayObject;
+					if (displayObject.parent != renderConfig.container) {
+						renderConfig.container.addChild(displayObject);
+					}
+				}
+
 				if (layoutItem.inLayout) {
 					layoutItem.parse(layoutItemRenderConfig);
 					parser.parseCell(layoutItem.cell);
