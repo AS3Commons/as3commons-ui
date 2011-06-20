@@ -12,7 +12,7 @@ h3. References
 
 *Downloads*
 
-* "Downloads":https://github.com/AS3Commons/as3commons-ui/downloads (ZIP with src, examples and tests, SWC)
+* "Downloads":http://sibirjak.com/osflash/projects/as3commons-ui/#a3-downloads (ZIP with src, examples and tests, SWC)
 
 *Documentation*
 
