@@ -73,6 +73,22 @@ package org.as3commons.ui.layer {
 		}
 		
 		/**
+		 * Optional method to explicitly set the popup container size.
+		 * 
+		 * <p>To calculate the centered position and size a modal overlay the PopUpManager
+		 * uses by default the stage's <code>stageWidth</code> and <code>stageHeight</code>
+		 * properties. In certain cases these properties may not be set propertly at the
+		 * time of instantiation. Is is possible to specify a size using this method.</p>
+		 * 
+		 * @param width The popup container width.
+		 * @param height The popup container height.
+		 */
+		public function setSize(width : uint, height : uint) : void {
+			_width = width;
+			_height = height;
+		}
+		
+		/**
 		 * Modal overlay template.
 		 * 
 		 * <p>An instance of this class is created with each added modal popup.</p>
