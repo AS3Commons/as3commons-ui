@@ -16,7 +16,6 @@
 package org.as3commons.ui.layout.framework.core.config {
 
 	import org.as3commons.ui.layout.CellConfig;
-	import org.as3commons.ui.layout.constants.Align;
 
 	/**
 	 * Util to merge two different cell configs.
@@ -36,14 +35,15 @@ package org.as3commons.ui.layout.framework.core.config {
 			if (!fromConfig) return toConfig;
 
 			if (!toConfig) toConfig = new CellConfig();
-
-			if (fromConfig.width) toConfig.width = fromConfig.width;
-			if (fromConfig.height) toConfig.height = fromConfig.height;
-			if (fromConfig.marginX) toConfig.marginX = fromConfig.marginX;
-			if (fromConfig.marginY) toConfig.marginY = fromConfig.marginY;
-			if (fromConfig.offsetX) toConfig.offsetX = fromConfig.offsetX;
-			if (fromConfig.hAlign != Align.LEFT) toConfig.hAlign = fromConfig.hAlign;
-			if (fromConfig.vAlign != Align.TOP) toConfig.vAlign = fromConfig.vAlign;
+			
+			if (fromConfig.propertyExplicitlySet("width")) toConfig.width = fromConfig.width;
+			if (fromConfig.propertyExplicitlySet("height")) toConfig.height = fromConfig.height;
+			if (fromConfig.propertyExplicitlySet("marginX")) toConfig.marginX = fromConfig.marginX;
+			if (fromConfig.propertyExplicitlySet("marginY")) toConfig.marginY = fromConfig.marginY;
+			if (fromConfig.propertyExplicitlySet("offsetX")) toConfig.offsetX = fromConfig.offsetX;
+			if (fromConfig.propertyExplicitlySet("offsetY")) toConfig.offsetY = fromConfig.offsetY;
+			if (fromConfig.propertyExplicitlySet("hAlign")) toConfig.hAlign = fromConfig.hAlign;
+			if (fromConfig.propertyExplicitlySet("vAlign")) toConfig.vAlign = fromConfig.vAlign;
 
 			return toConfig;
 		}

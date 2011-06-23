@@ -27,42 +27,178 @@ package org.as3commons.ui.layout {
 		/**
 		 * Cell width.
 		 */
-		public var width : uint;
+		private var _width : uint;
 
 		/**
 		 * Cell height.
 		 */
-		public var height : uint;
+		private var _height : uint;
 
 		/**
 		 * Cell horizontal margin.
 		 */
-		public var marginX : int;
+		private var _marginX : int;
 
 		/**
 		 * Cell vertical margin.
 		 */
-		public var marginY : int;
+		private var _marginY : int;
 
 		/**
 		 * Cell horizontal offset.
 		 */
-		public var offsetX : int;
+		private var _offsetX : int;
 
 		/**
 		 * Cell vertical offset.
 		 */
-		public var offsetY : int;
+		private var _offsetY : int;
 
 		/**
 		 * Cell horizontal align.
 		 */
-		public var hAlign : String = Align.LEFT;
+		private var _hAlign : String = Align.LEFT;
 
 		/**
 		 * Cell vertical align.
 		 */
-		public var vAlign : String = Align.TOP;
+		private var _vAlign : String = Align.TOP;
+		
+		/**
+		 * Changed properties.
+		 */
+		private var _propertiesSet : Object;
+
+		/**
+		 * CellConfig constructor.
+		 */
+		public function CellConfig() {
+			_propertiesSet = new Object();
+		}
+
+		/**
+		 * Cell width.
+		 */
+		public function set width(width : uint) : void {
+			_width = width;
+			_propertiesSet["width"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get width() : uint {
+			return _width;
+		}
+
+		/**
+		 * Cell height.
+		 */
+		public function set height(height : uint) : void {
+			_height = height;
+			_propertiesSet["height"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get height() : uint {
+			return _height;
+		}
+
+		/**
+		 * Cell horizontal margin.
+		 */
+		public function set marginX(marginX : int) : void {
+			_marginX = marginX;
+			_propertiesSet["marginX"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get marginX() : int {
+			return _marginX;
+		}
+
+		/**
+		 * Cell vertical margin.
+		 */
+		public function set marginY(marginY : int) : void {
+			_marginY = marginY;
+			_propertiesSet["marginY"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get marginY() : int {
+			return _marginY;
+		}
+
+		/**
+		 * Cell horizontal offset.
+		 */
+		public function set offsetX(offsetX : int) : void {
+			_offsetX = offsetX;
+			_propertiesSet["offsetX"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get offsetX() : int {
+			return _offsetX;
+		}
+
+		/**
+		 * Cell vertical offset.
+		 */
+		public function set offsetY(offsetY : int) : void {
+			_offsetY = offsetY;
+			_propertiesSet["offsetY"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get offsetY() : int {
+			return _offsetY;
+		}
+
+		/**
+		 * Cell horizontal align.
+		 */
+		public function set hAlign(hAlign : String) : void {
+			_hAlign = hAlign;
+			_propertiesSet["hAlign"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get hAlign() : String {
+			return _hAlign;
+		}
+
+		/**
+		 * Cell vertical align.
+		 */
+		public function set vAlign(vAlign : String) : void {
+			_vAlign = vAlign;
+			_propertiesSet["vAlign"] = true;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get vAlign() : String {
+			return _vAlign;
+		}
+		
+		public function propertyExplicitlySet(property : String) : Boolean {
+			return _propertiesSet.hasOwnProperty(property);
+		}
 
 	}
 }

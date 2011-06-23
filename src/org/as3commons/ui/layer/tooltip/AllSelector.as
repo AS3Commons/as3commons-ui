@@ -18,7 +18,7 @@ package org.as3commons.ui.layer.tooltip {
 	import flash.display.DisplayObject;
 
 	/**
-	 * Default <code>II10NSelector</code> implementation approving all objects.
+	 * Default <code>IToolTipSelector</code> implementation approving all objects.
 	 * 
 	 * @author Jens Struwe 23.05.2011
 	 */

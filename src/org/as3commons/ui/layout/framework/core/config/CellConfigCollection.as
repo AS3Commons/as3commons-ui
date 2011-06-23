@@ -79,10 +79,10 @@ package org.as3commons.ui.layout.framework.core.config {
 			if (y >= _height) y = 0;
 
 			var cellConfig : CellConfig;
-			if (x && y) cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[y * _width + x]);
+			cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[0]);
 			if (x) cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[x]);
 			if (y) cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[y * _width]);
-			cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[0]);
+			if (x && y) cellConfig = CellConfigMerge.merge(cellConfig, _cellConfigs[y * _width + x]);
 
 			return cellConfig;
 		}
