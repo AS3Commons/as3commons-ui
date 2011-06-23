@@ -1,6 +1,12 @@
 Version 0.3.2-snapshot
 ----------------------------------------------------------
 
+- [Layouts][Dev] Enabled cellconfig specifities. The specifity depends on the given hIndex and vIndex values. Given both (hIndex, vIndex) is more specific than given only (hIndex) or (vIndex) and more specific than leaving out the index. It's now possible to set up a general cellconfig for all cells and override it for a particular row, column or cell.
+
+- [Layer][Dev] Added general tooltip selector that match all components
+
+- [Layers][Dev] Added method to set an explicit size to PopUpManager wich is used to scale the modal overlay in the case the stage size is not yet known or should not be used.
+
 - [LifeCycle][Dev] Moved initial invalidation command before the init hook to enable an immediate validation by calling validateNow() within the init hook.
 
 - [Layouts][Dev] Layout items not on the stage are now added to the stage before their size is evaluated. This enables components to perform some dimensioning within Event.ADDED_TO_STAGE.
@@ -34,16 +40,19 @@ Version 0.3
 - [Layouts][Bug] HGroup and VGroup did not work with cellconfig objects (hIndex, vIndex)
 
 
+
 Version 0.2.1
 ----------------------------------------------------------
 
 - [Invalidation][Dev] Improvements of Invalidation & LifeCycle
 
 
+
 Version 0.2
 ----------------------------------------------------------
 
 - [Invalidation][Dev] New package Invalidation & LifeCycle
+
 
 
 Version 0.1.3
