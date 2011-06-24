@@ -1,6 +1,8 @@
 Version 0.3.2-snapshot
 ----------------------------------------------------------
 
+- [Layouts][Dev] Added possibility to add items in front of the list of items to be layouted.
+
 - [Layouts][Dev] Enabled cellconfig specifities. The specifity depends on the given hIndex and vIndex values. Given both (hIndex, vIndex) is more specific than given only (hIndex) or (vIndex) and more specific than leaving out the index. It's now possible to set up a general cellconfig for all cells and override it for a particular row, column or cell.
 
 - [Layer][Dev] Added general tooltip selector that match all components
