@@ -90,6 +90,19 @@ package org.as3commons.ui.layout.framework {
 		function add(...args) : void;
 		
 		/**
+		 * Adds the given list of items in front of the layout.
+		 * 
+		 * <p>A single argument may be a plain display object, an <code>ILayoutItem</code> or an array
+		 * containing each of them.</p>
+		 * 
+		 * <p>The item order of the given list is kept. The entire list is added in front and not
+		 * its reversion.</p>
+		 * 
+		 * @param args List of items to add in front of the layout.
+		 */
+		function addFirst(...args) : void;
+		
+		/**
 		 * Adds all display objects of the given container to the layout.
 		 * 
 		 * @param container The container to add its content to the layout.

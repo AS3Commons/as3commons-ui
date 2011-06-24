@@ -135,50 +135,22 @@ package org.as3commons.ui.layout.framework.core {
 		 * @inheritDoc
 		 */
 		public function add(...args) : void {
-			var item : *;
-			var layoutItem : AbstractLayoutItem;
-			
-			for (var i : uint = 0; i < args.length; i++) {
-				item = args[i];
-				
-				// array of items
-				if (item is Array) {
-					add.apply(null, item);
-					continue;
-				}
-				
-				// single item
-				if (item is DisplayObject) {
-					var display : Display = new Display();
-					display.displayObject = item;
-					_items.add(item, display);
-					
-					layoutItem = display;
-
-				} else if (item is AbstractLayoutItem) {
-					if (item is Display) {
-						if (!Display(item).displayObject) continue;
-						_items.add(Display(item).displayObject, item);
-
-					} else if (item is AbstractLayout) {
-						_items.add(item, item);
-	
-						if (!_subLayouts) _subLayouts = new LinkedSet();
-						_subLayouts.add(item);
-					}
-					layoutItem = item;
-
-				} else {
-					continue;
-				}
-				
-				if (layoutItem.id) {
-					if (!_itemIds) _itemIds = new Map();
-					_itemIds.add(layoutItem.id, layoutItem);
-				}
+			var items : Array = getItemsToAdd(args);
+			for (var i : uint = 0; i < items.length; i += 2) {
+				addItem(items[i], items[i + 1]);
 			}
 		}
-
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function addFirst(...args) : void {
+			var items : Array = getItemsToAdd(args);
+			for (var i : int = items.length - 2; i >= 0; i -= 2) {
+				addItemFirst(items[i], items[i + 1]);
+			}
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -372,6 +344,79 @@ package org.as3commons.ui.layout.framework.core {
 		/*
 		 * Private
 		 */
+
+		/**
+		 * Converts the given nested list of arguments into a flat one.
+		 */
+		private function getItemsToAdd(args : Array) : Array {
+			var item : *;
+			var items : Array = new Array();
+			
+			for (var i : uint = 0; i < args.length; i++) {
+				item = args[i];
+				
+				// array of items
+				if (item is Array) {
+					items = items.concat(getItemsToAdd(item));
+					continue;
+				}
+				
+				// single item
+				if (item is DisplayObject) {
+					var display : Display = new Display();
+					display.displayObject = item;
+					items.push(item, display);
+
+				} else if (item is AbstractLayoutItem) {
+					if (item is Display) {
+						if (!Display(item).displayObject) continue;
+						items.push(Display(item).displayObject, item);
+
+					} else if (item is AbstractLayout) {
+						items.push(item, item);
+					}
+
+				} else {
+					continue;
+				}
+			}
+
+			return items;
+		}
+
+		/**
+		 * Adds an item at end to the list.
+		 */
+		private function addItem(key : *, layoutItem : ILayoutItem) : void {
+			_items.add(key, layoutItem);
+			
+			if (layoutItem is AbstractLayout) {
+				if (!_subLayouts) _subLayouts = new LinkedSet();
+				_subLayouts.add(layoutItem);
+			}
+
+			if (layoutItem.id) {
+				if (!_itemIds) _itemIds = new Map();
+				_itemIds.add(layoutItem.id, layoutItem);
+			}
+		}
+		
+		/**
+		 * Adds an item in front of the list.
+		 */
+		private function addItemFirst(key : *, layoutItem : ILayoutItem) : void {
+			_items.addFirst(key, layoutItem);
+			
+			if (layoutItem is AbstractLayout) {
+				if (!_subLayouts) _subLayouts = new LinkedSet();
+				_subLayouts.addFirst(layoutItem);
+			}
+
+			if (layoutItem.id) {
+				if (!_itemIds) _itemIds = new Map();
+				_itemIds.add(layoutItem.id, layoutItem);
+			}
+		}
 
 		/**
 		 * Tests if the layout contains the given layout item.
