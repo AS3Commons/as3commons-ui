@@ -111,4 +111,13 @@
 		
 	</target>
 
+	<target name="Zip_Src" description="ZIP Sources">
+ 		<delete file="${ZIP}/${FILE_NAME}-${VERSION}-src.zip" />
+
+		<zip destfile="${ZIP}/${FILE_NAME}-${VERSION}-src.zip">
+			<zipfileset dir="${SRC}" />
+		</zip>
+		
+	</target>
+
 </project>
