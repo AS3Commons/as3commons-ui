@@ -42,18 +42,18 @@ package layout {
 				}),
 			
 				radioButton({
+					diff: -10,
+					group: "layouts",
+					value: vgroup("gap", 3, "hAlign", "center"),
+					label: "VGroup"
+				}),
+			
+				radioButton({
 					diff: -6,
 					group: "layouts",
 					value: hlayout("maxContentWidth", 500, "hGap", 3, "vGap", 3, "vAlign", "middle"),
 					selected: true,
 					label: "HLayout"
-				}),
-			
-				radioButton({
-					diff: -10,
-					group: "layouts",
-					value: vgroup("gap", 3, "hAlign", "center"),
-					label: "VGroup"
 				}),
 			
 				radioButton({
@@ -74,7 +74,6 @@ package layout {
 				}),
 			
 				radioButton({
-					diff: -6,
 					group: "layouts",
 					value: dyntable(
 						"maxContentWidth", 500, "hGap", 3, "vGap", 3,
@@ -82,6 +81,7 @@ package layout {
 					),
 					label: "DynTable"
 				})
+
 			).layout(this);
 		}
 		
@@ -110,7 +110,7 @@ package layout {
 				tween = new GTween();
 				tween.ease = Sine.easeOut;
 				tween.target = o;
-				tween.duration = .2;
+				tween.duration = .25;
 				tween.onComplete = function(tween : GTween) : void {
 					delete _tweens[tween.target];
 				};
