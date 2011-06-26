@@ -105,7 +105,7 @@ package org.as3commons.ui.layout.framework.core.row {
 					if (cellConfig && cellConfig[_width]) width = cellConfig[_width];
 					else width = rowItem.space[_width];
 					
-					if (_currentPosition + rowItem.space[_x] + width > _config.maxContentSize) return false;
+					if (_currentPosition + _config.gap + rowItem.space[_x] + width > _config.maxContentSize) return false;
 				}
 			}
 
