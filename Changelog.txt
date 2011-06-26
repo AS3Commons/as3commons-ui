@@ -13,6 +13,8 @@ Version 0.3.2-snapshot
 
 - [Layouts][Dev] Layout items not on the stage are now added to the stage before their size is evaluated. This enables components to perform some dimensioning within Event.ADDED_TO_STAGE.
 
+- [Layouts][Bug] Gap before the last item of a row/column was not considered in calculation of max content width.
+
 - [Invalidation][Bug] Stopping validation for one object did stop the queue at all.
 
 
