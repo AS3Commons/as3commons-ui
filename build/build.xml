@@ -4,7 +4,7 @@
 	<property file="build/build.env" />
 
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.3.2-snapshot" />
+	<property name="VERSION" value="0.3.2" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
@@ -61,7 +61,10 @@
 		<exec executable="${ASDOC}" failonerror="true">
 			<arg line="-doc-sources '${basedir}/${TMP}/src/org/as3commons/ui'" />
 			<arg line="-source-path '${TMP}/src'" />
+
+			<arg line="-main-title 'AS3Commons UI ${VERSION}'" />
 			<arg line="-window-title 'AS3Commons UI ${VERSION}'" />
+
 			<arg line="-output '${DOC}/apidoc'"/>
 			
 			<arg line="-external-library-path ${LIBS}" />

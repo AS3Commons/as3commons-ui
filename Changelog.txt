@@ -1,5 +1,7 @@
-Version 0.3.2-snapshot
+Version 0.3.2 - 2011-06-29
 ----------------------------------------------------------
+
+- [Layers] Added argument to hasModalPopUp to test if the given object is a modal popup
 
 - [Layouts][Dev] Added possibility to add items in front of the list of items to be layouted.
 
@@ -19,7 +21,7 @@ Version 0.3.2-snapshot
 
 
 
-Version 0.3.1
+Version 0.3.1 - 2011-06-15
 ----------------------------------------------------------
 
 - [Layer][Dev] Trying to register the same tooltip adapter with another component now throws an error.
@@ -32,7 +34,7 @@ Version 0.3.1
 
 
 
-Version 0.3
+Version 0.3 - 2011-06-10
 ----------------------------------------------------------
 
 - [Layers][Dev] New package layers containing PopUpManager, ToolTipManager, Placement
@@ -45,28 +47,28 @@ Version 0.3
 
 
 
-Version 0.2.1
+Version 0.2.1 - 2011-06-01
 ----------------------------------------------------------
 
 - [Invalidation][Dev] Improvements of Invalidation & LifeCycle
 
 
 
-Version 0.2
+Version 0.2 - 2011-05-30
 ----------------------------------------------------------
 
 - [Invalidation][Dev] New package Invalidation & LifeCycle
 
 
 
-Version 0.1.3
+Version 0.1.3 - 2011-05-20
 ----------------------------------------------------------
 
 - [Project] Update to AS3Commons Collections 1.3.0
 
 
 
-Version 0.1.2
+Version 0.1.2 - 2011-04-12
 ----------------------------------------------------------
 
 - [Layouts][Dev] Added numItems info to ILayout
@@ -75,7 +77,7 @@ Version 0.1.2
 
 
 
-Version 0.1.1
+Version 0.1.1 - 2011-04-08
 ----------------------------------------------------------
 
 - [Layouts][Bug] Cells in DynTable could not be aligned.
@@ -84,7 +86,7 @@ Version 0.1.1
 
 
 
-Version 0.1
+Version 0.1 - 2011-03-25
 ----------------------------------------------------------
 
 Initial release
