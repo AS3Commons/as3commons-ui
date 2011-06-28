@@ -149,6 +149,26 @@ package org.as3commons.ui.layer.placement {
 		}
 
 		/**
+		 * Horizontal anchor swap tolerance.
+		 * 
+		 * <p>If horizontal auto swapping is enabled, this property defines
+		 * a tolerance shift before swapping is performed. If the layer is
+		 * placed out of bounds but still within this tolerance it will be
+		 * auto corrected to the position of the bounds. If the layer is
+		 * placed out of this tolerance value, anchors will be swapped.</p>
+		 */
+		public function set autoSwapAnchorsHDiff(diff : uint) : void {
+			_autoSwapAnchorsHDiff = diff;
+		}
+
+		/**
+		 * @private
+		 */
+		public function get autoSwapAnchorsHDiff() : uint {
+			return _autoSwapAnchorsHDiff;
+		}
+
+		/**
 		 * Vertical anchor swap on bounds flag.
 		 * 
 		 * <p>If bounds are specified and this property is set to <code>true</code>
@@ -163,26 +183,6 @@ package org.as3commons.ui.layer.placement {
 		 * <li>Layer overlaps bottom and source anchor is bottom and layer anchor is top.</li>
 		 * <li>Layer overlaps top and source anchor is top and layer anchor is bottom.</li>
 		 * </ul>
-		 */
-		public function set autoSwapAnchorsHDiff(diff : uint) : void {
-			_autoSwapAnchorsHDiff = diff;
-		}
-
-		/**
-		 * @private
-		 */
-		public function get autoSwapAnchorsHDiff() : uint {
-			return _autoSwapAnchorsHDiff;
-		}
-
-		/**
-		 * Horizontal anchor swap tolerance.
-		 * 
-		 * <p>If horizontal auto swapping is enabled, this property defines
-		 * a tolerance shift before swapping is performed. If the layer is
-		 * placed out of bounds but still within this tolerance it will be
-		 * auto corrected to the position of the bounds. If the layer is
-		 * placed out of this tolerance value, anchors will be swapped.</p>
 		 */
 		public function set autoSwapAnchorsV(autoSwap : Boolean) : void {
 			_autoSwapAnchorsV = autoSwap;
