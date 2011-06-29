@@ -5,3 +5,4 @@ h3. References
 * "Project Homepage":http://sibirjak.com/osflash/projects/as3commons-ui/ (Overview, Features, Documentation, Examples)
 * "Downloads":http://sibirjak.com/osflash/projects/as3commons-ui/downloads/ (ZIP, SWC)
 * "APIDoc":http://as3commons.github.com/as3commons-ui/apidoc/
+* "Changelog":https://github.com/AS3Commons/as3commons-ui/blob/master/Changelog.txt
