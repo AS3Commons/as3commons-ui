@@ -1,0 +1,90 @@
+form {
+	margin: 20px;
+	font-size: 12px;
+}
+
+form, select {
+	font-family: monospace;
+}
+
+input[type="radio"] {
+	vertical-align: middle;
+}
+
+span {
+	vertical-align: middle;
+}
+
+td {
+	padding: 5px 20px 5px 10px;
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	vertical-align: top;
+}
+
+td:first-child {
+	border-left: none;
+}
+
+tr:first-child td {
+	border-top: none;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid #666666;
+	margin: 20px;
+}
+
+h1, h2 {
+	font-family: sans-serif;
+	font-weight: normal;
+}
+
+h1 {
+	margin: 20px 0 0 20px;
+	font-size: 30px;
+	letter-spacing: -1px;
+}
+
+
+
+
+
+#focus_container {
+	margin: 20px 10px;
+}
+
+#focus_container  *:focus {
+	outline: none;
+	background-color: #EEEEEE;
+	border-color: #666666;
+}
+
+input[type="button"].focus {
+	width: 30px;
+	height: 190px;
+	margin: 10px;
+	vertical-align: top;
+	border: 1px solid #BBBBBB;
+	background: white;
+}
+
+input.focus2 {
+	width: 105px;
+	height: 30px;
+	margin: 10px;
+	margin-left: 10px;
+	vertical-align: top;
+	border: 1px solid #BBBBBB;
+	background: white;
+}
+
+input[type="button"]::-moz-focus-inner {
+	border: none;
+}
+
+object {
+	border: 1px solid #BBBBBB;
+	margin: 10px; 
+}
