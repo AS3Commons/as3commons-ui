@@ -20,7 +20,8 @@
 				StageProxy.stage = stage;
 				
 				core = new FlexUnitCore();
-				core.addListener( new UIListener( uiListener ));
+				core.addListener(new UIListener(uiListener));
+
 				core.run(org.as3commons.ui.lifecycle.LifeCycleTests);
 			}
 		]]>

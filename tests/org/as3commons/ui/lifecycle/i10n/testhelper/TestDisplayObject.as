@@ -14,7 +14,7 @@ package org.as3commons.ui.lifecycle.i10n.testhelper {
 		}
 		
 		override public function toString() : String {
-			return "[TestDisplayObject] name:" + _name;
+			return "[" + _name + "]";
 		}
 	}
 }
