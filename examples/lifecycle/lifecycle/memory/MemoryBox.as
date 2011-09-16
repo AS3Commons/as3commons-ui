@@ -6,14 +6,15 @@ package lifecycle.lifecycle.memory {
 
 		public function MemoryBox() {
 			_lcAdapter = new MemoryBoxAdapter();
-			MemoryGlobals.lifeCycle.registerComponent(this, _lcAdapter);
-		}
-
-		public function invalidate() : void {
+			MemoryGlobals.lifeCycle.registerDisplayObject(this, _lcAdapter);
 			_lcAdapter.invalidate();
 		}
 
-		public function draw() : void {
+		public function update() : void {
+			_lcAdapter.invalidate();
+		}
+
+		public function render() : void {
 			with (graphics) {
 				clear();
 				beginFill(MemoryGlobals.boxColor);
@@ -22,7 +23,7 @@ package lifecycle.lifecycle.memory {
 		}
 		
 		public function cleanUp() : void {
-			MemoryGlobals.lifeCycle.unregisterComponent(this);
+			MemoryGlobals.lifeCycle.unregisterDisplayObject(this);
 		}
 	}
 }

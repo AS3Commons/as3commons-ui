@@ -1,6 +1,6 @@
 package lifecycle.lifecycle {
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 	import flash.display.Sprite;
+	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 
 	public class SetupLifeCycle extends Sprite {
 		public function SetupLifeCycle() {

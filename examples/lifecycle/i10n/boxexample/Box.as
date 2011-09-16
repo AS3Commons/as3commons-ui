@@ -2,27 +2,30 @@ package lifecycle.i10n.boxexample {
 	import flash.display.Sprite;
 
 	public class Box extends Sprite {
-		private var _name : String;
+		private var _adapter : BoxAdapter;
 		private var _backgroundColor : uint = 0xCCCCCC;
 		private var _borderColor : uint = 0x999999;
 
-		public function Box(name : String) {
-			_name = name;
-			I10N.invalidate(this);
+		public function Box(boxName : String) {
+			name = boxName;
+			
+			_adapter = new BoxAdapter();
+			I10NService.instance.registerDisplayObject(this, _adapter);
+			_adapter.invalidate(I10NService.PHASE_VALIDATE);
 		}
 
 		public function set backgroundColor(backgroundColor : uint) : void {
 			_backgroundColor = backgroundColor;
-			I10N.invalidate(this);
+			_adapter.invalidate(I10NService.PHASE_VALIDATE);
 		}
 
 		public function set borderColor(borderColor : uint) : void {
 			_borderColor = borderColor;
-			I10N.invalidate(this);
+			_adapter.invalidate(I10NService.PHASE_VALIDATE);
 		}
 
-		public function update() : void {
-			trace (_name, "update");
+		public function render() : void {
+			trace ("RENDER", name);
 			with (graphics) {
 				clear();
 				lineStyle(1, _borderColor);

@@ -1,17 +1,15 @@
 package lifecycle.lifecycle.boxexample {
 	import flash.utils.setTimeout;
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 	import flash.display.Sprite;
 
 	public class BoxLifeCycleExample extends Sprite {
-		
 		private var _box1 : Box;
 		private var _box2 : Box;
 		private var _box3 : Box;
 		private var _box4 : Box;
 		
 		public function BoxLifeCycleExample() {
-			LIFE_CYCLE = new LifeCycle();
+			LifeCycleService.start();
 			
 			_box1 = new Box("Box1");
 			addChild(_box1);

@@ -3,23 +3,20 @@ package lifecycle.lifecycle {
 
 	public class SimpleAdapter extends LifeCycleAdapter {
 		override protected function onInit() : void {
-			Dummy(_component).init();
+			Dummy(displayObject).init();
+			Dummy(displayObject).createChildren();
 		}
 
-		override protected function onDraw() : void {
-			Dummy(_component).draw();
+		override protected function onValidate() : void {
+			Dummy(displayObject).validate();
 		}
 
-		override protected function onPrepareUpdate() : void {
-			Dummy(_component).prepareUpdate();
+		override protected function onCalculateDefaults() : void {
+			Dummy(displayObject).calculateDefaults();
 		}
 
-		override protected function onUpdate() : void {
-			Dummy(_component).update();
-		}
-
-		override protected function onCleanUp() : void {
-			Dummy(_component).cleanUp();
+		override protected function onRender() : void {
+			Dummy(displayObject).render();
 		}
 	}
 }
@@ -27,18 +24,19 @@ package lifecycle.lifecycle {
 import flash.display.Sprite;
 internal class Dummy extends Sprite {
 	internal function init() : void {
-		// init something e.g. styles
+		// init something e.g. styles or listeners
 	}
-	internal function draw() : void {
-		// draw something
+	internal function createChildren() : void {
+		// create and add children
 	}
-	internal function prepareUpdate() : void {
-		// determine update reasons
+	internal function validate() : void {
+		// set properties to children
+		// schedule calls to calculateDefaults and render
 	}
-	internal function update() : void {
-		// update something
+	internal function calculateDefaults() : void {
+		// calculate values for properties not set yet
 	}
-	internal function cleanUp() : void {
-		// remove references and listeners
+	internal function render() : void {
+		// draw something or arrange children
 	}
 }

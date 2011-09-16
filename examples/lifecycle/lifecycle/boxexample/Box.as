@@ -1,40 +1,51 @@
 package lifecycle.lifecycle.boxexample {
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter;
 	import flash.display.Sprite;
 
 	public class Box extends Sprite {
-		private var _lcAdapter : LifeCycleAdapter;
-		private var _name : String;
-		private var _backgroundColor : uint = 0xCCCCCC;
-		private var _borderColor : uint = 0x999999;
+		private var _adapter : BoxAdapter;
+		private var _backgroundColor : uint;
+		private var _borderColor : uint;
 
-		public function Box(name : String) {
-			_name = name;
-			_lcAdapter = new BoxAdapter();
-			LIFE_CYCLE.registerComponent(this, _lcAdapter);
+		public function Box(boxName : String) {
+			name = boxName;
+			_adapter = new BoxAdapter();
+			LifeCycleService.instance.registerDisplayObject(this, _adapter);
+			_adapter.invalidate();
 		}
 
 		public function set backgroundColor(backgroundColor : uint) : void {
 			_backgroundColor = backgroundColor;
-			_lcAdapter.invalidate();
+			_adapter.invalidate();
 		}
 
 		public function set borderColor(borderColor : uint) : void {
 			_borderColor = borderColor;
-			_lcAdapter.invalidate();
+			_adapter.invalidate();
 		}
 		
 		public function init() : void {
-			trace (_name, "init");
+			trace ("INIT", name);
+			_backgroundColor = 0xCCCCCC;
 		}
 
-		public function draw() : void {
-			trace (_name, "draw");
-			drawBox();
+		public function validate() : void {
+			trace ("VALIDATE", name);
+			
+			if (!_borderColor) _adapter.invalidateDefaults("border");
+			if (!_backgroundColor) _adapter.invalidateDefaults("background");
+			
+			_adapter.scheduleRendering();
 		}
 
-		public function update() : void {
-			trace (_name, "update");
+		public function calculateDefaults() : void {
+			trace ("CALCULATE_DEFAULTS", name);
+			
+			if (_adapter.defaultIsInvalid("border")) _borderColor = 0x999999;
+			if (_adapter.defaultIsInvalid("background")) _backgroundColor = 0xCCCCCC;
+		}
+
+		public function render() : void {
+			trace ("RENDER", name);
 			drawBox();
 		}
 		

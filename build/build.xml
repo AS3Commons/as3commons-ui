@@ -4,7 +4,7 @@
 	<property file="build/build.env" />
 
 	<property name="FILE_NAME" value="as3commons-ui" />
-	<property name="VERSION" value="0.3.2" />
+	<property name="VERSION" value="0.3.3" />
 
 	<property name="BUILD" value="build" />
 	<property name="SRC" value="src" />
@@ -85,8 +85,10 @@
 			
 			<arg line="-package org.as3commons.ui.lifecycle.i10n 'Invalidation (public).'" />
 			<arg line="-package org.as3commons.ui.lifecycle.i10n.core 'Invalidation - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.lifecycle.i10n.errors 'Invalidation runtime errors (public).'" />
 			<arg line="-package org.as3commons.ui.lifecycle.lifecycle 'LifeCycle (public).'" />
 			<arg line="-package org.as3commons.ui.lifecycle.lifecycle.core 'LifeCycle - Framework internal code (hidden).'" />
+			<arg line="-package org.as3commons.ui.lifecycle.lifecycle.errors 'LifeCycle runtime errors (public).'" />
 			
 			<arg line="-package org.as3commons.ui.layer 'Layers (public).'" />
 			<arg line="-package org.as3commons.ui.layer.placement 'Layers - Placement classes (public).'" />
@@ -94,6 +96,9 @@
 			<arg line="-package org.as3commons.ui.layer.tooltip 'Layers - ToolTipManager classes (public).'" />
 
 			<arg line="-package org.as3commons.ui.focus 'Focus (public).'" />
+
+			<arg line="-package org.as3commons.ui.framework.uiservice 'Abstract UI service classes (public).'" />
+			<arg line="-package org.as3commons.ui.framework.uiservice.errors 'Abstract UI service runtime errors (public).'" />
 		</exec>
 
 		<copy file="${BUILD}/asdoc/asdoc.js" todir="${DOC}/apidoc" overwrite="true" />

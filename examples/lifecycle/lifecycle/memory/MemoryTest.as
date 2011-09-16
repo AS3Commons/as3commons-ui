@@ -1,13 +1,14 @@
 package lifecycle.lifecycle.memory {
-	import org.as3commons.collections.ArrayList;
-	import org.as3commons.collections.framework.IIterator;
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
+	import org.as3commons.collections.ArrayList;
+	import org.as3commons.collections.framework.IIterator;
+	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
+
 
 	public class MemoryTest extends Sprite {
 		private var _components : ArrayList;
@@ -52,7 +53,7 @@ package lifecycle.lifecycle.memory {
 			MemoryGlobals.boxColor = Math.round(Math.random() * 0xCCCCCC);
 			var i : IIterator = _components.iterator();
 			while (i.hasNext()) {
-				MemoryBox(i.next()).invalidate();
+				MemoryBox(i.next()).update();
 			}
 		}
 		

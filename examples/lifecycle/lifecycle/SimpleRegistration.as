@@ -1,6 +1,6 @@
 package lifecycle.lifecycle {
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 	import flash.display.Sprite;
+	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
 
 	public class SimpleRegistration extends Sprite {
 		public function SimpleRegistration() {
@@ -10,14 +10,14 @@ package lifecycle.lifecycle {
 	}
 }
 
+import flash.display.Sprite;
 import lifecycle.lifecycle.SimpleAdapter;
 import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
-import flash.display.Sprite;
 
 internal class Component extends Sprite {
 	private var _lcAdapter : SimpleAdapter;
 	public function Component(lifeCycle : LifeCycle) {
 		_lcAdapter = new SimpleAdapter();
-		lifeCycle.registerComponent(this, _lcAdapter);
+		lifeCycle.registerDisplayObject(this, _lcAdapter);
 	}
 }

@@ -3,15 +3,19 @@ package lifecycle.lifecycle.boxexample {
 
 	public class BoxAdapter extends LifeCycleAdapter {
 		override protected function onInit() : void {
-			Box(_component).init();
+			Box(displayObject).init();
+		}
+		
+		override protected function onValidate() : void {
+			Box(displayObject).validate();
 		}
 
-		override protected function onDraw() : void {
-			Box(_component).draw();
+		override protected function onCalculateDefaults() : void {
+			Box(displayObject).calculateDefaults();
 		}
 
-		override protected function onUpdate() : void {
-			Box(_component).update();
+		override protected function onRender() : void {
+			Box(displayObject).render();
 		}
 	}
 }

@@ -1,188 +1,113 @@
-/**
- * Copyright 2011 The original author or authors.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.as3commons.ui.lifecycle.lifecycle {
 
 	import flash.display.DisplayObject;
 
 	/**
-	 * <code>LifeCycle</code> component adapter definition.
+	 * LifeCycle adapter definition.
 	 * 
-	 * @author Jens Struwe 23.05.2011
+	 * @author Jens Struwe 15.09.2011
 	 */
 	public interface ILifeCycleAdapter {
 		
 		/**
-		 * Component with that the adapter has been registered in LifeCycle.
+		 * The object associated with this adapter.
 		 */
-		function get component() : DisplayObject;
+		function get displayObject() : DisplayObject;
 
 		/**
-		 * Flag to indicate if the component has already been initialized.
+		 * The nest level of the object.
 		 * 
-		 * <p><code>initialized</code> will be <code>true</code> if both the appropriate
-		 * <code>init()</code> and <code>draw()</code> methods have been called and the
-		 * next attempt to invalidate the component will start an update cycle rather
-		 * than triggering <code>init()</code> and <code>draw()</code>.</p>
-		 * 
-		 * <p>The property might be used to determine if the initial state of the
-		 * component has been drawn and if necessary child objects are available.</p>
+		 * <p>The nest level is set to <code>-1</code> if the object is not in the
+		 * display list or the adapter is not registered.</p>
 		 */
-		function get initialized() : Boolean;
+		function get nestLevel() : int;
 		
 		/**
-		 * Registers a component to be updated right before an update is performed.
-		 * 
-		 * @param child The component to auto update.
+		 * Method to test if the object is invalid for at least one phase.
 		 */
-		function autoUpdateBefore(child : DisplayObject) : void;
-		
+		function isInvalidForAnyPhase() : Boolean;
+
 		/**
-		 * Removes a component from the auto update list.
-		 * 
-		 * @param child The component to remove from auto updates.
-		 */
-		function removeAutoUpdateBefore(child : DisplayObject) : void;
-		
-		/**
-		 * Starts an invalidation process.
+		 * Invalidates the object for the validation phase.
 		 * 
 		 * <p>The optional <code>property</code> argument may be used to declare only parts
-		 * of a component to be updated.</p>
+		 * of a component to be invalid.</p>
 		 * 
-		 * <p>If <code>property</code> is set, a call to <code>isInvalid(property)</code> within
-		 * the update hooks <code>onPrepareUpdate()</code> and <code>onUpdate()</code> will return
-		 * <code>true</code>.</p>
+		 * <p>If <code>property</code> is not set, the system assumes the wish of a full validation. In that
+		 * case a test for <code>isInvalid()</code> will return <code>true</code> for any property.</p>
 		 * 
-		 * <p>If <code>property</code> is not set, the system assumes the wish of a full update,
-		 * and a call to <code>isInvalid(property)</code> withing the update hooks <code>onPrepareUpdate()</code>
-		 * and <code>onUpdate()</code> will always return <code>true</code> regardless of the actual
-		 * value of <code>property</code>.</p>
-		 * 
-		 * @param property An optional invalidation property.
+		 * @param property An optional property to invalidate.
 		 */
 		function invalidate(property : String = null) : void;
+
+		/**
+		 * Method to test if the object is invalid for validation phase.
+		 * 
+		 * <p>If no <code>property</code> is given, the method checks if the object
+		 * is invalid for at least one property.</p>
+		 * 
+		 * @param property A property to test.
+		 */
+		function isInvalid(property : String = null) : Boolean;
 		
 		/**
-		 * Immediately performs an update.
+		 * Invalidates the object for the calculate defaults phase.
 		 * 
-		 * <p>Components not invalidated beforehand are not validated.</p>
+		 * <p>The optional <code>property</code> argument may be used to declare only parts
+		 * of a component to be validated.</p>
 		 * 
-		 * <p>Components currently not in the display list are not validated.</p>
+		 * <p>If <code>property</code> is not set, the system assumes the wish of a full validation. In that
+		 * case a test for <code>defaultIsInvalid()</code> will return <code>true</code> for any property.</p>
+		 * 
+		 * @param property An optional property to invalidate.
+		 */
+		function invalidateDefaults(property : String = null) : void;
+
+		/**
+		 * Method to test if the object is invalid for the calculate defaults phase.
+		 * 
+		 * <p>If no <code>property</code> is given, the method checks if the object
+		 * is invalid for at least one property.</p>
+		 * 
+		 * @param property A property to test.
+		 */
+		function defaultIsInvalid(property : String = null) : Boolean;
+		
+		/**
+		 * Schedules a rendering in the render phase.
+		 * 
+		 * <p>The optional <code>property</code> argument may be used to declare only parts
+		 * of a component to be rendered.</p>
+		 * 
+		 * <p>If <code>property</code> is not set, the system assumes the wish of a full rendering. In that
+		 * case a test for <code>shouldRender()</code> will return <code>true</code> for any property.</p>
+		 * 
+		 * @param property An optional render property.
+		 */
+		function scheduleRendering(property : String = null) : void;
+
+		/**
+		 * Method to test if the object is invalid for the render phase.
+		 * 
+		 * <p>If no <code>property</code> is given, the method checks if the object
+		 * is invalid for at least one property.</p>
+		 * 
+		 * @param property A property to test.
+		 */
+		function shouldRender(property : String = null) : Boolean;
+		
+		/**
+		 * Validates the objects immediately.
+		 * 
+		 * <p>You cannot all this method during a running validation cycle. An error
+		 * is thrown if you try.</p>
+		 * 
+		 * <p>The display list of the current object including all invalid children gets validated.</p>
+		 * 
+		 * <p>Invalidating non-children during a <code>validateNow()</code> run will skip those components
+		 * and schedule them to the next usual validation cycle.</p>
 		 */
 		function validateNow() : void;
-
-		/**
-		 * Returns <code>true</code> if the <code>property</code> has been invalidated beforehand.
-		 * 
-		 * <p>Returns also <code>true</code> for any property value, if an invalidation
-		 * process had been invoked without specification of an invalidation property
-		 * (<code>invalidate()</code>).</p>
-		 * 
-		 * <p>This method might be used within the update hooks <code>onPrepareUpdate()</code>
-		 * and <code>onUpdate()</code> to determine what properties of a component had been
-		 * changed and should cause an visual update.</p>
-		 * 
-		 * @param property The property that might be invalid.
-		 */
-		function isInvalid(property : String) : Boolean;
-		
-		/**
-		 * Defines an <code>updateKind</code> that can be considered within the <code>onUpdate</code> hook.
-		 * 
-		 * <p>This method might be used within the update hook <code>onPrepareUpdate()</code> to
-		 * schedule a visual update that should be subsequently executed within the <code>onUpdate()</code>
-		 * hook.</p>
-		 * 
-		 * @param updateKind The visual update to schedule.
-		 */
-		function scheduleUpdate(updateKind : String) : void;
-		
-		/**
-		 * Returns <code>true</code> if the <code>updateKind</code> has been scheduled beforehand.
-		 * 
-		 * @param property The kind of update that could be executed.
-		 */
-		function shouldUpdate(updateKind : String) : Boolean;
-
-		/**
-		 * Removes all listeners and references of the particular adapter.
-		 * 
-		 * <p>The adapter is then eligible for garbage collection.</p>
-		 * 
-		 * <p>Calling <code>cleanUp</code> will subsequently invoke the clean up hook <code>onCleanUp()</code>
-		 * to enable a client to perform further disposals.</p>
-		 */
-		function cleanUp() : void;
-
-		/**
-		 * Sets a custom callback for the init event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onInit()</code> hook.</p>
-		 * 
-		 * <p>Since the init hook is triggered at the time of registration, a custom handler must be set
-		 * before the component has been registered.</p>
-		 * 
-		 * @param initHandler The init callback.
-		 */
-		function set initHandler(initHandler : Function) : void;
-		
-		/**
-		 * Sets a custom callback for the draw event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onDraw()</code> hook.</p>
-		 * 
-		 * @param initHandler The draw callback.
-		 */
-		function set drawHandler(drawHandler : Function) : void;
-		
-		/**
-		 * Sets a custom callback for the init complete event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onInitComplete()</code> hook.</p>
-		 * 
-		 * @param initCompleteHandler The init complete callback.
-		 */
-		function get initCompleteHandler() : Function;
-
-		/**
-		 * Sets a custom callback for the prepare update event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onPrepareUpdate()</code> hook.</p>
-		 * 
-		 * @param prepareUpdateHandler The prepare update callback.
-		 */
-		function set prepareUpdateHandler(prepareUpdateHandler : Function) : void;
-		
-		/**
-		 * Sets a custom callback for the update event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onUpdate()</code> hook.</p>
-		 * 
-		 * @param prepareUpdateHandler The update callback.
-		 */
-		function set updateHandler(updateHandler : Function) : void;
-		
-		/**
-		 * Sets a custom callback for the clean up event.
-		 * 
-		 * <p>If specified, this callback is invoked instead of the protected <code>onCleanUp()</code> hook.</p>
-		 * 
-		 * @param prepareUpdateHandler The clean up callback.
-		 */
-		function set cleanUpHandler(cleanUpHandler : Function) : void;
 
 	}
 }

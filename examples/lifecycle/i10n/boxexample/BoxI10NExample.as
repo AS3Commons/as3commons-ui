@@ -1,11 +1,9 @@
 package lifecycle.i10n.boxexample {
-	import org.as3commons.ui.lifecycle.i10n.Invalidation;
 	import flash.display.Sprite;
 
 	public class BoxI10NExample extends Sprite {
 		public function BoxI10NExample() {
-			I10N = new Invalidation();
-			I10N.registerAdapter(new BoxSelector(), new BoxAdapter());
+			I10NService.start();
 			
 			var box1 : Box = new Box("Box1");
 			addChild(box1);

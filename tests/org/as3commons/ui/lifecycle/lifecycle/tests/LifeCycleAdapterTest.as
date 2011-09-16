@@ -1,1078 +1,1616 @@
 package org.as3commons.ui.lifecycle.lifecycle.tests {
 
-	import org.flexunit.asserts.assertStrictlyEquals;
 	import org.as3commons.collections.utils.ArrayUtils;
-	import org.as3commons.ui.lifecycle.i10n.Invalidation;
-	import org.as3commons.ui.lifecycle.i10n.testhelper.TestDisplayObject;
+	import org.as3commons.ui.framework.uiservice.errors.AdapterNotRegisteredError;
+	import org.as3commons.ui.lifecycle.i10n.errors.ValidateNowInRunningCycleError;
 	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
-	import org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter;
-	import org.as3commons.ui.lifecycle.lifecycle.testhelper.GenericAdapter;
-	import org.as3commons.ui.lifecycle.lifecycle.testhelper.LifeCycleWatcher;
-	import org.as3commons.ui.lifecycle.lifecycle.testhelper.SimpleAdapter;
+	import org.as3commons.ui.lifecycle.lifecycle.errors.InvalidationNotAllowedHereError;
+	import org.as3commons.ui.lifecycle.lifecycle.testhelper.LifeCycleCallbackWatcher;
+	import org.as3commons.ui.lifecycle.lifecycle.testhelper.TestLifeCycleAdapter;
+	import org.as3commons.ui.lifecycle.testhelper.AsyncCallback;
+	import org.as3commons.ui.lifecycle.testhelper.TestDisplayObject;
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.asserts.assertFalse;
+	import org.flexunit.asserts.assertNotNull;
 	import org.flexunit.asserts.assertTrue;
-	import org.flexunit.async.Async;
 
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.Event;
 
 	/**
-	 * @author Jens Struwe 27.05.2011
+	 * @author Jens Struwe 15.09.2011
 	 */
 	public class LifeCycleAdapterTest {
 
-		private var _lc : LifeCycle;
-
-		protected function setUpExitFrame(callback : Function, data : Object = null) : void {
-			StageProxy.stage.addEventListener(
-				Event.EXIT_FRAME, 
-				Async.asyncHandler(this, callback, 500, data, function() : void {
-					throw new Error("TIMEOUT");
-				}),
-				false, 0, true
-			);
-		}
-		
-		protected function validateLifeCycle(
-			initCalls : Array,
-			drawCalls : Array,
-			updateCalls : Array
-		) : void {
-			assertTrue(ArrayUtils.arraysEqual(initCalls, LifeCycleWatcher.initCalls));
-			assertTrue(ArrayUtils.arraysEqual(drawCalls, LifeCycleWatcher.drawCalls));
-			assertTrue(ArrayUtils.arraysEqual(drawCalls, LifeCycleWatcher.initCompleteCalls));
-			assertTrue(ArrayUtils.arraysEqual(updateCalls, LifeCycleWatcher.updateCalls));
-			LifeCycleWatcher.clearCalls();
-		}
-
-		protected function validateInvalidProperties(
-			invalidProperties : Array,
-			updateKinds : Array
-		) : void {
-			assertTrue(ArrayUtils.arraysEqual(invalidProperties, LifeCycleWatcher.invalidProperties));
-			assertTrue(ArrayUtils.arraysMatch(updateKinds, LifeCycleWatcher.updateKinds));
-			LifeCycleWatcher.clearProperties();
-		}
+		private var _lifeCycle : LifeCycle;
+		private var _watcher : LifeCycleCallbackWatcher;
 
 		[Before]
 		public function setUp() : void {
-			_lc = new LifeCycle();
+			_lifeCycle = new LifeCycle();
+
+			_watcher = new LifeCycleCallbackWatcher();
 		}
 
 		[After]
 		public function tearDown() : void {
-			_lc.cleanUp();
-			_lc = null;
+			_lifeCycle.cleanUp();
+			_lifeCycle = null;
+			_watcher = null;
 			
 			StageProxy.cleanUpRoot();
-			LifeCycleWatcher.clear();
+		}
+		
+		private function setUpCompleteTimer(callback : Function) : void {
+			AsyncCallback.setUpCompleteTimer(this, callback);
 		}
 
 		[Test(async)]
-		public function testInit_registeredBeforeAddedToStage():void {
+		public function test_invalidate() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				adapter.scheduleRendering();
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s, LifeCycle.PHASE_RENDER
+				], _watcher.phasesLog));
+			}
+		}
+
+
+		[Test]
+		public function test_invalidate_beforeRegistrationThrowsError() : void {
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			var errorThrown : Error;
+			try {
+				adapter.invalidate();
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+			
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+		}
+
+		[Test(async)]
+		public function test_invalidate_multipleTimes() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			adapter.invalidate();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				adapter.scheduleRendering();
+				adapter.invalidateDefaults();
+				adapter.scheduleRendering();
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s, LifeCycle.PHASE_RENDER,
+				], _watcher.phasesLog));
+			}
+		}
+
+
+		[Test(async)]
+		public function test_invalidate_inRenderHandler() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			
+			AsyncCallback.setUpRenderTimer(this, invalidate);
+			
+			function invalidate(event : Event, data : * = null) : void {
+				adapter.invalidate();
+
+				setUpCompleteTimer(complete);
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_inValidation_currentPhase() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				if (!adapter.validateCount) {
+					adapter.invalidate();
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				var log : Array = _watcher.phasesLog;
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_VALIDATE
+				], log));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_inValidation_allProperties() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
+			
+			var results : Array = new Array();
+			storeResults();
+
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				if (!adapter.validateCount) {
+					storeResults();
+
+					adapter.invalidate();
+
+					storeResults();
+				}
+
+				if (adapter.validateCount) {
+					storeResults();
+				}
+			}
+
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2"),
+					adapter.isInvalid("all_properties")
+				);
+			}
+			
+			function complete(event : Event, data : * = null) : void {
+				storeResults();
+				
+				assertTrue(ArrayUtils.arraysEqual([
+					// immediately phase1
+					true, true, true, false, false,
+
+					// phase1 first run1
+					true, true, true, false, false,
+					// phase1 first run2
+					true, true, true, true, true,
+
+					// phase1 second
+					true, true, true, true, true,
+
+					// complete
+					false, false, false, false, false
+				], results));
+			}
+		}
+
+		[Test(async)]
+		/*
+		 * s (validateNow -> invalidate s2, s3)
+		 * -- s2
+		 * s3
+		 * -- s4
+		 */
+		public function test_invalidate_others_inValidateNow() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			var s3 : Sprite = StageProxy.root.addChild(new TestDisplayObject("s3")) as Sprite;
+			var adapter3 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s3, adapter3);
+
+			adapter.invalidate();
+			adapter.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([
+				s, LifeCycle.PHASE_VALIDATE,
+				s2, LifeCycle.PHASE_VALIDATE
+			], _watcher.phasesLog));
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter2.invalidate();
+				adapter3.invalidate();
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s3, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		/*
+		 * s
+		 * -- s2 (validateNow -> invalidate s, s3)
+		 * -- -- s3
+		 */
+		public function test_invalidate_others_inValidateNow2() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter2.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			var s3 : Sprite = s2.addChild(new TestDisplayObject("s3")) as Sprite;
+			var adapter3 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s3, adapter3);
+
+			adapter2.invalidate();
+			adapter2.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([
+				s2, LifeCycle.PHASE_VALIDATE, s3, LifeCycle.PHASE_VALIDATE
+			], _watcher.phasesLog));
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.invalidate();
+				adapter3.invalidate();
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_notOnStage() : void {
 			var s : DisplayObject = new TestDisplayObject("s");
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
 			
-			validateLifeCycle([], [], []);
+			setUpCompleteTimer(complete);
 
-			StageProxy.root.addChild(s);
-
-			validateLifeCycle([s], [], []);
-
-			setUpExitFrame(complete, adapter);
-			
-			function complete(event : Event, adapter : SimpleAdapter) : void {
-				validateLifeCycle([], [s], []);
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testInit_registeredAfterAddedToStage():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+		public function test_invalidate_notOnStage_autoAdd() : void {
+			var s : DisplayObject = new TestDisplayObject("s");
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 
-			var adapter : SimpleAdapter = new SimpleAdapter();
-
-			validateLifeCycle([], [], []);
-
-			_lc.registerComponent(s, adapter);
-
-			validateLifeCycle([s], [], []);
-
-			setUpExitFrame(complete, adapter);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
 			
-			function complete(event : Event, adapter : SimpleAdapter) : void {
-				validateLifeCycle([], [s], []);
+			setUpCompleteTimer(complete);
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
+				StageProxy.root.addChild(s);
+
+				setUpCompleteTimer(complete2);
+			}
+
+			function complete2(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testInit_addedAtConstructionTime():void {
+		public function test_invalidate_removedFromStageinValidation() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			_lc.registerComponent(s, new SimpleAdapter());
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				adapter.scheduleRendering();
+				
+				StageProxy.root.removeChild(s);
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				var log : Array = _watcher.phasesLog;
+				assertTrue(log, ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE
+				], log));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_addedToStageinValidation() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.calculateFunction = calculate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+
+			var s2 : DisplayObject = new TestDisplayObject("s2");
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+			adapter2.invalidate();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+			}
+
+			function calculate() : void {
+				StageProxy.root.addChild(s2);
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				var log : Array = _watcher.phasesLog;
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s2, LifeCycle.PHASE_VALIDATE
+				], log));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_removedAndAddedToStageinValidation() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.calculateFunction = calculate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
 
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			_lc.registerComponent(s2, new SimpleAdapter());
-
-			var s3 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s3"));
-			_lc.registerComponent(s3, new SimpleAdapter());
-
-			validateLifeCycle([s, s2, s3], [], []);
-
-			setUpExitFrame(complete);
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter2.validateFunction = validate2;
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+			adapter2.invalidate();
 			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				adapter.scheduleRendering();
+
+				StageProxy.root.removeChild(s2);
+			}
+
+			function calculate() : void {
+				StageProxy.root.addChild(s2);
+			}
+
+			function validate2() : void {
+				adapter2.invalidateDefaults();
+				adapter2.scheduleRendering();
+			}
+
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2, s3], []);
+				var log : Array = _watcher.phasesLog;
+				assertTrue(log, ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s2, LifeCycle.PHASE_VALIDATE,
+					s2, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s, LifeCycle.PHASE_RENDER,
+					s2, LifeCycle.PHASE_RENDER
+				], log));
 			}
 		}
 
 		[Test(async)]
-		public function testInit_addedAllAfterRegistration():void {
-			var s : DisplayObject = new TestDisplayObject("s");
-			_lc.registerComponent(s, new SimpleAdapter());
-
-			var s2 : DisplayObject = new TestDisplayObject("s2");
-			_lc.registerComponent(s2, new SimpleAdapter());
-
-			var s3 : DisplayObject = new TestDisplayObject("s3");
-			_lc.registerComponent(s3, new SimpleAdapter());
-			
-			var s4 : DisplayObject = new TestDisplayObject("s4");
-			_lc.registerComponent(s4, new SimpleAdapter());
-			
-			validateLifeCycle([], [], []);
-
-			StageProxy.root.addChild(s2);
-			StageProxy.root.addChild(s4);
-			StageProxy.root.addChild(s);
-			StageProxy.root.addChild(s3);
-
-			validateLifeCycle([s2, s4, s, s3], [], []);
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s2, s4, s, s3], []);
-			}
-		}
-
-		[Test(async)]
-		public function testInit_addedAllBeforeRegistration():void {
-			var s : DisplayObject = new TestDisplayObject("s");
-			var s2 : DisplayObject = new TestDisplayObject("s2");
-			var s3 : DisplayObject = new TestDisplayObject("s3");
-			var s4 : DisplayObject = new TestDisplayObject("s4");
-			
-			StageProxy.root.addChild(s2);
-			StageProxy.root.addChild(s4);
-			StageProxy.root.addChild(s);
-			StageProxy.root.addChild(s3);
-
-			_lc.registerComponent(s, new SimpleAdapter());
-			_lc.registerComponent(s2, new SimpleAdapter());
-			_lc.registerComponent(s3, new SimpleAdapter());
-			_lc.registerComponent(s4, new SimpleAdapter());
-
-			validateLifeCycle([s, s2, s3, s4], [], []);
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2, s3, s4], []);
-			}
-		}
-
-		[Test(async)]
-		public function testInit_nestedComponents_addedAllAfterRegistration():void {
-			/*
-			 * 	s
-			 * 		s2
-			 * 			s4
-			 * 		s3
-			 */
-			var s : TestDisplayObject = new TestDisplayObject("s");
-			var s2 : TestDisplayObject = new TestDisplayObject("s2");
-			s.addChild(s2);
-			var s3 : TestDisplayObject = new TestDisplayObject("s3");
-			s.addChild(s3);
-			var s4 : TestDisplayObject = new TestDisplayObject("s4");
-			s2.addChild(s4);
-
-			_lc.registerComponent(s, new SimpleAdapter());
-			_lc.registerComponent(s2, new SimpleAdapter());
-			_lc.registerComponent(s3, new SimpleAdapter());
-			_lc.registerComponent(s4, new SimpleAdapter());
-
-			validateLifeCycle([], [], []);
-
-			StageProxy.root.addChild(s);
-
-			validateLifeCycle([s, s2, s4, s3], [], []);
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2, s4, s3], []);
-			}
-		}
-
-		[Test(async)]
-		public function testInit_nestedComponents_addedAllBeforeRegistration():void {
-			/*
-			 * 	s
-			 * 		s2
-			 * 			s4
-			 * 		s3
-			 */
-			var s : TestDisplayObject = new TestDisplayObject("s");
-			var s2 : TestDisplayObject = new TestDisplayObject("s2");
-			s.addChild(s2);
-			var s3 : TestDisplayObject = new TestDisplayObject("s3");
-			s.addChild(s3);
-			var s4 : TestDisplayObject = new TestDisplayObject("s4");
-			s2.addChild(s4);
-
-			StageProxy.root.addChild(s);
-
-			_lc.registerComponent(s, new SimpleAdapter());
-			_lc.registerComponent(s2, new SimpleAdapter());
-			_lc.registerComponent(s3, new SimpleAdapter());
-			_lc.registerComponent(s4, new SimpleAdapter());
-
-			validateLifeCycle([s, s2, s3, s4], [], []);
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2, s3, s4], []);
-			}
-		}
-
-		[Test(async)]
-		public function testInit_nestedComponents_addedAtConstructionTime():void {
-			/*
-			 * 	s
-			 * 		s2
-			 * 			s4
-			 * 		s3
-			 */
-			var s : TestDisplayObject = new TestDisplayObject("s");
-			_lc.registerComponent(s, new SimpleAdapter());
-			StageProxy.root.addChild(s);
-
-			var s2 : TestDisplayObject = new TestDisplayObject("s2");
-			_lc.registerComponent(s2, new SimpleAdapter());
-			s.addChild(s2);
-
-			var s3 : TestDisplayObject = new TestDisplayObject("s3");
-			_lc.registerComponent(s3, new SimpleAdapter());
-			s.addChild(s3);
-
-			var s4 : TestDisplayObject = new TestDisplayObject("s4");
-			_lc.registerComponent(s4, new SimpleAdapter());
-			s2.addChild(s4);
-
-			validateLifeCycle([s, s2, s3, s4], [], []);
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [s, s2, s3, s4], []);
-			}
-		}
-
-		[Test(async)]
-		public function testInit_setInitializedPropertyToTrue():void {
-			var s : DisplayObject = new TestDisplayObject("s");
-
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			assertFalse(adapter.initialized);
-
-			StageProxy.root.addChild(s);
-
-			assertFalse(adapter.initialized);
-
-			setUpExitFrame(complete, adapter);
-			
-			function complete(event : Event, adapter : SimpleAdapter) : void {
-				assertTrue(adapter.initialized);
-			}
-		}
-
-		[Test(async)]
-		public function testValidateNow():void {
+		public function test_invalidate_removedFromStage_autoAdd() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 
-			validateLifeCycle([s], [s], []);
-		}
-
-		[Test(async)]
-		public function testValidateNow_Invalidate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			
-			adapter.invalidate("test");
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["test"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testValidateNow_Invalidate_ValidateNow():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			
-			adapter.invalidate("test");
-			adapter.validateNow();
-
-			validateLifeCycle([], [], [s]);
-			validateInvalidProperties(["test"], []);
-		}
-
-		[Test(async)]
-		public function testPrepareUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			
-			adapter.invalidate("test");
-
-			setUpExitFrame(complete);
-			
-			function prepareUpdate() : void {
-				assertTrue(adapter.isInvalid("test"));
-				assertFalse(adapter.isInvalid("test2"));
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["test"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testPrepareUpdate_invalidateAll():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			
+			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
-
-			setUpExitFrame(complete);
 			
-			function prepareUpdate() : void {
-				assertTrue(adapter.isInvalid("test"));
-				assertTrue(adapter.isInvalid("test2"));
-				assertTrue(adapter.isInvalid("asfd"));
-			}
+			StageProxy.root.removeChild(s);
+			
+			setUpCompleteTimer(complete);
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties([Invalidation.ALL_PROPERTIES], []);
+				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
+				StageProxy.root.addChild(s);
+
+				setUpCompleteTimer(complete2);
+			}
+
+			function complete2(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testPrepareUpdate_invalidPropertiesCleanedUp():void {
+		public function test_invalidate_properties() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
-			_lc.registerComponent(s, adapter);
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
 			
-			adapter.validateNow();
+			var results : Array = new Array();
+			storeResults();
 
-			validateLifeCycle([s], [s], []);
+			setUpCompleteTimer(complete);
 			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
-
-			setUpExitFrame(complete);
-
-			function prepareUpdate() : void {
-				assertTrue(adapter.isInvalid("property"));
-				assertTrue(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+					
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2"),
+					adapter.isInvalid("all_properties"),
+					
+					adapter.defaultIsInvalid(),
+					adapter.defaultIsInvalid("test"),
+					adapter.defaultIsInvalid("test2")
+				);
 			}
-
-			function update() : void {
-				assertTrue(adapter.isInvalid("property"));
-				assertTrue(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
+			
+			function validate() : void {
+				storeResults();
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				assertFalse(adapter.isInvalid("property"));
-				assertFalse(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
+				storeResults();
 
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["property", "property2"], []);
+				assertTrue(ArrayUtils.arraysEqual([
+					// immediately
+					true,
+					true, true,	false, false,
+					false, false, false,
+					// validate
+					true,
+					true, true, false, false,
+					false, false, false,
+					// complete
+					false,
+					false, false,false, false,
+					false, false, false
+				], results));
 			}
 		}
 
 		[Test(async)]
-		public function testPrepareUpdate_invalidPropertiesCleanedUp2():void {
+		public function test_invalidate_allProperties() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = storeResults;
 
-			validateLifeCycle([s], [s], []);
-			
+			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
+			
+			var results : Array = new Array();
+			storeResults();
 
-			function prepareUpdate() : void {
-				assertTrue(adapter.isInvalid("property"));
-				assertTrue(adapter.isInvalid("property2"));
+			setUpCompleteTimer(complete);
+			
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2"),
+					adapter.isInvalid("all_properties"),
+
+					adapter.defaultIsInvalid(),
+					adapter.defaultIsInvalid("test"),
+					adapter.defaultIsInvalid("test2"),
+					adapter.defaultIsInvalid("all_properties")
+				);
 			}
+			
+			function complete(event : Event, data : * = null) : void {
+				storeResults();
 
-			function update() : void {
-				assertFalse(adapter.isInvalid("property"));
-				assertFalse(adapter.isInvalid("property2"));
+				assertTrue(ArrayUtils.arraysEqual([
+					// immediately
+					true,
+					true, true, true, true,
+					false, false, false, false,
+					// validate
+					true,
+					true, true, true, true,
+					false, false, false, false,
+					// complete
+					false,
+					false, false, false, false,
+					false, false, false, false
+				], results));
 			}
 		}
 
 		[Test(async)]
-		public function testUpdate():void {
+		public function test_invalidate_allProperties2() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
 
-			validateLifeCycle([s], [s], []);
-			
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
 			adapter.invalidate();
-
-			setUpExitFrame(complete);
 			
-			function update() : void {
-				assertTrue(adapter.isInvalid("test"));
-				assertFalse(adapter.shouldUpdate("test"));
+			var results : Array = new Array();
+			storeResults();
+
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				adapter.invalidateDefaults("test");
+
+				storeResults();
+			}
+
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2"),
+					adapter.isInvalid("all_properties"),
+
+					adapter.defaultIsInvalid(),
+					adapter.defaultIsInvalid("test"),
+					adapter.defaultIsInvalid("test2"),
+					adapter.defaultIsInvalid("all_properties")
+				);
+			}
+			
+			function complete(event : Event, data : * = null) : void {
+				storeResults();
+				
+				assertTrue(ArrayUtils.arraysEqual([
+					// immediately
+					true,
+					true, true, true, true,
+					false, false, false, false,
+					// validate
+					true,
+					true, true, true, true,
+					true, true, true, true,
+					// complete
+					false,
+					false, false, false, false,
+					false, false, false, false
+				], results));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_propertiesRemovedAfterPhase() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.calculateFunction = storeResults;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
+			adapter.invalidate("test2");
+			
+			
+			var results : Array = new Array();
+			storeResults();
+
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+
+				storeResults();
+			}
+
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2"),
+					adapter.isInvalid("test3"),
+					
+					adapter.defaultIsInvalid()
+				);
 			}
 
 			function complete(event : Event, data : * = null) : void {
+				storeResults();
+
+				assertTrue(ArrayUtils.arraysEqual([
+					// immediately
+					true, true, true, true, false, false,
+					// validate
+					true, true, true, true, false, true,
+					// calculate
+					true, false, false, false, false, true,
+					// complete
+					false, false, false, false, false, false
+				], results));
+			}
+		}
+
+		[Test(async)]
+		/*
+		 * Reinvalidation in phase 2
+		 */
+		public function test_invalidate_propertiesRemovedAfterPhase2() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.calculateFunction = calculate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
+			adapter.invalidate("test2");
+			
+			var results : Array = new Array();
+			storeResults();
+			
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				adapter.invalidateDefaults();
+				
+				storeResults();
+			}
+
+			function calculate() : void {
+				storeResults();
+
+				if (!adapter.calculatedCount) adapter.invalidate("test");
+
+				storeResults();
+			}
+
+			function storeResults() : void {
+				results.push(
+					adapter.isInvalidForAnyPhase(),
+					adapter.isInvalid(),
+					adapter.isInvalid("test"),
+					adapter.isInvalid("test2")
+				);
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				storeResults();
+
+				var log : Array = _watcher.phasesLog;
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS,
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS
+				], log));
+
+				assertTrue(results, ArrayUtils.arraysEqual([
+					// immediately
+					true, true, true, true,
+					// validate
+					true, true, true, true,
+					// calculate defaults - first
+					true, false, false, false,
+					// calculate defaults - second
+					true, true, true, false,
+					// validate #2
+					true, true, true, false,
+					// calculate defaults #2 - first
+					true, false, false, false,
+					// calculate defaults #2 - second
+					true, false, false, false,
+					// complete
+					false, false, false, false
+				], results));
+			}
+
+		}
+
+		[Test]
+		public function test_isInvalid_allProperties() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			assertTrue(adapter.isInvalidForAnyPhase());
+			assertTrue(adapter.isInvalid());
+			assertTrue(adapter.isInvalid("test"));
+			assertTrue(adapter.isInvalid("test2"));
+
+			assertFalse(adapter.defaultIsInvalid());
+			assertFalse(adapter.defaultIsInvalid("test"));
+			assertFalse(adapter.shouldRender());
+			assertFalse(adapter.shouldRender("test"));
+		}
+
+		[Test]
+		public function test_isInvalid() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate("test");
+			
+			assertTrue(adapter.isInvalidForAnyPhase());
+			assertTrue(adapter.isInvalid());
+			assertTrue(adapter.isInvalid("test"));
+			assertFalse(adapter.isInvalid("test2"));
+
+			assertFalse(adapter.defaultIsInvalid());
+			assertFalse(adapter.defaultIsInvalid("test"));
+			assertFalse(adapter.shouldRender());
+			assertFalse(adapter.shouldRender("test"));
+		}
+
+		[Test]
+		public function test_isInvalid_beforeRegistrationThrowsError() : void {
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			var errorThrown : Error;
+			try {
+				assertFalse(adapter.isInvalid());
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+
+			errorThrown = null;
+			try {
 				assertFalse(adapter.isInvalid("test"));
-				assertFalse(adapter.shouldUpdate("test"));
+			} catch (e : Error) {
+				errorThrown = e;
+			}
 
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties([Invalidation.ALL_PROPERTIES], []);
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+		}
+
+		[Test]
+		public function test_defaultIsInvalid_beforeRegistrationThrowsError() : void {
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			var errorThrown : Error;
+			try {
+				assertFalse(adapter.defaultIsInvalid());
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+
+			errorThrown = null;
+			try {
+				assertFalse(adapter.defaultIsInvalid("test"));
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+		}
+
+		[Test]
+		public function test_shouldRender_beforeRegistrationThrowsError() : void {
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			var errorThrown : Error;
+			try {
+				assertFalse(adapter.shouldRender());
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+
+			errorThrown = null;
+			try {
+				assertFalse(adapter.shouldRender("test"));
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+		}
+
+		[Test(async)]
+		public function test_validateNow_inValidationThrowsError() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var errorThrown : Error;
+			setUpCompleteTimer(complete);
+			
+			function validate() : void {
+				try {
+					adapter.validateNow();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is ValidateNowInRunningCycleError);
 			}
 		}
 
 		[Test(async)]
-		public function testUpdate_withUpdateKinds():void {
+		public function test_validateNow() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 
-			validateLifeCycle([s], [s], []);
+			adapter.invalidate();
+			adapter.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+		}
+
+		[Test]
+		public function test_validateNow_beforeRegistrationThrowsError() : void {
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+
+			var errorThrown : Error;
+			try {
+				adapter.validateNow();
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+			
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is AdapterNotRegisteredError);
+		}
+
+		[Test(async)]
+		public function test_validateNow_withoutInvalidation() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+
+			adapter.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.validateLog));
+		}
+
+		[Test(async)]
+		public function test_validateNow_validatesOnlyTarget() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+
+			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			adapter.invalidate();
+			adapter2.invalidate();
+			adapter.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+
+			setUpCompleteTimer(complete);
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s2, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_validateNow_validatesOnlyTarget2() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			var s3 : Sprite = StageProxy.root.addChild(new TestDisplayObject("s3")) as Sprite;
+			var adapter3 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s3, adapter3);
+
+			var s4 : Sprite = s3.addChild(new TestDisplayObject("s4")) as Sprite;
+			var adapter4 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s4, adapter4);
+
+			adapter.invalidate();
+			adapter2.invalidate();
+			adapter3.invalidate();
+			adapter4.invalidate();
+
+			adapter.validateNow();
+			
+			assertTrue(ArrayUtils.arraysEqual([s, LifeCycle.PHASE_VALIDATE, s2, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+
+			setUpCompleteTimer(complete);
+
+			function complete(event : Event, data : * = null) : void {
+				assertTrue(ArrayUtils.arraysEqual([s3, LifeCycle.PHASE_VALIDATE, s4, LifeCycle.PHASE_VALIDATE], _watcher.phasesLog));
+			}
+		}
+
+		[Test]
+		public function test_onAddedToStage_onRemovedFromStage() : void {
+			var s : Sprite = new TestDisplayObject("s");
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+			
+			StageProxy.root.addChild(s);
+			
+			assertEquals(1, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([s], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+
+			StageProxy.root.removeChild(s);
+
+			assertEquals(1, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([s], _watcher.removedLog));
+
+			StageProxy.root.addChild(s);
+			
+			assertEquals(2, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([s], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+		}
+
+		[Test]
+		public function test_onAddedToStage_onRemovedFromStage2() : void {
+			var s : Sprite = new TestDisplayObject("s");
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+			
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(0, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+			
+			StageProxy.root.addChild(s);
+			
+			assertEquals(1, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(1, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([s, s2], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+
+			StageProxy.root.removeChild(s);
+
+			assertEquals(1, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertEquals(1, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([s, s2], _watcher.removedLog));
+
+			StageProxy.root.addChild(s);
+			
+			assertEquals(2, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertEquals(2, adapter.addedToStageCount);
+			assertEquals(1, adapter.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([s, s2], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
+		}
+
+		[Test(async)]
+		public function test_onRemovedFromStage_onAddedToStage_inValidation() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
 			adapter.invalidate();
-
-			setUpExitFrame(complete);
 			
-			function prepareUpdate() : void {
-				adapter.scheduleUpdate("update");
-				adapter.scheduleUpdate("update2");
-			}
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(0, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
 
-			function update() : void {
-				assertTrue(adapter.shouldUpdate("update"));
-				assertTrue(adapter.shouldUpdate("update2"));
-				assertFalse(adapter.shouldUpdate("update3"));
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				if (!adapter.validateCount) { // else, it will schedule a second run
+					StageProxy.root.removeChild(s);
+					StageProxy.root.addChild(s);
+				}
 			}
 
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties([Invalidation.ALL_PROPERTIES], ["update", "update2"]);
+				assertEquals("1a", 1, adapter.addedToStageCount);
+				assertEquals("1r", 1, adapter.removedFromStageCount);
+				assertEquals("2a", 1, adapter2.addedToStageCount);
+				assertEquals("2r", 1, adapter2.removedFromStageCount);
+				assertTrue(ArrayUtils.arraysEqual([s, s2], _watcher.addedLog));
+				assertTrue(ArrayUtils.arraysEqual([s, s2], _watcher.removedLog));
 			}
 		}
 
-		[Test(async)]
-		public function testUpdate_updatedKindsCleanedUp():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, update);
-			_lc.registerComponent(s, adapter);
+		[Test]
+		public function test_onRemovedFromStage_onAddedToStage_afterCleanUp() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
-
-			setUpExitFrame(complete);
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(0, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
 			
-			function prepareUpdate() : void {
-				assertTrue(adapter.isInvalid("property"));
-				assertTrue(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
+			_lifeCycle.cleanUp();
 
-				adapter.scheduleUpdate("update");
-				adapter.scheduleUpdate("update2");
-			}
+			StageProxy.root.removeChild(s);
+			StageProxy.root.addChild(s);
 
-			function update() : void {
-				assertTrue(adapter.isInvalid("property"));
-				assertTrue(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
-
-				assertTrue(adapter.shouldUpdate("update"));
-				assertTrue(adapter.shouldUpdate("update2"));
-				assertFalse(adapter.shouldUpdate("update3"));
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				assertFalse(adapter.isInvalid("property"));
-				assertFalse(adapter.isInvalid("property2"));
-				assertFalse(adapter.isInvalid("property3"));
-
-				assertFalse(adapter.shouldUpdate("update"));
-				assertFalse(adapter.shouldUpdate("update2"));
-				assertFalse(adapter.shouldUpdate("update3"));
-
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["property", "property2"], ["update", "update2"]);
-			}
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(0, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
 		}
 
-		[Test(async)]
-		public function testInvalidate_inPrepareUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
+		[Test]
+		public function test_onRemovedFromStage_onAddedToStage_afterUnregister() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
-
-			setUpExitFrame(complete);
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(0, adapter2.addedToStageCount);
+			assertEquals(0, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([], _watcher.removedLog));
 			
-			function prepareUpdate() : void {
-				if (adapter.prepareUpdateCalls == 1) adapter.invalidate("property3");
-			}
+			_lifeCycle.unregisterDisplayObject(s);
 
-			function complete(event : Event, data : * = null) : void {
-				assertEquals(2, adapter.prepareUpdateCalls);
-				assertEquals(2, adapter.updateCalls);
+			StageProxy.root.removeChild(s);
+			StageProxy.root.addChild(s);
 
-				validateLifeCycle([], [], [s, s]);
-				validateInvalidProperties(["property", "property2", "property3"], []);
-			}
+			assertEquals(0, adapter.addedToStageCount);
+			assertEquals(0, adapter.removedFromStageCount);
+			assertEquals(1, adapter2.addedToStageCount);
+			assertEquals(1, adapter2.removedFromStageCount);
+			assertTrue(ArrayUtils.arraysEqual([s2], _watcher.addedLog));
+			assertTrue(ArrayUtils.arraysEqual([s2], _watcher.removedLog));
 		}
 
-		[Test(async)]
-		public function testInvalidate_inUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s, adapter);
+		[Test]
+		public function test_nestLevel() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
-
-			setUpExitFrame(complete);
+			assertEquals(2, adapter.nestLevel);
+			assertEquals(3, adapter2.nestLevel);
 			
-			function update() : void {
-				if (adapter.updateCalls == 1) adapter.invalidate("property3");
-			}
+			StageProxy.root.removeChild(s);
 
-			function complete(event : Event, data : * = null) : void {
-				assertEquals(2, adapter.prepareUpdateCalls);
-				assertEquals(2, adapter.updateCalls);
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(-1, adapter2.nestLevel);
 
-				validateLifeCycle([], [], [s, s]);
-				validateInvalidProperties(["property", "property2", "property3"], []);
-			}
+			StageProxy.root.addChild(s2);
+			s2.addChild(s);
+
+			assertEquals(3, adapter.nestLevel);
+			assertEquals(2, adapter2.nestLevel);
 		}
 
-		[Test(async)]
-		public function testInvalidateOther_inPrepareUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
+		[Test]
+		public function test_nestLevel_afterCleanUp() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
-			_lc.registerComponent(s2, adapter2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
+			assertEquals(2, adapter.nestLevel);
+			assertEquals(3, adapter2.nestLevel);
 			
-			function prepareUpdate() : void {
-				adapter2.invalidate("property3");
-			}
+			_lifeCycle.cleanUp();
+			
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(-1, adapter2.nestLevel);
 
-			function complete(event : Event, data : * = null) : void {
-				assertEquals(1, adapter.prepareUpdateCalls);
-				assertEquals(1, adapter.updateCalls);
-				assertEquals(1, adapter2.prepareUpdateCalls);
-				assertEquals(1, adapter2.updateCalls);
+			StageProxy.root.removeChild(s);
 
-				validateLifeCycle([], [], [s, s2]);
-				validateInvalidProperties(["property", "property2", "property3"], []);
-			}
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(-1, adapter2.nestLevel);
+
+			StageProxy.root.addChild(s);
+
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(-1, adapter2.nestLevel);
 		}
 
-		[Test(async)]
-		public function testInvalidateOther_inUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s, adapter);
+		[Test]
+		public function test_nestLevel_afterUnregister() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
 			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
-			_lc.registerComponent(s2, adapter2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
+			var s2 : Sprite = s.addChild(new TestDisplayObject("s2")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
+			assertEquals(2, adapter.nestLevel);
+			assertEquals(3, adapter2.nestLevel);
 			
-			function update() : void {
-				if (adapter.updateCalls == 1) adapter2.invalidate("property3");
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				assertEquals(1, adapter.prepareUpdateCalls);
-				assertEquals(1, adapter.updateCalls);
-				assertEquals(1, adapter2.prepareUpdateCalls);
-				assertEquals(1, adapter2.updateCalls);
-
-				validateLifeCycle([], [], [s, s2]);
-				validateInvalidProperties(["property", "property2", "property3"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testValidateNow_inPrepareUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
+			_lifeCycle.unregisterDisplayObject(s);
 			
-			adapter.validateNow();
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(3, adapter2.nestLevel);
 
-			validateLifeCycle([s], [s], []);
-			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
+			StageProxy.root.removeChild(s);
 
-			setUpExitFrame(complete);
-			
-			function prepareUpdate() : void {
-				adapter.validateNow();
-			}
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(-1, adapter2.nestLevel);
 
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["property", "property2"], []);
-			}
-		}
+			StageProxy.root.addChild(s);
 
-		[Test(async)]
-		public function testValidateNow_inUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			
-			adapter.invalidate("property");
-			adapter.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function update() : void {
-				adapter.validateNow();
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s]);
-				validateInvalidProperties(["property", "property2"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testValidateNowOther_inPrepareUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, prepareUpdate, null);
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
-			_lc.registerComponent(s2, adapter2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function prepareUpdate() : void {
-				adapter2.validateNow();
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s2, s]);
-				validateInvalidProperties(["property", "property2"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testValidateNowOther_inUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, null);
-			_lc.registerComponent(s2, adapter2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function update() : void {
-				adapter2.validateNow();
-			}
-
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s, s2]);
-				validateInvalidProperties(["property", "property2"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testAutoUpdateBefore_invalidateOrder1():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s2, adapter2);
-			
-			adapter.autoUpdateBefore(s2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s2, s]);
-				validateInvalidProperties(["property2", "property"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testAutoUpdateBefore_invalidateOrder2():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s2, adapter2);
-			
-			adapter.autoUpdateBefore(s2);
-
-			adapter2.validateNow();
-			adapter.validateNow();
-
-			validateLifeCycle([s, s2], [s2, s], []);
-			
-			adapter2.invalidate("property2");
-			adapter.invalidate("property");
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s2, s]);
-				validateInvalidProperties(["property2", "property"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testAutoUpdateBefore_invalidateInUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s2, adapter2);
-			
-			adapter.autoUpdateBefore(s2);
-
-			adapter2.validateNow();
-			adapter.validateNow();
-
-			validateLifeCycle([s, s2], [s2, s], []);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function update() : void {
-				adapter.invalidate("property3");
-			}
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s2, s]);
-				validateInvalidProperties(["property2", "property", "property3"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testAutoUpdateBefore_complexInvalidateInUpdate():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new GenericAdapter(null, null, null, update);
-			_lc.registerComponent(s2, adapter2);
-			
-			adapter.autoUpdateBefore(s2);
-
-			adapter2.validateNow();
-			adapter.validateNow();
-
-			validateLifeCycle([s, s2], [s2, s], []);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function update() : void {
-				adapter.invalidate("property3");
-				if (adapter2.updateCalls == 1) adapter2.invalidate("property4");
-			}
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s2, s, s2, s]);
-				validateInvalidProperties(["property2", "property", "property3", "property4", "property3"], []);
-			}
-		}
-
-		[Test(async)]
-		public function testRemoveAutoUpdateBefore():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s, adapter);
-			
-			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
-			var adapter2 : SimpleAdapter = new SimpleAdapter();
-			_lc.registerComponent(s2, adapter2);
-			
-			adapter.autoUpdateBefore(s2);
-
-			adapter.validateNow();
-			adapter2.validateNow();
-
-			validateLifeCycle([s, s2], [s, s2], []);
-			
-			adapter.removeAutoUpdateBefore(s2);
-			
-			adapter.invalidate("property");
-			adapter2.invalidate("property2");
-
-			setUpExitFrame(complete);
-			
-			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], [s, s2]);
-				validateInvalidProperties(["property", "property2"], []);
-			}
+			assertEquals(-1, adapter.nestLevel);
+			assertEquals(3, adapter2.nestLevel);
 		}
 		
 		[Test(async)]
-		public function testCallbacks():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+		public function test_invalidate_withinRenderThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.renderFunction = render;
 
-			var adapter : LifeCycleAdapter = new LifeCycleAdapter();
-			adapter.initHandler = init;
-			adapter.drawHandler = draw;
-			adapter.prepareUpdateHandler = prepareUpdate;
-			adapter.updateHandler = update;
-			adapter.cleanUpHandler = cleanUp;
-			
-			var calls : Array = new Array();
-			_lc.registerComponent(s, adapter);
-
-			adapter.validateNow();
+			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
-			setUpExitFrame(complete);
-			
-			function init(theAdapter : LifeCycleAdapter) : void {
-				assertStrictlyEquals(adapter, theAdapter);
-				calls.push("init");
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.scheduleRendering();
 			}
-			
-			function draw(theAdapter : LifeCycleAdapter) : void {
-				assertStrictlyEquals(adapter, theAdapter);
-				calls.push("draw");
+
+			function render() : void {
+				try {
+					adapter.invalidate();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
 			}
-			
-			function prepareUpdate(theAdapter : LifeCycleAdapter) : void {
-				assertStrictlyEquals(adapter, theAdapter);
-				calls.push("prepareUpdate");
-			}
-			
-			function update(theAdapter : LifeCycleAdapter) : void {
-				assertStrictlyEquals(adapter, theAdapter);
-				calls.push("update");
-			}
-			
-			function cleanUp(theAdapter : LifeCycleAdapter) : void {
-				assertStrictlyEquals(adapter, theAdapter);
-				calls.push("cleanUp");
-			}
-			
+
 			function complete(event : Event, data : * = null) : void {
-				adapter.cleanUp();
-				
-				assertTrue(calls, ArrayUtils.arraysEqual(["init", "draw", "prepareUpdate", "update", "cleanUp"], calls));
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FROM_RENDER,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter.isInvalidForAnyPhase());
+				assertFalse(adapter.isInvalid());
+
+				assertEquals(1, adapter.validateCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_RENDER
+				], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testCleanUp():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
-
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			
-			_lc.registerComponent(s, adapter);
-			
-			adapter.validateNow();
-
-			validateLifeCycle([s], [s], []);
-			validateInvalidProperties([], []);
-
+		public function test_invalidate_othersWithinRenderThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.renderFunction = render;
+			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
-			adapter.cleanUp();
-			
-			assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.cleanUpCalls));
+			var s2 : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
 
-			setUpExitFrame(complete);
-			
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.scheduleRendering();
+			}
+
+			function render() : void {
+				try {
+					adapter2.invalidate();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
 			function complete(event : Event, data : * = null) : void {
-				assertTrue(ArrayUtils.arraysEqual([s], LifeCycleWatcher.cleanUpCalls));
-				validateLifeCycle([], [], []);
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FROM_RENDER,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter2.isInvalidForAnyPhase());
+				assertFalse(adapter2.isInvalid());
+
+				assertEquals(0, adapter2.validateCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_RENDER
+				], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testCleanUp_doesNotSetInitializedToTrue():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+		public function test_invalidateDefaults_outsideOfCycleThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			
+			var errorThrown : Error;
+			try {
+				adapter.invalidateDefaults();
+			} catch (e : Error) {
+				errorThrown = e;
+			}
 
-			var adapter : SimpleAdapter = new SimpleAdapter();
-			
-			_lc.registerComponent(s, adapter);
-			
-			assertFalse(adapter.initialized);
-			
-			adapter.cleanUp();
-			
-			assertFalse(adapter.initialized);
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is InvalidationNotAllowedHereError);
+			assertEquals(
+				InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_OUTSIDE_OF_CYCLE,
+				InvalidationNotAllowedHereError(errorThrown).messageKey
+			);
+			assertFalse(adapter.isInvalidForAnyPhase());
+			assertFalse(adapter.defaultIsInvalid());
 
-			setUpExitFrame(complete);
-			
+			setUpCompleteTimer(complete);
+
 			function complete(event : Event, data : * = null) : void {
-				assertFalse(adapter.initialized);
+				assertEquals(0, adapter.calculatedCount);
+				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
 			}
 		}
 
 		[Test(async)]
-		public function testCleanUp2():void {
-			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+		public function test_invalidateDefaults_withinCalculateDefaultsThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.calculateFunction = calculate;
 
-			var adapter : SimpleAdapter = new SimpleAdapter();
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
 			
-			_lc.registerComponent(s, adapter);
-			
-			adapter.cleanUp();
-			
-			validateLifeCycle([s], [], []);
-			validateInvalidProperties([], []);
+			var errorThrown : Error;
 
-			setUpExitFrame(complete);
-			
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.invalidateDefaults();
+			}
+
+			function calculate() : void {
+				try {
+					adapter.invalidateDefaults();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
 			function complete(event : Event, data : * = null) : void {
-				validateLifeCycle([], [], []);
-				validateInvalidProperties([], []);
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_DEFAULTS_FROM_CALCULATE_DEFAULTS,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter.isInvalidForAnyPhase());
+				assertFalse(adapter.defaultIsInvalid());
+
+				assertEquals(1, adapter.calculatedCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_CALCULATE_DEFAULTS
+				], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidateDefaults_fromOtherComponentThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var s2 : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				try {
+					adapter2.invalidateDefaults();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_CURRENT_OBJECT,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter2.isInvalidForAnyPhase());
+				assertFalse(adapter2.defaultIsInvalid());
+
+				assertEquals(0, adapter2.calculatedCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE
+				], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidateDefaults_withinRenderThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.renderFunction = render;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.scheduleRendering();
+			}
+
+			function render() : void {
+				try {
+					adapter.invalidateDefaults();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FROM_RENDER,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter.isInvalidForAnyPhase());
+				assertFalse(adapter.defaultIsInvalid());
+
+				assertEquals(0, adapter.calculatedCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_RENDER
+				], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_scheduleRendering_outsideOfCycleThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s, adapter);
+			
+			var errorThrown : Error;
+			try {
+				adapter.scheduleRendering();
+			} catch (e : Error) {
+				errorThrown = e;
+			}
+
+			assertNotNull(errorThrown);
+			assertTrue(errorThrown is InvalidationNotAllowedHereError);
+			assertEquals(
+				InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_OUTSIDE_OF_CYCLE,
+				InvalidationNotAllowedHereError(errorThrown).messageKey
+			);
+			assertFalse(adapter.isInvalidForAnyPhase());
+			assertFalse(adapter.shouldRender());
+
+			setUpCompleteTimer(complete);
+
+			function complete(event : Event, data : * = null) : void {
+				assertEquals(0, adapter.renderCount);
+				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_scheduleRendering_fromOtherComponentThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var s2 : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			_lifeCycle.registerDisplayObject(s2, adapter2);
+
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				try {
+					adapter2.scheduleRendering();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_CURRENT_OBJECT,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter2.isInvalidForAnyPhase());
+				assertFalse(adapter2.shouldRender());
+
+				assertEquals(0, adapter2.renderCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE
+				], _watcher.phasesLog));
+			}
+		}
+
+		[Test(async)]
+		public function test_scheduleRendering_withinRenderThrowsError() : void {
+			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
+			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
+			adapter.validateFunction = validate;
+			adapter.renderFunction = render;
+
+			_lifeCycle.registerDisplayObject(s, adapter);
+			adapter.invalidate();
+			
+			var errorThrown : Error;
+
+			setUpCompleteTimer(complete);
+
+			function validate() : void {
+				adapter.scheduleRendering();
+			}
+
+			function render() : void {
+				try {
+					adapter.scheduleRendering();
+				} catch (e : Error) {
+					errorThrown = e;
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				assertNotNull(errorThrown);
+				assertTrue(errorThrown is InvalidationNotAllowedHereError);
+				assertEquals(
+					InvalidationNotAllowedHereError.INVALIDATE_FROM_RENDER,
+					InvalidationNotAllowedHereError(errorThrown).messageKey
+				);
+				assertFalse(adapter.isInvalidForAnyPhase());
+				assertFalse(adapter.shouldRender());
+
+				assertEquals(1, adapter.renderCount);
+				assertTrue(ArrayUtils.arraysEqual([
+					s, LifeCycle.PHASE_VALIDATE,
+					s, LifeCycle.PHASE_RENDER
+				], _watcher.phasesLog));
 			}
 		}
 

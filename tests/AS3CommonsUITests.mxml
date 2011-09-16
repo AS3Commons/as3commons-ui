@@ -10,6 +10,7 @@
 
 	<fx:Script>
 		<![CDATA[
+			import org.as3commons.ui.framework.FrameworkTests;
 			import org.as3commons.ui.lifecycle.LifeCycleTests;
 			import org.flexunit.listeners.UIListener;
 			import org.flexunit.runner.FlexUnitCore;
@@ -22,7 +23,10 @@
 				core = new FlexUnitCore();
 				core.addListener(new UIListener(uiListener));
 
-				core.run(org.as3commons.ui.lifecycle.LifeCycleTests);
+				core.run(
+					org.as3commons.ui.framework.FrameworkTests,
+					org.as3commons.ui.lifecycle.LifeCycleTests
+				);
 			}
 		]]>
 	</fx:Script>
