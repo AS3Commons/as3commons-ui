@@ -15,6 +15,8 @@
  */
 package org.as3commons.ui.layout.framework.core.cell {
 
+	import org.as3commons.ui.layout.Display;
+
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -24,35 +26,12 @@ package org.as3commons.ui.layout.framework.core.cell {
 	 * 
 	 * @author Jens Struwe 17.03.2011
 	 */
-	public class DisplayCell extends AbstractCell implements IDisplayCell {
+	public class DisplayCell extends AbstractCell {
 		
 		/**
 		 * The visible rect.
 		 */
 		private var _visibleRect : Rectangle;
-
-		/**
-		 * The display object.
-		 */
-		private var _displayObject : DisplayObject;
-		
-		/*
-		 * IDisplayCell
-		 */
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function set displayObject(displayObject : DisplayObject) : void {
-			_displayObject = displayObject;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public function get displayObject() : DisplayObject {
-			return _displayObject;
-		}
 
 		/*
 		 * Protected
@@ -62,28 +41,28 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 * @inheritDoc
 		 */
 		override protected function measureCellContent() : void {
-			_space.width = displayObject.width;
-			_space.height = displayObject.height;
+			_space.width = _displayObject.width;
+			_space.height = _displayObject.height;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		override protected function renderCellContent(position : Point) : void {
-			if (renderConfig.show) {
-				if (renderConfig.showCallback != null) renderConfig.showCallback(_displayObject);
+			if (_renderConfig.show) {
+				if (_renderConfig.showCallback != null) _renderConfig.showCallback(_displayObject);
 				else _displayObject.visible = true;
 			}
 
 			if (_renderConfig.renderCallback != null) {
-				_renderConfig.renderCallback(displayObject, position.x, position.y);
+				_renderConfig.renderCallback(_displayObject, position.x, position.y);
 
 			} else {
-				displayObject.x = position.x;
-				displayObject.y = position.y;
+				_displayObject.x = position.x;
+				_displayObject.y = position.y;
 			}
 			
-			_visibleRect = new Rectangle(position.x, position.y, displayObject.width, displayObject.height);
+			_visibleRect = new Rectangle(position.x, position.y, _displayObject.width, _displayObject.height);
 		}
 		
 		/*
@@ -95,6 +74,14 @@ package org.as3commons.ui.layout.framework.core.cell {
 		 */
 		override public function get visibleRect() : Rectangle {
 			return _visibleRect;
+		}
+		
+		/*
+		 * Private
+		 */
+		 
+		private function get _displayObject() : DisplayObject {
+			return Display(_layoutItem).displayObject;
 		}
 
 	}

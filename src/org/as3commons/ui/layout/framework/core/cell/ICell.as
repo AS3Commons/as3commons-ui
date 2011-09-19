@@ -16,6 +16,7 @@
 package org.as3commons.ui.layout.framework.core.cell {
 
 	import org.as3commons.ui.layout.CellConfig;
+	import org.as3commons.ui.layout.framework.core.AbstractLayoutItem;
 	import org.as3commons.ui.layout.framework.core.config.RenderConfig;
 	import org.as3commons.ui.layout.framework.core.row.IRowItem;
 	import org.as3commons.ui.layout.framework.core.sizeitem.ISizeItem;
@@ -29,6 +30,15 @@ package org.as3commons.ui.layout.framework.core.cell {
 	 */
 	public interface ICell extends ISizeItem, IRowItem {
 		
+		/*
+		 * Owner
+		 */
+
+		/**
+		 * The layout item hosted by this cell.
+		 */
+		function set layoutItem(layoutItem : AbstractLayoutItem) : void;
+
 		/*
 		 * Config
 		 */

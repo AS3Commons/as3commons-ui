@@ -11,6 +11,7 @@
 	<fx:Script>
 		<![CDATA[
 			import org.as3commons.ui.framework.FrameworkTests;
+			import org.as3commons.ui.layout.LayoutTests;
 			import org.as3commons.ui.lifecycle.LifeCycleTests;
 			import org.flexunit.listeners.UIListener;
 			import org.flexunit.runner.FlexUnitCore;
@@ -25,7 +26,8 @@
 
 				core.run(
 					org.as3commons.ui.framework.FrameworkTests,
-					org.as3commons.ui.lifecycle.LifeCycleTests
+					org.as3commons.ui.lifecycle.LifeCycleTests,
+					org.as3commons.ui.layout.LayoutTests
 				);
 			}
 		]]>

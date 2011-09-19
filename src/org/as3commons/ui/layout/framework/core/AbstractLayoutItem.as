@@ -15,6 +15,7 @@
  */
 package org.as3commons.ui.layout.framework.core {
 
+	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.layout.constants.Align;
 	import org.as3commons.ui.layout.framework.ILayoutItem;
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
@@ -22,6 +23,8 @@ package org.as3commons.ui.layout.framework.core {
 
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	use namespace as3commons_ui;
 
 	/**
 	 * Abstact layout item implementation.
@@ -109,6 +112,33 @@ package org.as3commons.ui.layout.framework.core {
 		 * The layout item cell.
 		 */
 		protected var _cell : ICell;
+		
+		/**
+		 * Origin.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
+		 */
+		protected var _position : Point;
+		
+		/**
+		 * The content rect.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
+		 */
+		protected var _contentRect : Rectangle;
+		
+		/**
+		 * The content rect.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
+		 */
+		protected var _visibleRect : Rectangle;
+
+		public function AbstractLayoutItem() {
+			_position = new Point();
+			_contentRect = new Rectangle();
+			_visibleRect = new Rectangle();
+		}
 		
 		/*
 		 * ILayoutItem
@@ -295,21 +325,21 @@ package org.as3commons.ui.layout.framework.core {
 		 * @inheritDoc
 		 */
 		public function get position() : Point {
-			return _cell ? _cell.position : new Point();
+			return _position;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function get contentRect() : Rectangle {
-			return _cell && _cell.contentRect ? _cell.contentRect : new Rectangle();
+			return _contentRect;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function get visibleRect() : Rectangle {
-			return _cell && _cell.visibleRect ? _cell.visibleRect : new Rectangle();
+			return _visibleRect;
 		}
 
 		/*
@@ -375,6 +405,23 @@ package org.as3commons.ui.layout.framework.core {
 			return _cell;
 		}
 		
+		/*
+		 * as3commons_ui
+		 */
+
+		/**
+		 * Updates all geometry data.
+		 */
+		as3commons_ui function notifyRenderFinished() : void {
+			if (!_cell) return;
+			
+			_position = _cell.position;
+			_contentRect = _cell.contentRect;
+			_visibleRect = _cell.visibleRect;
+			
+			_cell = null;
+		}
+
 		/*
 		 * Protected
 		 */

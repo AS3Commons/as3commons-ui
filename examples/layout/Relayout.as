@@ -34,7 +34,9 @@ package layout {
 				)
 			);
 			
+			trace ("LAY");
 			_layout.layout(this);
+			trace ("/LAY");
 		}
 		
 		private function buttonClick(selected : Boolean) : void {
@@ -45,6 +47,7 @@ package layout {
 				boxDisplay.excludeFromLayout();
 			}
 			var nested : ILayout = _layout.getLayoutItem("nested") as ILayout;
+			trace ("nested LAY");
 			nested.layout(this, true);
 		}
 

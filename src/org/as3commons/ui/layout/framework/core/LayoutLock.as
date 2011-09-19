@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.as3commons.ui.layout.framework.core.cell {
-
-	import flash.display.DisplayObject;
+package org.as3commons.ui.layout.framework.core {
 
 	/**
-	 * Display object cell definition.
+	 * Lock to prevent nested <code>layout()</code> calls.
 	 * 
-	 * @author Jens Struwe 19.03.2011
+	 * @author Jens Struwe 19.09.2011
 	 */
-	public interface IDisplayCell extends ICell {
+	public class LayoutLock {
 		
-		/**
-		 * The display object.
-		 */
-		function set displayObject(displayObject : DisplayObject) : void;
-
-		/**
-		 * @private
-		 */
-		function get displayObject() : DisplayObject;
+		public static var locked : Boolean;
 
 	}
 }

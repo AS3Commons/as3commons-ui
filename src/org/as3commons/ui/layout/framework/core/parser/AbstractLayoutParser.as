@@ -15,7 +15,7 @@
  */
 package org.as3commons.ui.layout.framework.core.parser {
 
-	import org.as3commons.ui.layout.framework.ILayout;
+	import org.as3commons.ui.layout.framework.core.AbstractLayout;
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
 	import org.as3commons.ui.layout.framework.core.cell.ILayoutCell;
 	import org.as3commons.ui.layout.framework.core.cell.LayoutCell;
@@ -31,7 +31,7 @@ package org.as3commons.ui.layout.framework.core.parser {
 		/**
 		 * The layout to be parsed.
 		 */
-		protected var _layout : ILayout;
+		protected var _layout : AbstractLayout;
 
 		/**
 		 * The cell corresponding to the layout.
@@ -45,7 +45,7 @@ package org.as3commons.ui.layout.framework.core.parser {
 		/**
 		 * @inheritDoc
 		 */
-		public function set layout(layout : ILayout) : void {
+		public function set layout(layout : AbstractLayout) : void {
 			_layout = layout;
 		}
 
@@ -54,6 +54,7 @@ package org.as3commons.ui.layout.framework.core.parser {
 		 */
 		public function prepare() : void {
 			_layoutCell = new LayoutCell();
+			_layoutCell.layoutItem = _layout;
 			_layoutCell.config.marginX = _layout.marginX;
 			_layoutCell.config.marginY = _layout.marginY;
 			_layoutCell.config.offsetX = _layout.offsetX;

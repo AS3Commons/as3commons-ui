@@ -18,9 +18,13 @@ package org.as3commons.ui.layout.framework.core {
 	import org.as3commons.collections.LinkedMap;
 	import org.as3commons.collections.LinkedSet;
 	import org.as3commons.collections.Map;
+	import org.as3commons.collections.StringMap;
 	import org.as3commons.collections.framework.IIterator;
+	import org.as3commons.collections.framework.IMap;
+	import org.as3commons.collections.framework.IOrderedMap;
 	import org.as3commons.collections.framework.IRecursiveIterator;
 	import org.as3commons.collections.iterators.RecursiveIterator;
+	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.layout.CellConfig;
 	import org.as3commons.ui.layout.Display;
 	import org.as3commons.ui.layout.framework.ILayout;
@@ -32,6 +36,8 @@ package org.as3commons.ui.layout.framework.core {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	
+	use namespace as3commons_ui;
 	
 	/**
 	 * Abstract layout implementation.
@@ -58,12 +64,12 @@ package org.as3commons.ui.layout.framework.core {
 		/**
 		 * Map of layout items.
 		 */
-		private var _items : LinkedMap;
+		private var _items : IOrderedMap;
 
 		/**
 		 * Map of ids to layout items.
 		 */
-		private var _itemIds : Map;
+		private var _itemIds : IMap;
 
 		/**
 		 * List of sublayouts.
@@ -71,12 +77,17 @@ package org.as3commons.ui.layout.framework.core {
 		private var _subLayouts : LinkedSet;
 		
 		/**
+		 * Last used render config.
+		 */
+		private var _lastRenderConfig : RenderConfig;
+
+		/**
 		 * <code>AbstractLayout</code> constructor.
 		 */
 		public function AbstractLayout() {
 			_items = new LinkedMap();
 		}
-
+		
 		/*
 		 * ILayout
 		 */
@@ -236,16 +247,21 @@ package org.as3commons.ui.layout.framework.core {
 		 * @inheritDoc
 		 */
 		public function layout(container : Sprite, relayout : Boolean = false) : void {
+			if (LayoutLock.locked) return;
+			
+			LayoutLock.locked = true;
+			
 			var renderConfig : RenderConfig;
 			var position : Point;
 
-			if (relayout && _cell) {
-				renderConfig = _cell.renderConfig;
-				position = _cell.position;
+			if (relayout && _lastRenderConfig) {
+				renderConfig = _lastRenderConfig;
+				position = _position;
+				
 			} else {
 				position = new Point();
 			}
-			
+
 			if (!renderConfig) renderConfig = createRenderConfig();
 			renderConfig.container = container;
 			
@@ -257,6 +273,8 @@ package org.as3commons.ui.layout.framework.core {
 				_cell.position.offset(position.x, position.y);
 				_cell.render();
 			}
+
+			LayoutLock.locked = false;
 		}
 
 		/*
@@ -268,6 +286,21 @@ package org.as3commons.ui.layout.framework.core {
 		 */
 		public function iterator(cursor : * = undefined) : IIterator {
 			return _items.iterator();
+		}
+
+		/*
+		 * as3commons_ui
+		 */
+
+		/**
+		 * Updates all geometry data and stores the last render config.
+		 */
+		override as3commons_ui function notifyRenderFinished() : void {
+			if (!_cell) return;
+
+			_lastRenderConfig = _cell.renderConfig;
+			
+			super.notifyRenderFinished();
 		}
 
 		/*
@@ -301,7 +334,7 @@ package org.as3commons.ui.layout.framework.core {
 						renderConfig.container.addChild(displayObject);
 					}
 				}
-
+				
 				if (layoutItem.inLayout) {
 					layoutItem.parse(layoutItemRenderConfig);
 					parser.parseCell(layoutItem.cell);
@@ -309,6 +342,7 @@ package org.as3commons.ui.layout.framework.core {
 				} else {
 					layoutItem.exclude(layoutItemRenderConfig);
 				}
+
 			}
 			
 			_cell = parser.finish();
@@ -396,7 +430,7 @@ package org.as3commons.ui.layout.framework.core {
 			}
 
 			if (layoutItem.id) {
-				if (!_itemIds) _itemIds = new Map();
+				if (!_itemIds) _itemIds = new StringMap();
 				_itemIds.add(layoutItem.id, layoutItem);
 			}
 		}

@@ -6,7 +6,6 @@ package layout {
 
 	public class CellConfig1 extends Sprite {
 		public function CellConfig1() {
-			
 			var h : HLayout = hlayout(
 				"maxItemsPerRow", 6,
 				cellconfig("vIndex", 2, "marginY", 10),

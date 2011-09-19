@@ -184,16 +184,22 @@ package org.as3commons.ui.layout.framework {
 
 		/**
 		 * The origin of the layout item.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
 		 */
 		function get position() : Point;
 
 		/**
 		 * The spacing rect of the layout item.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
 		 */
 		function get contentRect() : Rectangle;
 		
 		/**
 		 * The rect of the visible content.
+		 * 
+		 * <p>Valid only right after a layouting procedure.</p>
 		 */
 		function get visibleRect() : Rectangle;
 

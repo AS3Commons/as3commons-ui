@@ -53,7 +53,7 @@ package org.as3commons.ui.layout {
 		public function get displayObject() : DisplayObject {
 			return _displayObject;
 		}
-
+		
 		/*
 		 * Info
 		 */
@@ -84,7 +84,7 @@ package org.as3commons.ui.layout {
 		 */
 		override protected function parseLayoutItem(renderConfig : RenderConfig) : void {
 			_cell = new DisplayCell();
-			DisplayCell(_cell).displayObject = _displayObject;
+			DisplayCell(_cell).layoutItem = this;
 			_cell.renderConfig = renderConfig;
 
 			_cell.config.marginX = _marginX;

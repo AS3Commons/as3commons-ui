@@ -7,7 +7,6 @@ package layout {
 
 	public class CellConfig3 extends Sprite {
 		public function CellConfig3() {
-			
 			var h : HLayout = hlayout(
 				"maxContentWidth", 150,
 				cellconfig(

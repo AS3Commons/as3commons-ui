@@ -15,7 +15,7 @@
  */
 package org.as3commons.ui.layout.framework.core.parser {
 
-	import org.as3commons.ui.layout.framework.ILayout;
+	import org.as3commons.ui.layout.framework.core.AbstractLayout;
 	import org.as3commons.ui.layout.framework.core.cell.ICell;
 
 	/**
@@ -28,7 +28,7 @@ package org.as3commons.ui.layout.framework.core.parser {
 		/**
 		 * The layout to be parsed.
 		 */
-		function set layout(layout : ILayout) : void;
+		function set layout(layout : AbstractLayout) : void;
 
 		/*
 		 * Parsing

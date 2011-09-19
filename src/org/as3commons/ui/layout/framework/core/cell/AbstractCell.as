@@ -15,8 +15,10 @@
  */
 package org.as3commons.ui.layout.framework.core.cell {
 
+	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.layout.CellConfig;
 	import org.as3commons.ui.layout.constants.Align;
+	import org.as3commons.ui.layout.framework.core.AbstractLayoutItem;
 	import org.as3commons.ui.layout.framework.core.config.RenderConfig;
 	import org.as3commons.ui.layout.framework.core.row.AbstractRowItem;
 
@@ -29,6 +31,11 @@ package org.as3commons.ui.layout.framework.core.cell {
 	 * @author Jens Struwe 16.03.2011
 	 */
 	public class AbstractCell extends AbstractRowItem implements ICell {
+		
+		/**
+		 * The layout item hosted by this cell.
+		 */
+		protected var _layoutItem : AbstractLayoutItem;
 		
 		/**
 		 * The cell config.
@@ -60,6 +67,15 @@ package org.as3commons.ui.layout.framework.core.cell {
 		/*
 		 * ICell
 		 */
+
+		// Owner
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function set layoutItem(layoutItem : AbstractLayoutItem) : void {
+			_layoutItem = layoutItem;
+		}
 
 		// Config
 		
@@ -142,6 +158,8 @@ package org.as3commons.ui.layout.framework.core.cell {
 			position.offset(offsetX, offsetY);
 			alignCellContent(position);
 			renderCellContent(position);
+			
+			AbstractLayoutItem(_layoutItem).as3commons_ui::notifyRenderFinished();
 		}
 		
 		/*
