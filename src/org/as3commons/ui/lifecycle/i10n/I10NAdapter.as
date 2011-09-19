@@ -1,10 +1,7 @@
 package org.as3commons.ui.lifecycle.i10n {
 
-	import org.as3commons.collections.Map;
-	import org.as3commons.collections.Set;
+	import org.as3commons.collections.StringMap;
 	import org.as3commons.collections.framework.IMap;
-	import org.as3commons.collections.framework.ISet;
-	import org.as3commons.collections.utils.Sets;
 	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.framework.uiservice.AbstractUIAdapter;
 	import org.as3commons.ui.framework.uiservice.AbstractUIService;
@@ -27,7 +24,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		private var _invalidPhases : IMap;
 
 		private var _currentPhaseName : String;
-		private var _propertiesInvalidatedInCurrentPhase : ISet;
+		private var _propertiesInvalidatedInCurrentPhase : Object;
 		
 		/*
 		 * II10NAdapter
@@ -54,21 +51,23 @@ package org.as3commons.ui.lifecycle.i10n {
 
 			} else {
 				if (_invalidPhases.itemFor(phaseName) != ALL_PROPERTIES) {
-					var properties : ISet = _invalidPhases.itemFor(phaseName);
+					var properties : Object = _invalidPhases.itemFor(phaseName);
 					if (!properties) {
-						properties = new Set();
+						properties = new Object();
 						_invalidPhases.add(phaseName, properties);
 					}
-					properties.add(property);
+					properties[property] = true;
 				}
 			}
 			
 			if (phaseName == _currentPhaseName) {
+				if (!_propertiesInvalidatedInCurrentPhase || !property) {
+					_propertiesInvalidatedInCurrentPhase = new Object();
+				}
 				if (!property) {
-					_propertiesInvalidatedInCurrentPhase.clear();
 					property = ALL_PROPERTIES;
 				}
-				_propertiesInvalidatedInCurrentPhase.add(property);
+				_propertiesInvalidatedInCurrentPhase[property] = true;
 			}
 
 			I10N(_uiService).invalidate_internal(this, phaseName);
@@ -79,15 +78,15 @@ package org.as3commons.ui.lifecycle.i10n {
 		 */
 		public function isInvalid(phaseName : String = null, property : String = null) : Boolean {
 			if (!_uiService) throw new AdapterNotRegisteredError();
-
+			
 			if (!phaseName) return _invalidPhases.size > 0;
 			if (!property) return _invalidPhases.hasKey(phaseName);
 			
 			if (_invalidPhases.itemFor(phaseName) == ALL_PROPERTIES) return true;
 
-			var properties : ISet = _invalidPhases.itemFor(phaseName);
+			var properties : Object = _invalidPhases.itemFor(phaseName);
 			if (properties) {
-				return properties.has(property);
+				return properties.hasOwnProperty(property);
 			}
 			return false;
 		}
@@ -108,8 +107,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		override as3commons_ui function setUp_internal(displayObject : DisplayObject, uiService : AbstractUIService) : void {
 			super.setUp_internal(displayObject, uiService);
 			
-			_invalidPhases = new Map();
-			_propertiesInvalidatedInCurrentPhase = new Set();
+			_invalidPhases = new StringMap();
 		}
 
 		override as3commons_ui function cleanUp_internal() : void {
@@ -125,21 +123,22 @@ package org.as3commons.ui.lifecycle.i10n {
 			
 			onValidate(phaseName);
 			
-			// component might be removed during a validation
+			// component might be removed from the service during onValidate
 			if (!_uiService) return;
 			
 			_currentPhaseName = null;
 			
 			_invalidPhases.removeKey(phaseName);
 
-			if (_propertiesInvalidatedInCurrentPhase.size) {
-				if (_propertiesInvalidatedInCurrentPhase.has(ALL_PROPERTIES)) {
+			// add properties being invalidated during onValidate
+			if (_propertiesInvalidatedInCurrentPhase) {
+				if (_propertiesInvalidatedInCurrentPhase.hasOwnProperty(ALL_PROPERTIES)) {
 					_invalidPhases.add(phaseName, ALL_PROPERTIES);
 
 				} else {
-					_invalidPhases.add(phaseName, Sets.clone(_propertiesInvalidatedInCurrentPhase));
+					_invalidPhases.add(phaseName, _propertiesInvalidatedInCurrentPhase);
 				}
-				_propertiesInvalidatedInCurrentPhase.clear();
+				_propertiesInvalidatedInCurrentPhase = null;
 			}
 		}
 

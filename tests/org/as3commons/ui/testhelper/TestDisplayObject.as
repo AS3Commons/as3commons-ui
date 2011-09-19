@@ -1,4 +1,4 @@
-package org.as3commons.ui.lifecycle.testhelper {
+package org.as3commons.ui.testhelper {
 
 	import flash.display.Sprite;
 

@@ -122,6 +122,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		}
 
 		/**
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalidForAnyPhase()
+		 */
+		public function isInvalidForAnyPhase() : Boolean {
+			return _lifeCycleAdapter.isInvalidForAnyPhase();
+		}
+
+		/**
 		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalid()
 		 */
 		protected function isInvalid(property : String = null) : Boolean {

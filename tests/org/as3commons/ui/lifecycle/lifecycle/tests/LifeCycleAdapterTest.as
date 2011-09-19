@@ -8,7 +8,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 	import org.as3commons.ui.lifecycle.lifecycle.testhelper.LifeCycleCallbackWatcher;
 	import org.as3commons.ui.lifecycle.lifecycle.testhelper.TestLifeCycleAdapter;
 	import org.as3commons.ui.lifecycle.testhelper.AsyncCallback;
-	import org.as3commons.ui.lifecycle.testhelper.TestDisplayObject;
+	import org.as3commons.ui.testhelper.TestDisplayObject;
 	import org.flexunit.asserts.assertEquals;
 	import org.flexunit.asserts.assertFalse;
 	import org.flexunit.asserts.assertNotNull;

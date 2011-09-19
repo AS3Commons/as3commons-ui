@@ -1,6 +1,5 @@
 package  {
 
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 
@@ -10,7 +9,7 @@ package  {
 	public class StageProxy {
 
 		private static var _stage : Stage;
-		private static var _root : DisplayObjectContainer;
+		private static var _root : Sprite;
 
 		public static function get stage() : Stage {
 			return _stage;
@@ -19,11 +18,11 @@ package  {
 		public static function set stage(stage : Stage) : void {
 			_stage = stage;
 			
-			_root = _stage.addChild(new Sprite()) as DisplayObjectContainer;
+			_root = _stage.addChild(new Sprite()) as Sprite;
 			_root.visible = false;
 		}
 
-		public static function get root() : DisplayObjectContainer {
+		public static function get root() : Sprite {
 			return _root;
 		}
 		

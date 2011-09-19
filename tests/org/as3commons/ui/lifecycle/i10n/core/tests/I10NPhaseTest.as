@@ -1,4 +1,4 @@
-package org.as3commons.ui.lifecycle.i10n.tests.core {
+package org.as3commons.ui.lifecycle.i10n.core.tests {
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -8,7 +8,7 @@ package org.as3commons.ui.lifecycle.i10n.tests.core {
 	import org.as3commons.ui.lifecycle.i10n.testhelper.I10NCallbackWatcher;
 	import org.as3commons.ui.lifecycle.i10n.testhelper.TestI10NAdapter;
 	import org.as3commons.ui.lifecycle.testhelper.AsyncCallback;
-	import org.as3commons.ui.lifecycle.testhelper.TestDisplayObject;
+	import org.as3commons.ui.testhelper.TestDisplayObject;
 	import org.flexunit.asserts.assertTrue;
 
 
