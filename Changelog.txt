@@ -1,3 +1,14 @@
+Version 0.3.4 - 2011-09-19
+----------------------------------------------------------
+
+- [Layouts][Dev] Huge memory improvements on Layouts
+
+- [Invalidation & LifeCycle][Dev] Memory usage improvements on Invalidation & LifeCycle
+
+- [Project][Libs] Update to as3commons-collections-1.3.2
+
+
+
 Version 0.3.3 - 2011-09-16
 ----------------------------------------------------------
 
