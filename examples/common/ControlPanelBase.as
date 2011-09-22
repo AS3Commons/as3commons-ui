@@ -17,6 +17,7 @@ package common{
 
 	import org.as3commons.collections.LinkedMap;
 	import org.as3commons.collections.framework.IIterator;
+	import org.as3commons.ui.layout.Display;
 	import org.as3commons.ui.layout.HGroup;
 	import org.as3commons.ui.layout.shortcut.display;
 	import org.as3commons.ui.layout.shortcut.hgroup;
@@ -137,7 +138,7 @@ package common{
 			var textInput : TextInput = new TextInput();
 
 			textInput.setSize(LABEL_SIZE + properties["diff"], 18);
-			textInput.text = properties["text"];
+			textInput.text = properties["text"] || "";
 
 			textInput.setStyles([Label.style.verticalAlign, Position.MIDDLE, Label.style.size, 10, TextInput.style.maxChars, 0 + properties["maxchars"]]);
 
@@ -267,7 +268,7 @@ package common{
 			}
 		}
 
-		protected function checkBox(properties : Object) : CheckBox {
+		protected function checkBox(properties : Object) : Display {
 			var checkBox : CheckBox = new CheckBox();
 
 			var width : uint = 14;
@@ -298,7 +299,7 @@ package common{
 			if (properties["change"]) checkBox.bindProperty(Button.BINDABLE_PROPERTY_SELECTED, properties["change"]);
 			if (properties["enabled"] != null) checkBox.enabled = properties["enabled"];
 			
-			return checkBox;
+			return display("id", properties["id"], checkBox);
 		}
 		
 		protected function window(properties : Object) : Window {

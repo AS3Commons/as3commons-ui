@@ -122,13 +122,6 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalidForAnyPhase()
-		 */
-		public function isInvalidForAnyPhase() : Boolean {
-			return _lifeCycleAdapter.isInvalidForAnyPhase();
-		}
-
-		/**
 		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalid()
 		 */
 		protected function isInvalid(property : String = null) : Boolean {
@@ -161,6 +154,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		protected function shouldRender(property : String = null) : Boolean {
 			return _lifeCycleAdapter.shouldRender(property);
+		}
+
+		/**
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalidForAnyPhase()
+		 */
+		protected function isInvalidForAnyPhase() : Boolean {
+			return _lifeCycleAdapter.isInvalidForAnyPhase();
 		}
 
 		/*
