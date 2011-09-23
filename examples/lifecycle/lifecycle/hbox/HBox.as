@@ -19,6 +19,10 @@ package lifecycle.lifecycle.hbox {
 			invalidate();
 		}
 		
+		public function refresh() : void {
+			invalidate();
+		}
+		
 		override public function addChild(child : DisplayObject) : DisplayObject {
 			child.addEventListener(Component.EVENT_RESIZE, resized);
 			_hGroup.add(child);
