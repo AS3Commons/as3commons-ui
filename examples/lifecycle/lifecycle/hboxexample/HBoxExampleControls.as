@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.hbox {
+package lifecycle.lifecycle.hboxexample {
 	import common.ControlPanelBase;
 	import com.sibirjak.asdpcbeta.slider.Slider;
 	import org.as3commons.ui.layout.HLayout;

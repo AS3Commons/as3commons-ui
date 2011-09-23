@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.hbox {
+package lifecycle.lifecycle.hboxexample {
 	import lifecycle.lifecycle.common.Component;
 	import org.as3commons.ui.layout.HGroup;
 	import org.as3commons.ui.lifecycle.lifecycle.LifeCycleView;

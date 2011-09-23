@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.hbox {
+package lifecycle.lifecycle.hboxexample {
 	import lifecycle.lifecycle.common.Component;
 
 	public class AnyComponent extends Component {

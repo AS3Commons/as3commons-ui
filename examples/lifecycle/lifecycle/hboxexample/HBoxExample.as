@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.hbox {
+package lifecycle.lifecycle.hboxexample {
 	import flash.display.Sprite;
 
 	public class HBoxExample extends Sprite {
