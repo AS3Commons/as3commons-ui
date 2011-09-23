@@ -323,6 +323,12 @@ package org.as3commons.ui.lifecycle.i10n {
 
 			if (_cycleIsScheduled) return;
 
+			_stage.addEventListener(Event.RENDER, renderHandler);
+			_stage.invalidate();
+			
+			// if we are in a render listener, we cannot invalidate the stage again.
+			// for this rare case we use a timer to invalidate the stage at the next
+			// possibility
 			_stageInvalidationTimer.start();
 
 			_cycleIsScheduled = true;
@@ -330,7 +336,6 @@ package org.as3commons.ui.lifecycle.i10n {
 
 		private function stageInvalidationTimerHandler(event : TimerEvent) : void {
 			_stageInvalidationTimer.stop();
-			_stage.addEventListener(Event.RENDER, renderHandler);
 			_stage.invalidate();
 			event.updateAfterEvent();
 		}
