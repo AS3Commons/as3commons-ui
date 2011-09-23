@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.buttonexample {
+package lifecycle.lifecycle.common {
 	import org.as3commons.ui.lifecycle.lifecycle.LifeCycleView;
 	import flash.events.Event;
 
@@ -6,35 +6,34 @@ package lifecycle.lifecycle.buttonexample {
 		public static const EVENT_RESIZE : String = "component_resize";
 
 		protected const SIZE : String = "size";
-		protected const ACTUAL_SIZE : String = "actual_size";
 
 		private var _explicitWidth : uint;
 		private var _explicitHeight : uint;
-		private var _actualWidth : uint;
-		private var _actualHeight : uint;
+		private var _measuredWidth : uint;
+		private var _measuredHeight : uint;
 		
 		override public function set width(width : Number) : void {
 			if (width == _explicitWidth) return;
 			_explicitWidth = width;
-			_actualWidth = 0;
+			_measuredWidth = 0;
 			invalidate(SIZE);
 			dispatchEvent(new Event(EVENT_RESIZE));
 		}
 		
 		override public function get width() : Number {
-			return _explicitWidth ? _explicitWidth : _actualWidth;
+			return _explicitWidth ? _explicitWidth : _measuredWidth;
 		}
 
 		override public function set height(height : Number) : void {
 			if (height == _explicitHeight) return;
 			_explicitHeight = height;
-			_actualHeight = 0;
+			_measuredHeight = 0;
 			invalidate(SIZE);
 			dispatchEvent(new Event(EVENT_RESIZE));
 		}
 
 		override public function get height() : Number {
-			return _explicitHeight ? _explicitHeight : _actualHeight;
+			return _explicitHeight ? _explicitHeight : _measuredHeight;
 		}
 		
 		protected function get explicitWidth() : uint {
@@ -45,28 +44,26 @@ package lifecycle.lifecycle.buttonexample {
 			return _explicitHeight;
 		}
 
-		protected function setActualWidth(actualWidth : uint, doInvalidate : Boolean = false) : void {
+		protected function set measuredWidth(measuredWidth : uint) : void {
 			if (_explicitWidth) return;
-			if (actualWidth == _actualWidth) return;
-			_actualWidth = actualWidth;
-			if (doInvalidate) invalidate(ACTUAL_SIZE);
+			if (measuredWidth == _measuredWidth) return;
+			_measuredWidth = measuredWidth;
 			dispatchEvent(new Event(EVENT_RESIZE));
 		}
 
 		protected function get actualWidth() : uint {
-			return _actualWidth;
+			return _measuredWidth;
 		}
 
-		protected function setActualHeight(actualHeight : uint, doInvalidate : Boolean = false) : void {
+		protected function set measuredHeight(measuredHeight : uint) : void {
 			if (_explicitHeight) return;
-			if (actualHeight == _actualHeight) return;
-			_actualHeight = actualHeight;
-			if (doInvalidate) invalidate(ACTUAL_SIZE);
+			if (measuredHeight == _measuredHeight) return;
+			_measuredHeight = measuredHeight;
 			dispatchEvent(new Event(EVENT_RESIZE));
 		}
 		
 		protected function get actualHeight() : uint {
-			return _actualHeight;
+			return _measuredHeight;
 		}
 	}
 }

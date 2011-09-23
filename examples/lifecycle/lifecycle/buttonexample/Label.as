@@ -4,6 +4,7 @@ package lifecycle.lifecycle.buttonexample {
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.text.TextLineMetrics;
+	import lifecycle.lifecycle.common.Component;
 
 	public class Label extends Component {
 		private const TEXT : String = "text";
@@ -79,8 +80,8 @@ package lifecycle.lifecycle.buttonexample {
 			tf.autoSize = TextFieldAutoSize.LEFT;
 			tf.text = _text;
 			var metrics : TextLineMetrics = tf.getLineMetrics(0);
-			if (!explicitWidth) setActualWidth(metrics.width + 4);
-			if (!explicitHeight) setActualHeight(metrics.height + 4);
+			if (!explicitWidth) measuredWidth = metrics.width + 4;
+			if (!explicitHeight) measuredHeight = metrics.height + 4;
 		}
 		
 		override protected function render() : void {

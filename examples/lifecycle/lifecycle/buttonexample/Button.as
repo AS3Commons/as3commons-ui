@@ -1,6 +1,7 @@
 package lifecycle.lifecycle.buttonexample {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import lifecycle.lifecycle.common.Component;
 
 	public class Button extends Component {
 		public static const EVENT_CLICK : String = "button_click";
@@ -64,11 +65,6 @@ package lifecycle.lifecycle.buttonexample {
 				}
 			}
 
-			if (isInvalid(ACTUAL_SIZE)) {
-				if (actualWidth) _skin.width = actualWidth;
-				if (actualHeight) _skin.height = actualHeight;
-			}
-			
 			if (isInvalid(LABEL_SIZE)) {
 				if (!explicitWidth || !explicitHeight) {
 					invalidateDefaults();
@@ -98,8 +94,8 @@ package lifecycle.lifecycle.buttonexample {
 		}
 		
 		override protected function calculateDefaults() : void {
-			if (!explicitWidth) setActualWidth(_label.width, true);
-			if (!explicitHeight) setActualHeight(_label.height, true);
+			if (!explicitWidth) measuredWidth = _skin.width = _label.width;
+			if (!explicitHeight) measuredHeight = _skin.height = _label.height;
 		}
 		
 		override protected function render() : void {

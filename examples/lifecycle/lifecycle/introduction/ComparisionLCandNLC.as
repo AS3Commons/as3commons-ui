@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.introduction.comparision {
+package lifecycle.lifecycle.introduction {
 	import flash.display.Sprite;
 
 	public class ComparisionLCandNLC extends Sprite {

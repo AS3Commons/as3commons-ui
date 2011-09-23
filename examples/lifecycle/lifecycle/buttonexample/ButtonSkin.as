@@ -2,6 +2,7 @@ package lifecycle.lifecycle.buttonexample {
 	import common.ColorUtil;
 	import flash.display.GradientType;
 	import flash.geom.Matrix;
+	import lifecycle.lifecycle.common.Component;
 
 	public class ButtonSkin extends Component {
 		private var _state : String;

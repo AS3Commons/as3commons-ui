@@ -1,4 +1,4 @@
-package lifecycle.lifecycle.introduction.comparision {
+package lifecycle.lifecycle.introduction {
 	import org.as3commons.ui.lifecycle.lifecycle.LifeCycleView;
 
 	public class LifeCycleComponent extends LifeCycleView {
