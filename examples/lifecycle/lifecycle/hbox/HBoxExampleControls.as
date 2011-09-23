@@ -60,7 +60,6 @@ package lifecycle.lifecycle.hbox {
 				c = _hBox.getChildAt(0) as AnyComponent;
 				_hBox.removeChild(c);
 			}
-//			_hBox.validateNow();
 		}
 
 		private function itemSizeChange(size : uint) : void {
