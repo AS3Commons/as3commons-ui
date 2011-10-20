@@ -1,10 +1,7 @@
 package org.as3commons.ui.lifecycle.lifecycle {
 
 	import org.as3commons.ui.framework.core.as3commons_ui;
-	import org.as3commons.ui.framework.uiservice.AbstractUIAdapter;
-	import org.as3commons.ui.framework.uiservice.AbstractUIService;
 	import org.as3commons.ui.lifecycle.i10n.I10N;
-	import org.as3commons.ui.lifecycle.lifecycle.core.LifeCycleI10NAdapter;
 
 	import flash.display.DisplayObject;
 	
@@ -15,7 +12,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 	 * 
 	 * @author Jens Struwe 15.09.2011
 	 */
-	public class LifeCycle extends AbstractUIService implements ILifeCycle {
+	public class LifeCycle implements ILifeCycle {
 		
 		/**
 		 * Constant defining the name of the first validation phase (validation).
@@ -43,8 +40,6 @@ package org.as3commons.ui.lifecycle.lifecycle {
 			_i10n.addPhase(PHASE_CALCULATE_DEFAULTS, I10N.PHASE_ORDER_BOTTOM_UP);
 			_i10n.addPhase(PHASE_RENDER, I10N.PHASE_ORDER_TOP_DOWN, I10N.PHASE_LOOPBACK_NONE);
 			_i10n.start();
-			
-			start_protected();
 		}
 		
 		/*
@@ -55,14 +50,16 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function registerDisplayObject(displayObject : DisplayObject, adapter : LifeCycleAdapter) : void {
-			registerDisplayObject_protected(displayObject, adapter);
+			_i10n.registerDisplayObject(displayObject, adapter.i10nAdapter_internal);
+			
+			adapter.setLifeCycle_internal(this);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function unregisterDisplayObject(displayObject : DisplayObject) : void {
-			unregisterDisplayObject_protected(displayObject);
+			_i10n.unregisterDisplayObject(displayObject);
 		}
 
 		/**
@@ -97,26 +94,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * @inheritDoc
 		 */
 		public function cleanUp() : void {
-			cleanUp_protected();
-		}
-
-		/*
-		 * Protected
-		 */
-
-		/**
-		 * @inheritDoc
-		 */
-		override protected function onRegister(adapter : AbstractUIAdapter) : void {
-			var i10nAdapter : LifeCycleI10NAdapter = LifeCycleAdapter(adapter).i10nAdapter_internal;
-			_i10n.registerDisplayObject(adapter.displayObject, i10nAdapter);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override protected function onUnregister(adapter : AbstractUIAdapter, displayObject : DisplayObject) : void {
-			_i10n.unregisterDisplayObject(displayObject);
+			_i10n.cleanUp();
 		}
 
 	}

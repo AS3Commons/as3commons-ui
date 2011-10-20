@@ -1,5 +1,8 @@
 package org.as3commons.ui.lifecycle.lifecycle.core {
 
+	import flash.display.DisplayObject;
+
+	import org.as3commons.ui.framework.uiservice.AbstractUIService;
 	import org.as3commons.ui.framework.core.as3commons_ui;
 	import org.as3commons.ui.lifecycle.i10n.I10NAdapter;
 	import org.as3commons.ui.lifecycle.lifecycle.LifeCycle;
@@ -24,6 +27,31 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 		 */
 		public function LifeCycleI10NAdapter(lifeCycleAdapter : LifeCycleAdapter) {
 			_lifeCycleAdapter = lifeCycleAdapter;
+		}
+		
+		/*
+		 * Public
+		 */
+		
+		/**
+		 * The life cycle adapter that internally hosts this i10n adapter instance.
+		 */
+		public function get lifeCycleAdapter() : LifeCycleAdapter {
+			return _lifeCycleAdapter;
+		}
+		
+		/*
+		 * as3commons_ui
+		 */
+
+		override as3commons_ui function setUp_internal(displayObject : DisplayObject, uiService : AbstractUIService) : void {
+			super.setUp_internal(displayObject, uiService);
+			_lifeCycleAdapter.setUp_internal();
+		}
+		
+		override as3commons_ui function cleanUp_internal() : void {
+			super.cleanUp_internal();
+			_lifeCycleAdapter.cleanUp_internal();
 		}
 		
 		/*
@@ -103,6 +131,5 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 
 			}
 		}
-		
 	}
 }

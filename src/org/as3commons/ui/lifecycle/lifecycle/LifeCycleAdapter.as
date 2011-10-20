@@ -1,8 +1,6 @@
 package org.as3commons.ui.lifecycle.lifecycle {
 
 	import org.as3commons.ui.framework.core.as3commons_ui;
-	import org.as3commons.ui.framework.uiservice.AbstractUIAdapter;
-	import org.as3commons.ui.framework.uiservice.AbstractUIService;
 	import org.as3commons.ui.lifecycle.lifecycle.core.LifeCycleI10NAdapter;
 
 	import flash.display.DisplayObject;
@@ -14,16 +12,17 @@ package org.as3commons.ui.lifecycle.lifecycle {
 	 * 
 	 * @author Jens Struwe 15.09.2011
 	 */
-	public class LifeCycleAdapter extends AbstractUIAdapter implements ILifeCycleAdapter {
+	public class LifeCycleAdapter implements ILifeCycleAdapter {
 		
-		private var _i10nAdapter : LifeCycleI10NAdapter;
+		private var _lifeCycle : LifeCycle;
+		private var _lifeCycleI10NAdapter : LifeCycleI10NAdapter;
 		private var _initialized : Boolean;
 		
 		/**
 		 * LifeCycleAdapter constructor.
 		 */
 		public function LifeCycleAdapter() {
-			_i10nAdapter = new LifeCycleI10NAdapter(this);
+			_lifeCycleI10NAdapter = new LifeCycleI10NAdapter(this);
 		}
 		
 		/*
@@ -33,81 +32,94 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * @inheritDoc
 		 */
+		public function get displayObject() : DisplayObject {
+			return _lifeCycleI10NAdapter.displayObject;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
 		public function get nestLevel() : int {
-			return _i10nAdapter.nestLevel;
+			return _lifeCycleI10NAdapter.nestLevel;
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function invalidate(property : String = null) : void {
-			_i10nAdapter.invalidate(LifeCycle.PHASE_VALIDATE, property);
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_VALIDATE, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function isInvalidForAnyPhase() : Boolean {
-			return _i10nAdapter.isInvalid();
+			return _lifeCycleI10NAdapter.isInvalid();
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function isInvalid(property : String = null) : Boolean {
-			return _i10nAdapter.isInvalid(LifeCycle.PHASE_VALIDATE, property);
+			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_VALIDATE, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function invalidateDefaults(property : String = null) : void {
-			_i10nAdapter.invalidate(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function defaultIsInvalid(property : String = null) : Boolean {
-			return _i10nAdapter.isInvalid(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
+			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function scheduleRendering(property : String = null) : void {
-			_i10nAdapter.invalidate(LifeCycle.PHASE_RENDER, property);
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_RENDER, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function shouldRender(property : String = null) : Boolean {
-			return _i10nAdapter.isInvalid(LifeCycle.PHASE_RENDER, property);
+			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_RENDER, property);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
 		public function validateNow() : void {
-			_i10nAdapter.validateNow();
+			_lifeCycleI10NAdapter.validateNow();
 		}
 		
 		/*
 		 * as3commons_ui
 		 */
 		
-		override as3commons_ui function setUp_internal(displayObject : DisplayObject, uiService : AbstractUIService) : void {
-			super.setUp_internal(displayObject, uiService);
-			
+		as3commons_ui function setLifeCycle_internal(lifeCycle : LifeCycle) : void {
+			_lifeCycle = lifeCycle;
+		}
+
+		as3commons_ui function setUp_internal() : void {
 			if (displayObject.stage) {
 				onInit();
 				_initialized = true;
 			}
 		}
 
+		as3commons_ui function cleanUp_internal() : void {
+			_lifeCycle = null;
+		}
+
 		as3commons_ui function get i10nAdapter_internal() : LifeCycleI10NAdapter {
-			return _i10nAdapter;
+			return _lifeCycleI10NAdapter;
 		}
 		
 		as3commons_ui function validate_internal() : void {
@@ -143,7 +155,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * The LifeCycle service.
 		 */
 		protected function get lifeCycle() : LifeCycle {
-			return _uiService as LifeCycle;
+			return _lifeCycle;
 		}
 
 		/**
