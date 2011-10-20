@@ -20,6 +20,7 @@ package org.as3commons.ui.lifecycle.i10n {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 
@@ -322,11 +323,40 @@ package org.as3commons.ui.lifecycle.i10n {
 			_schedule.add(adapter);
 
 			if (_cycleIsScheduled) return;
+			
+			/*
+			 * Here we want to register for the next screen update (Event.RENDER)
+			 * where we want to process our schedule. We need to call _stage.invalidate()
+			 * in order to get the Event.RENDER dispatched.
+			 * 
+			 * Unfortunately, Flash does not consider nested calls to _stage.invalidate(). Nested
+			 * calls may happen when using different invalidation frameworks together such as
+			 * Flex and this one here.
+			 * 
+			 * There is no safe way to determine whether we are in a render event handler or not.
+			 * We use here the following workaround:
+			 * 
+			 * - Invalidate the stage as usual. If we are not in a render handler, this will
+			 *   work properly and notify us right before the next screen update.
+			 *   To speed up the response, we create a dummy mouse event and call its
+			 *   updateAfterEvent() method. The Event.RENDER will be dispatched right after the
+			 *   current block of code, which is fine and avoids jittering in movies with a
+			 *   small frame rate. No need to call mouseEvent.updateAfterEvent() in client code.
+			 *   
+			 * - Additionally, we start a timer with a very small delay. If we are in a render
+			 *   handler, the timer will fire right after the current rendering has been finished.
+			 *   Tests show, that there is still a delay between the finishing of the rendering and 
+			 *   the timer event dispatched, but this is hopefully imperceptible. In any case the
+			 *   timer fires before the next ENTER_FRAME event, so the timer approach might be better one.
+			 */
 
+			// regular stage invalidation
 			_stage.addEventListener(Event.RENDER, renderHandler);
 			_stage.invalidate();
+			// request immediate screen update
+			new MouseEvent(MouseEvent.CLICK).updateAfterEvent();
 			
-			// if we are in a render listener, we cannot invalidate the stage again.
+			// if we are in a render handler, we cannot invalidate the stage again.
 			// for this rare case we use a timer to invalidate the stage at the next
 			// possibility
 			_stageInvalidationTimer.start();
@@ -337,6 +367,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		private function stageInvalidationTimerHandler(event : TimerEvent) : void {
 			_stageInvalidationTimer.stop();
 			_stage.invalidate();
+			// request immediate screen update
 			event.updateAfterEvent();
 		}
 		
