@@ -24,7 +24,7 @@ package org.as3commons.ui.lifecycle.i10n {
 		private var _invalidPhases : IMap;
 
 		private var _currentPhaseName : String;
-		private var _propertiesInvalidatedInCurrentPhase : Object;
+		private var _propertiesInvalidatedInCurrentPhase : StringMap;
 		
 		/*
 		 * II10NAdapter
@@ -45,32 +45,36 @@ package org.as3commons.ui.lifecycle.i10n {
 			
 			testInvalidationAllowed_internal(phaseName);
 			
-			if (!property) {
-				_invalidPhases.removeKey(phaseName);
-				_invalidPhases.add(phaseName, ALL_PROPERTIES);
-
-			} else {
-				if (_invalidPhases.itemFor(phaseName) != ALL_PROPERTIES) {
-					var properties : Object = _invalidPhases.itemFor(phaseName);
-					if (!properties) {
-						properties = new Object();
-						_invalidPhases.add(phaseName, properties);
-					}
-					properties[property] = true;
-				}
-			}
-			
+			// invalidate called while the object is being validated in the current phase
+			// if the property is not currently invalid, we validate it later
 			if (phaseName == _currentPhaseName) {
-				if (!_propertiesInvalidatedInCurrentPhase || !property) {
-					_propertiesInvalidatedInCurrentPhase = new Object();
+				if (!property) property = ALL_PROPERTIES;
+				if (!isInvalid(phaseName, property)) {
+					if (!_propertiesInvalidatedInCurrentPhase || property == ALL_PROPERTIES) {
+						_propertiesInvalidatedInCurrentPhase = new StringMap();
+					}
+					_propertiesInvalidatedInCurrentPhase.add(property, true);
 				}
-				if (!property) {
-					property = ALL_PROPERTIES;
-				}
-				_propertiesInvalidatedInCurrentPhase[property] = true;
-			}
 
-			I10N(_uiService).invalidate_internal(this, phaseName);
+			// invalidate for another phase
+			} else {
+				if (!property) {
+					_invalidPhases.removeKey(phaseName);
+					_invalidPhases.add(phaseName, ALL_PROPERTIES);
+	
+				} else {
+					if (_invalidPhases.itemFor(phaseName) != ALL_PROPERTIES) {
+						var properties : StringMap = _invalidPhases.itemFor(phaseName);
+						if (!properties) {
+							properties = new StringMap();
+							_invalidPhases.add(phaseName, properties);
+						}
+						properties.add(property, true);
+					}
+				}
+
+				I10N(_uiService).invalidate_internal(this, phaseName);
+			}
 		}
 
 		/**
@@ -84,11 +88,25 @@ package org.as3commons.ui.lifecycle.i10n {
 			
 			if (_invalidPhases.itemFor(phaseName) == ALL_PROPERTIES) return true;
 
-			var properties : Object = _invalidPhases.itemFor(phaseName);
+			var properties : StringMap = _invalidPhases.itemFor(phaseName);
 			if (properties) {
-				return properties.hasOwnProperty(property);
+				return properties.hasKey(property);
 			}
 			return false;
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function invalidPropertiesToArray(phaseName : String) : Array {
+			if (_invalidPhases.itemFor(phaseName) == ALL_PROPERTIES) return [ALL_PROPERTIES];
+
+			var properties : StringMap = _invalidPhases.itemFor(phaseName);
+			if (properties) {
+				return properties.keysToArray();
+			} else {
+				return new Array();
+			}
 		}
 
 		/**
@@ -132,13 +150,15 @@ package org.as3commons.ui.lifecycle.i10n {
 
 			// add properties being invalidated during onValidate
 			if (_propertiesInvalidatedInCurrentPhase) {
-				if (_propertiesInvalidatedInCurrentPhase.hasOwnProperty(ALL_PROPERTIES)) {
+				if (_propertiesInvalidatedInCurrentPhase.hasKey(ALL_PROPERTIES)) {
 					_invalidPhases.add(phaseName, ALL_PROPERTIES);
 
 				} else {
 					_invalidPhases.add(phaseName, _propertiesInvalidatedInCurrentPhase);
 				}
 				_propertiesInvalidatedInCurrentPhase = null;
+
+				I10N(_uiService).invalidate_internal(this, phaseName);
 			}
 		}
 

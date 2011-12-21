@@ -50,6 +50,14 @@ package org.as3commons.ui.lifecycle.i10n {
 		 * @return <code>true</code> if the object is invalid regarding the given properties.
 		 */
 		function isInvalid(phaseName : String = null, property : String = null) : Boolean;
+
+		/**
+		 * Returns a list of all properties invalidated for the specified phase. 
+		 * 
+		 * @param phaseName A phase name to test.
+		 * @return List of all invalidated properties.
+		 */
+		function invalidPropertiesToArray(phaseName : String) : Array;
 		
 		/**
 		 * Validates the objects immediately.
