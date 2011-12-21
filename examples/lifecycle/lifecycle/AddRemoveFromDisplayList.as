@@ -15,7 +15,7 @@ package lifecycle.lifecycle {
 		
 		private function update1() : void {
 			trace ("update1");
-			_component.update();
+			_component.invalidate();
 			removeChild(_component); // not updated in this frame
 			setTimeout(update2, 1000);
 		}
@@ -38,16 +38,16 @@ internal class Component extends Sprite {
 		_lcAdapter = new ComponentAdapter();
 		lifeCycle.registerDisplayObject(this, _lcAdapter);
 	}
-	public function update() : void {
+	public function invalidate() : void {
 		_lcAdapter.invalidate();
 	}
-	public function render() : void {
-		trace ("RENDER");
+	public function update() : void {
+		trace ("UPDATE");
 	}
 }
 
 internal class ComponentAdapter  extends LifeCycleAdapter {
 	override protected function onValidate() : void {
-		Component(displayObject).render();
+		Component(displayObject).update();
 	}
 }

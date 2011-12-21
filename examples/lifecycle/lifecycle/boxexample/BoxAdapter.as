@@ -10,12 +10,12 @@ package lifecycle.lifecycle.boxexample {
 			Box(displayObject).validate();
 		}
 
-		override protected function onCalculateDefaults() : void {
-			Box(displayObject).calculateDefaults();
+		override protected function onMeasure() : void {
+			Box(displayObject).measure();
 		}
 
-		override protected function onRender() : void {
-			Box(displayObject).render();
+		override protected function onUpdate() : void {
+			Box(displayObject).update();
 		}
 	}
 }

@@ -11,12 +11,12 @@ package lifecycle.lifecycle {
 			Dummy(displayObject).validate();
 		}
 
-		override protected function onCalculateDefaults() : void {
-			Dummy(displayObject).calculateDefaults();
+		override protected function onMeasure() : void {
+			Dummy(displayObject).measure();
 		}
 
-		override protected function onRender() : void {
-			Dummy(displayObject).render();
+		override protected function onUpdate() : void {
+			Dummy(displayObject).update();
 		}
 	}
 }
@@ -31,12 +31,12 @@ internal class Dummy extends Sprite {
 	}
 	internal function validate() : void {
 		// set properties to children
-		// schedule calls to calculateDefaults and render
+		// schedule calls to measure and update
 	}
-	internal function calculateDefaults() : void {
-		// calculate values for properties not set yet
+	internal function measure() : void {
+		// calculate (default) size of the component
 	}
-	internal function render() : void {
+	internal function update() : void {
 		// draw something or arrange children
 	}
 }

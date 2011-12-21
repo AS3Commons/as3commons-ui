@@ -13,10 +13,10 @@ package lifecycle.lifecycle.buttonexample {
 		}
 		
 		override protected function validate() : void {
-			scheduleRendering();
+			scheduleUpdate();
 		}
 		
-		override protected function render() : void {
+		override protected function update() : void {
 			var backgroundColor : uint = _state == Button.STATE_OVER ? 0xFFFFFF : 0xEEEEEE;
 			var borderColor : uint = _state == Button.STATE_DOWN ? 0x999999 : 0x666666;
 			var gradientDirection : String = _state == Button.STATE_DOWN ? "dark_to_bright" : "bright_to_dark";

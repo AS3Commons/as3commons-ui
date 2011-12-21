@@ -70,15 +70,15 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		function shouldMeasure() : Boolean;
 
 		/**
-		 * Schedules a rendering in the update phase.
+		 * Schedules to the update phase.
 		 * 
 		 * <p>The optional <code>property</code> argument may be used to declare only parts
-		 * of a component to be rendered.</p>
+		 * of a component to be updated.</p>
 		 * 
-		 * <p>If <code>property</code> is not set, the system assumes the wish of a full rendering. In that
-		 * case a test for <code>shouldRender()</code> will return <code>true</code> for any property.</p>
+		 * <p>If <code>property</code> is not set, the system assumes the wish of a full update. In that
+		 * case a test for <code>shouldUpdate()</code> will return <code>true</code> for any property.</p>
 		 * 
-		 * @param property An optional render property.
+		 * @param property An optional update property.
 		 */
 		function scheduleUpdate(property : String = null) : void;
 

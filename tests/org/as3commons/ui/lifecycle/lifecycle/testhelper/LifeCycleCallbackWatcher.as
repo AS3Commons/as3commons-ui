@@ -9,8 +9,8 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 	public class LifeCycleCallbackWatcher {
 
 		private var _logValidate : Array;
-		private var _logCalculate : Array;
-		private var _logRender : Array;
+		private var _logMeasure : Array;
+		private var _logUpdate : Array;
 		
 		private var _phasesLog : Array;
 
@@ -19,8 +19,8 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 
 		public function LifeCycleCallbackWatcher() {
 			_logValidate = new Array();
-			_logCalculate = new Array();
-			_logRender = new Array();
+			_logMeasure = new Array();
+			_logUpdate = new Array();
 			
 			_phasesLog = new Array();
 			
@@ -39,25 +39,25 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			return log;
 		}
 		
-		public function logCalculate(displayObject : DisplayObject) : void {
+		public function logMeasure(displayObject : DisplayObject) : void {
 			_logValidate.push(displayObject);
 			_phasesLog.push(displayObject, LifeCycle.PHASE_MEASURE);
 		}
 
-		public function get calculateLog() : Array {
-			var log : Array = _logCalculate;
-			_logCalculate = new Array();
+		public function get measureLog() : Array {
+			var log : Array = _logMeasure;
+			_logMeasure = new Array();
 			return log;
 		}
 		
-		public function logRender(displayObject : DisplayObject) : void {
-			_logRender.push(displayObject);
+		public function logUpdate(displayObject : DisplayObject) : void {
+			_logUpdate.push(displayObject);
 			_phasesLog.push(displayObject, LifeCycle.PHASE_UPDATE);
 		}
 
-		public function get renderLog() : Array {
-			var log : Array = _logRender;
-			_logRender = new Array();
+		public function get updateLog() : Array {
+			var log : Array = _logUpdate;
+			_logUpdate = new Array();
 			return log;
 		}
 		

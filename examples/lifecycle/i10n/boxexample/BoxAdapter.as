@@ -3,7 +3,7 @@ package lifecycle.i10n.boxexample {
 
 	public class BoxAdapter extends I10NAdapter {
 		override protected function onValidate(phaseName : String) : void {
-			Box(displayObject).render();
+			Box(displayObject).update();
 		}
 	}
 }

@@ -251,16 +251,16 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = otherPhase;
-			adapter.renderFunction = otherPhase;
+			adapter.measureFunction = otherPhase;
+			adapter.updateFunction = otherPhase;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
 			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter2.validateFunction = validate2;
-			adapter2.calculateFunction = otherPhase;
-			adapter2.renderFunction = otherPhase;
+			adapter2.measureFunction = otherPhase;
+			adapter2.updateFunction = otherPhase;
 			_lifeCycle.registerDisplayObject(s2, adapter2);
 			adapter2.invalidate();			
 
@@ -305,8 +305,8 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = otherPhase;
-			adapter.renderFunction = otherPhase;
+			adapter.measureFunction = otherPhase;
+			adapter.updateFunction = otherPhase;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
@@ -340,16 +340,16 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = otherPhase;
-			adapter.renderFunction = otherPhase;
+			adapter.measureFunction = otherPhase;
+			adapter.updateFunction = otherPhase;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
 			var s2 : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s2"));
 			var adapter2 : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter2.validateFunction = validate2;
-			adapter2.calculateFunction = otherPhase;
-			adapter2.renderFunction = otherPhase;
+			adapter2.measureFunction = otherPhase;
+			adapter2.updateFunction = otherPhase;
 			_lifeCycle.registerDisplayObject(s2, adapter2);
 			adapter2.invalidate();
 			

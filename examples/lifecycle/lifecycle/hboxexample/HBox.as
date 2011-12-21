@@ -38,11 +38,11 @@ package lifecycle.lifecycle.hboxexample {
 		}
 		
 		override protected function validate() : void {
-			scheduleRendering();
+			scheduleUpdate();
 		}
 		
-		override protected function render() : void {
-			trace ("render");
+		override protected function update() : void {
+			trace ("update");
 			_hGroup.layout(this);
 			
 			with (graphics) {

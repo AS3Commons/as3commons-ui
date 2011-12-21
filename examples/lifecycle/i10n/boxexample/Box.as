@@ -24,8 +24,8 @@ package lifecycle.i10n.boxexample {
 			_adapter.invalidate(I10NService.PHASE_VALIDATE);
 		}
 
-		public function render() : void {
-			trace ("RENDER", name);
+		public function update() : void {
+			trace ("UPDATE", name);
 			with (graphics) {
 				clear();
 				lineStyle(1, _borderColor);

@@ -51,30 +51,30 @@ package lifecycle.lifecycle.buttonexample {
 		override protected function validate() : void {
 			if (isInvalid(SIZE)) {
 				if (!explicitWidth || !explicitHeight) {
-					invalidateDefaults();
+					requestMeasurement();
 				}
-				scheduleRendering(SIZE);
+				scheduleUpdate(SIZE);
 			}
 			
 			if (isInvalid(TEXT)) {
 				invalidate(SIZE);
 				if (_text == null) _text = "Label";
-				scheduleRendering(TEXT);
+				scheduleUpdate(TEXT);
 			}
 			
 			if (isInvalid(FONT_SIZE)) {
 				invalidate(SIZE);
 				if (!_fontSize) _fontSize = 11;
-				scheduleRendering(FONT_SIZE);
+				scheduleUpdate(FONT_SIZE);
 			}
 
 			if (isInvalid(COLOR)) {
 				if (_color == uint.MAX_VALUE) _color = 0xFF0000;
-				scheduleRendering(COLOR);
+				scheduleUpdate(COLOR);
 			}
 		}
 		
-		override protected function calculateDefaults() : void {
+		override protected function measure() : void {
 			var tf : TextField = new TextField();
 			tf.defaultTextFormat = new TextFormat("_sans", _fontSize);
 			tf.autoSize = TextFieldAutoSize.LEFT;
@@ -84,21 +84,21 @@ package lifecycle.lifecycle.buttonexample {
 			if (!explicitHeight) measuredHeight = metrics.height + 4;
 		}
 		
-		override protected function render() : void {
-			if (shouldRender(TEXT)) {
+		override protected function update() : void {
+			if (shouldUpdate(TEXT)) {
 				_tf.text = _text;
 			}
 			
-			if (shouldRender(COLOR)) {
+			if (shouldUpdate(COLOR)) {
 				_tf.textColor = _color;
 			}
 			
-			if (shouldRender(FONT_SIZE)) {
+			if (shouldUpdate(FONT_SIZE)) {
 				_tf.defaultTextFormat = new TextFormat("_sans", _fontSize);
 				_tf.setTextFormat(_tf.defaultTextFormat);
 			}
 			
-			if (shouldRender(SIZE)) {
+			if (shouldUpdate(SIZE)) {
 				_mask.width = width;
 				_mask.height = height;
 

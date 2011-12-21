@@ -3,11 +3,11 @@ package lifecycle.lifecycle.memory {
 
 	public class MemoryBoxAdapter extends LifeCycleAdapter {
 		override protected function onValidate() : void {
-			scheduleRendering();
+			scheduleUpdate();
 		}
 
-		override protected function onRender() : void {
-			MemoryBox(displayObject).render();
+		override protected function onUpdate() : void {
+			MemoryBox(displayObject).update();
 		}
 	}
 }

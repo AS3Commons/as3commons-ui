@@ -10,11 +10,11 @@ package lifecycle.lifecycle.memory {
 			_lcAdapter.invalidate();
 		}
 
-		public function update() : void {
+		public function invalidate() : void {
 			_lcAdapter.invalidate();
 		}
 
-		public function render() : void {
+		public function update() : void {
 			with (graphics) {
 				clear();
 				beginFill(MemoryGlobals.boxColor);

@@ -13,8 +13,8 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		private var _watcher : LifeCycleCallbackWatcher;
 		
 		private var _validateFunction : Function;
-		private var _calculateFunction : Function;
-		private var _renderFunction : Function;
+		private var _measureFunction : Function;
+		private var _updateFunction : Function;
 
 		private var _addedToStageFunction : Function;
 		private var _removedFromStageFunction : Function;
@@ -38,12 +38,12 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			_validateFunction = validateFunction;
 		}
 
-		public function set calculateFunction(calculateDefaultsFunction : Function) : void {
-			_calculateFunction = calculateDefaultsFunction;
+		public function set measureFunction(measureFunction : Function) : void {
+			_measureFunction = measureFunction;
 		}
 
-		public function set renderFunction(renderFunction : Function) : void {
-			_renderFunction = renderFunction;
+		public function set updateFunction(updateFunction : Function) : void {
+			_updateFunction = updateFunction;
 		}
 		
 		public function set addedToStageFunction(addedToStageFunction : Function) : void {
@@ -58,11 +58,11 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			return _counts[LifeCycle.PHASE_VALIDATE];
 		}
 
-		public function get calculatedCount() : uint {
+		public function get measureCount() : uint {
 			return _counts[LifeCycle.PHASE_MEASURE];
 		}
 
-		public function get renderCount() : uint {
+		public function get updateCount() : uint {
 			return _counts[LifeCycle.PHASE_UPDATE];
 		}
 
@@ -97,9 +97,9 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			// cache display object, it may be removed during validateFunction on unregister.
 			var theDisplayObject : DisplayObject = displayObject;
 			
-			if (_calculateFunction != null) _calculateFunction();
+			if (_measureFunction != null) _measureFunction();
 
-			_watcher.logCalculate(theDisplayObject);
+			_watcher.logMeasure(theDisplayObject);
 			if (!_counts[LifeCycle.PHASE_MEASURE]) _counts[LifeCycle.PHASE_MEASURE] = 0;
 			_counts[LifeCycle.PHASE_MEASURE]++;
 		}
@@ -108,9 +108,9 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			// cache display object, it may be removed during validateFunction on unregister.
 			var theDisplayObject : DisplayObject = displayObject;
 			
-			if (_renderFunction != null) _renderFunction();
+			if (_updateFunction != null) _updateFunction();
 
-			_watcher.logRender(theDisplayObject);
+			_watcher.logUpdate(theDisplayObject);
 			if (!_counts[LifeCycle.PHASE_UPDATE]) _counts[LifeCycle.PHASE_UPDATE] = 0;
 			_counts[LifeCycle.PHASE_UPDATE]++;
 		}

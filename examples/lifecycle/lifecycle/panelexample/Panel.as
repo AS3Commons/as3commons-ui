@@ -20,11 +20,11 @@ package lifecycle.lifecycle.panelexample {
 		}
 
 		override protected function validate() : void {
-			if (!explicitWidth || !explicitHeight) invalidateDefaults();
-			scheduleRendering();
+			if (!explicitWidth || !explicitHeight) requestMeasurement();
+			scheduleUpdate();
 		}
 		
-		override protected function calculateDefaults() : void {
+		override protected function measure() : void {
 			if (_display) {
 				measuredWidth = _display.width + 20;
 				measuredHeight = _display.height + 20;
@@ -34,7 +34,7 @@ package lifecycle.lifecycle.panelexample {
 			}
 		}
 		
-		override protected function render() : void {
+		override protected function update() : void {
 			with (graphics) {
 				clear();
 				beginFill(_backgroundColor);

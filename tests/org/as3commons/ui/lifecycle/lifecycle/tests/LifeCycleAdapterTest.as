@@ -393,7 +393,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = calculate;
+			adapter.measureFunction = measure;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 
@@ -408,7 +408,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				adapter.requestMeasurement();
 			}
 
-			function calculate() : void {
+			function measure() : void {
 				StageProxy.root.addChild(s2);
 			}
 
@@ -427,7 +427,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = calculate;
+			adapter.measureFunction = measure;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 
@@ -446,7 +446,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				StageProxy.root.removeChild(s2);
 			}
 
-			function calculate() : void {
+			function measure() : void {
 				StageProxy.root.addChild(s2);
 			}
 
@@ -649,7 +649,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = storeResults;
+			adapter.measureFunction = storeResults;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate("test");
@@ -688,7 +688,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 					true, true, true, true, false, false,
 					// validate
 					true, true, true, true, false, true,
-					// calculate
+					// measure
 					true, false, false, false, false, true,
 					// complete
 					false, false, false, false, false, false
@@ -704,7 +704,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = calculate;
+			adapter.measureFunction = measure;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate("test");
@@ -721,10 +721,10 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				storeResults();
 			}
 
-			function calculate() : void {
+			function measure() : void {
 				storeResults();
 
-				if (!adapter.calculatedCount) adapter.invalidate("test");
+				if (!adapter.measureCount) adapter.invalidate("test");
 
 				storeResults();
 			}
@@ -754,15 +754,15 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 					true, true, true, true,
 					// validate
 					true, true, true, true,
-					// calculate defaults - first
+					// measure - first
 					true, false, false, false,
-					// calculate defaults - second
+					// measure - second
 					true, true, true, false,
 					// validate #2
 					true, true, true, false,
-					// calculate defaults #2 - first
+					// measure #2 - first
 					true, false, false, false,
-					// calculate defaults #2 - second
+					// measure #2 - second
 					true, false, false, false,
 					// complete
 					false, false, false, false
@@ -1259,7 +1259,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.renderFunction = render;
+			adapter.updateFunction = update;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
@@ -1272,7 +1272,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				if (!adapter.validateCount)	adapter.scheduleUpdate();
 			}
 
-			function render() : void {
+			function update() : void {
 				try {
 					adapter.invalidate();
 				} catch (e : Error) {
@@ -1299,7 +1299,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.renderFunction = render;
+			adapter.updateFunction = update;
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
 			
@@ -1315,7 +1315,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				adapter.scheduleUpdate();
 			}
 
-			function render() : void {
+			function update() : void {
 				try {
 					adapter2.invalidate();
 				} catch (e : Error) {
@@ -1362,7 +1362,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function complete(event : Event, data : * = null) : void {
-				assertEquals(0, adapter.calculatedCount);
+				assertEquals(0, adapter.measureCount);
 				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
 			}
 		}
@@ -1372,7 +1372,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.calculateFunction = calculate;
+			adapter.measureFunction = measure;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
@@ -1385,7 +1385,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				adapter.requestMeasurement();
 			}
 
-			function calculate() : void {
+			function measure() : void {
 				try {
 					adapter.requestMeasurement();
 				} catch (e : Error) {
@@ -1403,7 +1403,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.isInvalidForAnyPhase());
 				assertFalse(adapter.shouldMeasure());
 
-				assertEquals(1, adapter.calculatedCount);
+				assertEquals(1, adapter.measureCount);
 				assertTrue(ArrayUtils.arraysEqual([
 					s, LifeCycle.PHASE_VALIDATE,
 					s, LifeCycle.PHASE_MEASURE
@@ -1445,7 +1445,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter2.isInvalidForAnyPhase());
 				assertFalse(adapter2.shouldMeasure());
 
-				assertEquals(0, adapter2.calculatedCount);
+				assertEquals(0, adapter2.measureCount);
 				assertTrue(ArrayUtils.arraysEqual([
 					s, LifeCycle.PHASE_VALIDATE
 				], _watcher.phasesLog));
@@ -1457,7 +1457,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.renderFunction = render;
+			adapter.updateFunction = update;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
@@ -1470,7 +1470,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				adapter.scheduleUpdate();
 			}
 
-			function render() : void {
+			function update() : void {
 				try {
 					adapter.requestMeasurement();
 				} catch (e : Error) {
@@ -1488,7 +1488,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.isInvalidForAnyPhase());
 				assertFalse(adapter.shouldMeasure());
 
-				assertEquals(0, adapter.calculatedCount);
+				assertEquals(0, adapter.measureCount);
 				assertTrue(ArrayUtils.arraysEqual([
 					s, LifeCycle.PHASE_VALIDATE,
 					s, LifeCycle.PHASE_UPDATE
@@ -1521,7 +1521,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function complete(event : Event, data : * = null) : void {
-				assertEquals(0, adapter.renderCount);
+				assertEquals(0, adapter.updateCount);
 				assertTrue(ArrayUtils.arraysEqual([], _watcher.phasesLog));
 			}
 		}
@@ -1560,7 +1560,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter2.isInvalidForAnyPhase());
 				assertFalse(adapter2.shouldUpdate());
 
-				assertEquals(0, adapter2.renderCount);
+				assertEquals(0, adapter2.updateCount);
 				assertTrue(ArrayUtils.arraysEqual([
 					s, LifeCycle.PHASE_VALIDATE
 				], _watcher.phasesLog));
@@ -1572,7 +1572,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			var s : Sprite = StageProxy.root.addChild(new TestDisplayObject("s")) as Sprite;
 			var adapter : TestLifeCycleAdapter = new TestLifeCycleAdapter(_watcher);
 			adapter.validateFunction = validate;
-			adapter.renderFunction = render;
+			adapter.updateFunction = update;
 
 			_lifeCycle.registerDisplayObject(s, adapter);
 			adapter.invalidate();
@@ -1585,7 +1585,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				adapter.scheduleUpdate();
 			}
 
-			function render() : void {
+			function update() : void {
 				try {
 					adapter.scheduleUpdate();
 				} catch (e : Error) {
@@ -1603,7 +1603,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertFalse(adapter.isInvalidForAnyPhase());
 				assertFalse(adapter.shouldUpdate());
 
-				assertEquals(1, adapter.renderCount);
+				assertEquals(1, adapter.updateCount);
 				assertTrue(ArrayUtils.arraysEqual([
 					s, LifeCycle.PHASE_VALIDATE,
 					s, LifeCycle.PHASE_UPDATE

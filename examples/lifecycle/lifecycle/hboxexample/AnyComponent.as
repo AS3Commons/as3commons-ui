@@ -8,10 +8,10 @@ package lifecycle.lifecycle.hboxexample {
 		}
 
 		override protected function validate() : void {
-			scheduleRendering();
+			scheduleUpdate();
 		}
 		
-		override protected function render() : void {
+		override protected function update() : void {
 			with (graphics) {
 				clear();
 				lineStyle(0);

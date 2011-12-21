@@ -31,21 +31,21 @@ package lifecycle.lifecycle.boxexample {
 		public function validate() : void {
 			trace ("VALIDATE", name);
 			
-			if (!_borderColor) _adapter.invalidateDefaults("border");
-			if (!_backgroundColor) _adapter.invalidateDefaults("background");
+			if (!_borderColor) _adapter.requestMeasurement();
+			if (!_backgroundColor) _adapter.requestMeasurement();
 			
-			_adapter.scheduleRendering();
+			_adapter.scheduleUpdate();
 		}
 
-		public function calculateDefaults() : void {
-			trace ("CALCULATE_DEFAULTS", name);
+		public function measure() : void {
+			trace ("MEASURE", name);
 			
-			if (_adapter.defaultIsInvalid("border")) _borderColor = 0x999999;
-			if (_adapter.defaultIsInvalid("background")) _backgroundColor = 0xCCCCCC;
+			_borderColor = 0x999999;
+			_backgroundColor = 0xCCCCCC;
 		}
 
-		public function render() : void {
-			trace ("RENDER", name);
+		public function update() : void {
+			trace ("UPDATE", name);
 			drawBox();
 		}
 		

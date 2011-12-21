@@ -53,7 +53,7 @@ package lifecycle.lifecycle.memory {
 			MemoryGlobals.boxColor = Math.round(Math.random() * 0xCCCCCC);
 			var i : IIterator = _components.iterator();
 			while (i.hasNext()) {
-				MemoryBox(i.next()).update();
+				MemoryBox(i.next()).invalidate();
 			}
 		}
 		

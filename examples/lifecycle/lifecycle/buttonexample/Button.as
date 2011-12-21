@@ -54,20 +54,20 @@ package lifecycle.lifecycle.buttonexample {
 					_label.width = _skin.width = explicitWidth;
 				} else {
 					_label.width = 0;
-					invalidateDefaults();
+					requestMeasurement();
 				}
 				
 				if (explicitHeight) {
 					_label.height = _skin.height = explicitHeight;
 				} else {
 					_label.height = 0;
-					invalidateDefaults();
+					requestMeasurement();
 				}
 			}
 
 			if (isInvalid(LABEL_SIZE)) {
 				if (!explicitWidth || !explicitHeight) {
-					invalidateDefaults();
+					requestMeasurement();
 				}
 			}
 			
@@ -89,16 +89,16 @@ package lifecycle.lifecycle.buttonexample {
 				if (_over) _label.color = 0x555555;
 				else _label.color = 0x333333;
 				
-				scheduleRendering();
+				scheduleUpdate();
 			}
 		}
 		
-		override protected function calculateDefaults() : void {
+		override protected function measure() : void {
 			if (!explicitWidth) measuredWidth = _skin.width = _label.width;
 			if (!explicitHeight) measuredHeight = _skin.height = _label.height;
 		}
 		
-		override protected function render() : void {
+		override protected function update() : void {
 			if (_over && _down) {
 				_label.x = _label.y = 1;
 			} else {
