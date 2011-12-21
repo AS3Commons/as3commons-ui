@@ -1,6 +1,7 @@
 package org.as3commons.ui.lifecycle.lifecycle {
 
 	import org.as3commons.ui.framework.core.as3commons_ui;
+
 	import flash.display.Sprite;
 
 	/**
@@ -14,19 +15,19 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * Static context
 		 */
 		
-		private static var _lifeCycle : LifeCycle;
+		public static var lifeCycle : LifeCycle;
 		
 		private static function _lifeCycle_register(view : LifeCycleView) : void {
-			if (!_lifeCycle) {
-				_lifeCycle = new LifeCycle();
+			if (!lifeCycle) {
+				lifeCycle = new LifeCycle();
 			}
 			view._lifeCycleAdapter = new LifeCycleViewAdapter();
-			_lifeCycle.registerDisplayObject(view, view._lifeCycleAdapter);
+			lifeCycle.registerDisplayObject(view, view._lifeCycleAdapter);
 		}
 		
 		private static function _lifeCycle_unregister(view : LifeCycleView) : void {
-			if (!_lifeCycle) return;
-			_lifeCycle.unregisterDisplayObject(view);
+			if (!lifeCycle) return;
+			lifeCycle.unregisterDisplayObject(view);
 		}
 		
 		/*
@@ -94,12 +95,12 @@ package org.as3commons.ui.lifecycle.lifecycle {
 			validate();
 		}
 
-		as3commons_ui function calculateDefaults_internal() : void {
-			calculateDefaults();
+		as3commons_ui function measure_internal() : void {
+			measure();
 		}
 
-		as3commons_ui function render_internal() : void {
-			render();
+		as3commons_ui function update_internal() : void {
+			update();
 		}
 
 		as3commons_ui function onAddedToStage_internal() : void {
@@ -113,6 +114,13 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/*
 		 * Protected
 		 */
+
+		/**
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalidForAnyPhase()
+		 */
+		protected function isInvalidForAnyPhase() : Boolean {
+			return _lifeCycleAdapter.isInvalidForAnyPhase();
+		}
 
 		/**
 		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#invalidate()
@@ -129,38 +137,31 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#invalidateDefaults()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#requestMeasurement()
 		 */
-		protected function invalidateDefaults(property : String = null) : void {
-			_lifeCycleAdapter.invalidateDefaults(property);
+		protected function requestMeasurement() : void {
+			_lifeCycleAdapter.requestMeasurement();
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#defaultIsInvalid()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#shouldMeasure()
 		 */
-		protected function defaultIsInvalid(property : String = null) : Boolean {
-			return _lifeCycleAdapter.defaultIsInvalid(property);
+		protected function shouldMeasure() : Boolean {
+			return _lifeCycleAdapter.shouldMeasure();
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#scheduleRendering()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#scheduleUpdate()
 		 */
-		protected function scheduleRendering(property : String = null) : void {
-			_lifeCycleAdapter.scheduleRendering(property);
+		protected function scheduleUpdate(property : String = null) : void {
+			_lifeCycleAdapter.scheduleUpdate(property);
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#shouldRender()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#shouldUpdate()
 		 */
-		protected function shouldRender(property : String = null) : Boolean {
-			return _lifeCycleAdapter.shouldRender(property);
-		}
-
-		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.ILifeCycleAdapter#isInvalidForAnyPhase()
-		 */
-		protected function isInvalidForAnyPhase() : Boolean {
-			return _lifeCycleAdapter.isInvalidForAnyPhase();
+		protected function shouldUpdate(property : String = null) : Boolean {
+			return _lifeCycleAdapter.shouldUpdate(property);
 		}
 
 		/*
@@ -200,16 +201,16 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter#onCalculateDefaults()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter#onMeasure()
 		 */
-		protected function calculateDefaults() : void {
+		protected function measure() : void {
 			// template method to be overridden
 		}
 
 		/**
-		 * @copy org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter#onRender()
+		 * @copy org.as3commons.ui.lifecycle.lifecycle.LifeCycleAdapter#onUpdate()
 		 */
-		protected function render() : void {
+		protected function update() : void {
 			// template method to be overridden
 		}
 
@@ -256,12 +257,12 @@ internal class LifeCycleViewAdapter extends LifeCycleAdapter {
 		LifeCycleView(displayObject).validate_internal();
 	}
 
-	override protected function onCalculateDefaults() : void {
-		LifeCycleView(displayObject).calculateDefaults_internal();
+	override protected function onMeasure() : void {
+		LifeCycleView(displayObject).measure_internal();
 	}
 
-	override protected function onRender() : void {
-		LifeCycleView(displayObject).render_internal();
+	override protected function onUpdate() : void {
+		LifeCycleView(displayObject).update_internal();
 	}
 
 	override protected function onAddedToStage() : void {

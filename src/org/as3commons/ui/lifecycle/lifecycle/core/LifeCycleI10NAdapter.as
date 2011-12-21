@@ -66,11 +66,11 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 				case LifeCycle.PHASE_VALIDATE:
 					_lifeCycleAdapter.validate_internal();
 					break;
-				case LifeCycle.PHASE_CALCULATE_DEFAULTS:
-					_lifeCycleAdapter.calculateDefaults_internal();
+				case LifeCycle.PHASE_MEASURE:
+					_lifeCycleAdapter.measure_internal();
 					break;
-				case LifeCycle.PHASE_RENDER:
-					_lifeCycleAdapter.render_internal();
+				case LifeCycle.PHASE_UPDATE:
+					_lifeCycleAdapter.update_internal();
 					break;
 			}
 		}
@@ -95,13 +95,7 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 		override protected function onTestInvalidationAllowed(phaseName : String) : void {
 			// validation running
 			if (i10n.validationIsRunning) {
-				// nothing is possible from within the render phase
-				if (i10n.currentPhaseName == LifeCycle.PHASE_RENDER) {
-					throw new InvalidationNotAllowedHereError(
-						InvalidationNotAllowedHereError.INVALIDATE_FROM_RENDER
-					);
-				}
-				
+
 				// invalidate is possible from all other phases as well as from any object
 				if (phaseName == LifeCycle.PHASE_VALIDATE) return;
 
@@ -111,11 +105,11 @@ package org.as3commons.ui.lifecycle.lifecycle.core {
 						InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_CURRENT_OBJECT
 					);
 				}
-
-				// invalidate defaults is not possible within the calculate defaults phase
-				if (phaseName == LifeCycle.PHASE_CALCULATE_DEFAULTS && i10n.currentPhaseName == LifeCycle.PHASE_CALCULATE_DEFAULTS) {
+				
+				// secondary phase is possible only within the validation phase
+				if (i10n.currentPhaseName != LifeCycle.PHASE_VALIDATE) {
 					throw new InvalidationNotAllowedHereError(
-						InvalidationNotAllowedHereError.INVALIDATE_DEFAULTS_FROM_CALCULATE_DEFAULTS
+						InvalidationNotAllowedHereError.INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_FIRST_PHASE
 					);
 				}
 

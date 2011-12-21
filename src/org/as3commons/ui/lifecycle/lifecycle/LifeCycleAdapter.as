@@ -46,15 +46,15 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * @inheritDoc
 		 */
-		public function invalidate(property : String = null) : void {
-			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_VALIDATE, property);
+		public function isInvalidForAnyPhase() : Boolean {
+			return _lifeCycleI10NAdapter.isInvalid();
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function isInvalidForAnyPhase() : Boolean {
-			return _lifeCycleI10NAdapter.isInvalid();
+		public function invalidate(property : String = null) : void {
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_VALIDATE, property);
 		}
 
 		/**
@@ -67,29 +67,43 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		/**
 		 * @inheritDoc
 		 */
-		public function invalidateDefaults(property : String = null) : void {
-			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
+		public function invalidPropertiesToArray() : Array {
+			return _lifeCycleI10NAdapter.invalidPropertiesToArray(LifeCycle.PHASE_VALIDATE);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function defaultIsInvalid(property : String = null) : Boolean {
-			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_CALCULATE_DEFAULTS, property);
+		public function requestMeasurement() : void {
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_MEASURE);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function scheduleRendering(property : String = null) : void {
-			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_RENDER, property);
+		public function shouldMeasure() : Boolean {
+			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_MEASURE);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function shouldRender(property : String = null) : Boolean {
-			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_RENDER, property);
+		public function scheduleUpdate(property : String = null) : void {
+			_lifeCycleI10NAdapter.invalidate(LifeCycle.PHASE_UPDATE, property);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function shouldUpdate(property : String = null) : Boolean {
+			return _lifeCycleI10NAdapter.isInvalid(LifeCycle.PHASE_UPDATE, property);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function scheduledUpdatesToArray() : Array {
+			return _lifeCycleI10NAdapter.invalidPropertiesToArray(LifeCycle.PHASE_UPDATE);
 		}
 
 		/**
@@ -126,12 +140,12 @@ package org.as3commons.ui.lifecycle.lifecycle {
 			onValidate();
 		}
 
-		as3commons_ui function calculateDefaults_internal() : void {
-			onCalculateDefaults();
+		as3commons_ui function measure_internal() : void {
+			onMeasure();
 		}
 
-		as3commons_ui function render_internal() : void {
-			onRender();
+		as3commons_ui function update_internal() : void {
+			onUpdate();
 		}
 
 		as3commons_ui function onAddedToStage_internal() : void {
@@ -182,11 +196,11 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		}
 
 		/**
-		 * Calculate defaults hook (second phase).
+		 * Measurement hook (second phase).
 		 * 
-		 * <p>The custom adapter is supposed to calculate values for all properties not set yet.</p>
+		 * <p>The custom adapter is supposed to perform a measuring on the component.</p>
 		 */
-		protected function onCalculateDefaults() : void {
+		protected function onMeasure() : void {
 			// template method to be overridden
 		}
 
@@ -195,7 +209,7 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * 
 		 * <p>The custom adapter is supposed to draw any graphics or to layout its children.</p>
 		 */
-		protected function onRender() : void {
+		protected function onUpdate() : void {
 			// template method to be overridden
 		}
 

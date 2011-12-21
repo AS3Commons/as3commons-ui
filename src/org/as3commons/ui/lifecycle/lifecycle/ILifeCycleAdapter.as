@@ -51,30 +51,26 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		function isInvalid(property : String = null) : Boolean;
 		
 		/**
-		 * Invalidates the object for the calculate defaults phase.
+		 * Returns a list of all invalidated properties.
 		 * 
-		 * <p>The optional <code>property</code> argument may be used to declare only parts
-		 * of a component to be validated.</p>
-		 * 
-		 * <p>If <code>property</code> is not set, the system assumes the wish of a full validation. In that
-		 * case a test for <code>defaultIsInvalid()</code> will return <code>true</code> for any property.</p>
-		 * 
-		 * @param property An optional property to invalidate.
+		 * @return List of all invalidated properties.
 		 */
-		function invalidateDefaults(property : String = null) : void;
+		function invalidPropertiesToArray() : Array;
 
 		/**
-		 * Method to test if the object is invalid for the calculate defaults phase.
-		 * 
-		 * <p>If no <code>property</code> is given, the method checks if the object
-		 * is invalid for at least one property.</p>
-		 * 
-		 * @param property A property to test.
+		 * Invalidates the object for the measurement phase.
 		 */
-		function defaultIsInvalid(property : String = null) : Boolean;
-		
+		function requestMeasurement() : void;
+
 		/**
-		 * Schedules a rendering in the render phase.
+		 * Method to test if the object is invalid for the measurement phase.
+		 * 
+		 * @return <code>true</code> if the component is scheduled to the measurement phase.
+		 */
+		function shouldMeasure() : Boolean;
+
+		/**
+		 * Schedules a rendering in the update phase.
 		 * 
 		 * <p>The optional <code>property</code> argument may be used to declare only parts
 		 * of a component to be rendered.</p>
@@ -84,17 +80,25 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 * 
 		 * @param property An optional render property.
 		 */
-		function scheduleRendering(property : String = null) : void;
+		function scheduleUpdate(property : String = null) : void;
 
 		/**
-		 * Method to test if the object is invalid for the render phase.
+		 * Returns a list of all scheduled updates.
+		 * 
+		 * @return List of all scheduled updates.
+		 */
+		function scheduledUpdatesToArray() : Array;
+
+		/**
+		 * Method to test if the object is invalid for the update phase.
 		 * 
 		 * <p>If no <code>property</code> is given, the method checks if the object
 		 * is invalid for at least one property.</p>
 		 * 
 		 * @param property A property to test.
+		 * @return <code>true</code> if the update is scheduled.
 		 */
-		function shouldRender(property : String = null) : Boolean;
+		function shouldUpdate(property : String = null) : Boolean;
 		
 		/**
 		 * Validates the objects immediately.

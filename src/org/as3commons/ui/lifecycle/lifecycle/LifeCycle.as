@@ -20,15 +20,15 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		public static const PHASE_VALIDATE : String = "validate";
 
 		/**
-		 * Constant defining the name of the second validation phase (calculate defaults).
+		 * Constant defining the name of the second validation phase (measurement).
 		 */
-		public static const PHASE_CALCULATE_DEFAULTS : String = "calculate_defaults";
+		public static const PHASE_MEASURE : String = "measure";
 
 		/**
-		 * Constant defining the name of the third validation phase (render).
+		 * Constant defining the name of the third validation phase (update).
 		 */
-		public static const PHASE_RENDER : String = "render";
-		
+		public static const PHASE_UPDATE : String = "update";
+
 		private var _i10n : I10N;
 
 		/**
@@ -36,9 +36,11 @@ package org.as3commons.ui.lifecycle.lifecycle {
 		 */
 		public function LifeCycle() {
 			_i10n = new I10N;
+
 			_i10n.addPhase(PHASE_VALIDATE, I10N.PHASE_ORDER_TOP_DOWN);
-			_i10n.addPhase(PHASE_CALCULATE_DEFAULTS, I10N.PHASE_ORDER_BOTTOM_UP);
-			_i10n.addPhase(PHASE_RENDER, I10N.PHASE_ORDER_TOP_DOWN, I10N.PHASE_LOOPBACK_NONE);
+			_i10n.addPhase(PHASE_MEASURE, I10N.PHASE_ORDER_BOTTOM_UP);
+			_i10n.addPhase(PHASE_UPDATE, I10N.PHASE_ORDER_TOP_DOWN);
+
 			_i10n.start();
 		}
 		

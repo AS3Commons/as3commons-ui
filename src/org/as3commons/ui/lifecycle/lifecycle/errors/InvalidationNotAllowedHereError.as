@@ -18,15 +18,10 @@ package org.as3commons.ui.lifecycle.lifecycle.errors {
 		public static const INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_CURRENT_OBJECT : String = "invalidate_for_secondary_phase_not_from_current_object";
 
 		/**
-		 * Constant defining the invalidation during the render phase message.
+		 * Constant defining the invalidation for secondary phase not from the first phase message.
 		 */
-		public static const INVALIDATE_FROM_RENDER : String = "invalidate_from_render_method";
+		public static const INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_FIRST_PHASE : String = "invalidate_for_secondary_phase_not_from_first_phase";
 
-		/**
-		 * Constant defining the defaults invalidation during the calculates default phase message.
-		 */
-		public static const INVALIDATE_DEFAULTS_FROM_CALCULATE_DEFAULTS : String = "invalidate_defaults_from_calculate_defaults_phase";
-		
 		public var messageKey : String;
 
 		/**
@@ -53,18 +48,10 @@ package org.as3commons.ui.lifecycle.lifecycle.errors {
 						You are only allowed to invalidate within a validation method of the current object being validated.
 					]]>;
 					break;
-				case INVALIDATE_FROM_RENDER:
+				case INVALIDATE_FOR_SECONDARY_PHASE_NOT_FROM_FIRST_PHASE:
 					message = <![CDATA[
-						You cannot invalidate anything from within the render phase.
-						The render phase is meant to update the display list according to properties calculated and
-						validated in the preceeding phases. If there is something left, consider modifications
-						of your validate or calculate defaults methods.
-					]]>;
-					break;
-				case INVALIDATE_DEFAULTS_FROM_CALCULATE_DEFAULTS:
-					message = <![CDATA[
-						You cannot schedule a defaults calculation from within the calculate defaults phase.
-						If there is something to be calculated later, make a roundtrip to the validate phase.
+						You cannot invalidate an object for a secondary phase outside of the first phase.
+						You are only allowed to invalidate within a validation method of the current object being validated.
 					]]>;
 					break;
 			}
