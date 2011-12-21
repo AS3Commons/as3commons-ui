@@ -41,7 +41,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		public function logCalculate(displayObject : DisplayObject) : void {
 			_logValidate.push(displayObject);
-			_phasesLog.push(displayObject, LifeCycle.PHASE_CALCULATE_DEFAULTS);
+			_phasesLog.push(displayObject, LifeCycle.PHASE_MEASURE);
 		}
 
 		public function get calculateLog() : Array {
@@ -52,7 +52,7 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		
 		public function logRender(displayObject : DisplayObject) : void {
 			_logRender.push(displayObject);
-			_phasesLog.push(displayObject, LifeCycle.PHASE_RENDER);
+			_phasesLog.push(displayObject, LifeCycle.PHASE_UPDATE);
 		}
 
 		public function get renderLog() : Array {

@@ -168,7 +168,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
+				adapter.requestMeasurement();
 				
 				_lifeCycle.unregisterDisplayObject(s);
 			}
@@ -190,7 +190,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
+				adapter.requestMeasurement();
 				
 				StageProxy.root.removeChild(s);
 				_lifeCycle.unregisterDisplayObject(s);
@@ -235,7 +235,7 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
+				adapter.requestMeasurement();
 
 				_lifeCycle.cleanUp();
 			}
@@ -270,14 +270,14 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
-				adapter.scheduleRendering();
+				adapter.requestMeasurement();
+				adapter.scheduleUpdate();
 				result.push(_lifeCycle.currentPhaseName);
 			}
 			
 			function validate2() : void {
-				adapter2.invalidateDefaults();
-				adapter2.scheduleRendering();
+				adapter2.requestMeasurement();
+				adapter2.scheduleUpdate();
 				result.push(LifeCycle.PHASE_VALIDATE);
 			}
 
@@ -289,10 +289,10 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 				assertTrue(ArrayUtils.arraysEqual([
 					LifeCycle.PHASE_VALIDATE,
 					LifeCycle.PHASE_VALIDATE,
-					LifeCycle.PHASE_CALCULATE_DEFAULTS,
-					LifeCycle.PHASE_CALCULATE_DEFAULTS,
-					LifeCycle.PHASE_RENDER,
-					LifeCycle.PHASE_RENDER
+					LifeCycle.PHASE_MEASURE,
+					LifeCycle.PHASE_MEASURE,
+					LifeCycle.PHASE_UPDATE,
+					LifeCycle.PHASE_UPDATE
 				], result));
 
 				assertNull(_lifeCycle.currentPhaseName);
@@ -316,8 +316,8 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
-				adapter.scheduleRendering();
+				adapter.requestMeasurement();
+				adapter.scheduleUpdate();
 				result.push(_lifeCycle.validationIsRunning);
 			}
 			
@@ -359,14 +359,14 @@ package org.as3commons.ui.lifecycle.lifecycle.tests {
 			setUpCompleteTimer(complete);
 
 			function validate() : void {
-				adapter.invalidateDefaults();
-				adapter.scheduleRendering();
+				adapter.requestMeasurement();
+				adapter.scheduleUpdate();
 				result.push(_lifeCycle.currentDisplayObject);
 			}
 			
 			function validate2() : void {
-				adapter2.invalidateDefaults();
-				adapter2.scheduleRendering();
+				adapter2.requestMeasurement();
+				adapter2.scheduleUpdate();
 				result.push(_lifeCycle.currentDisplayObject);
 			}
 			

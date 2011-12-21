@@ -13,26 +13,32 @@
 			import org.as3commons.ui.framework.FrameworkTests;
 			import org.as3commons.ui.layout.LayoutTests;
 			import org.as3commons.ui.lifecycle.LifeCycleTests;
-			import org.flexunit.listeners.UIListener;
+			import org.flexunit.internals.TraceListener;
 			import org.flexunit.runner.FlexUnitCore;
 
-			private var core:FlexUnitCore;
+			private var core : FlexUnitCore;
 			
 			public function runMe():void {
 				StageProxy.stage = stage;
 				
 				core = new FlexUnitCore();
-				core.addListener(new UIListener(uiListener));
+				core.addListener(new TraceListener());
+
+				addEventListener(Event.ENTER_FRAME, afterFrame);
+			}
+
+			public function afterFrame(event : Event):void {
+				removeEventListener(Event.ENTER_FRAME, afterFrame);
 
 				core.run(
 					org.as3commons.ui.framework.FrameworkTests,
-					org.as3commons.ui.lifecycle.LifeCycleTests,
-					org.as3commons.ui.layout.LayoutTests
+					org.as3commons.ui.layout.LayoutTests,
+					org.as3commons.ui.lifecycle.LifeCycleTests
 				);
 			}
 		]]>
 	</fx:Script>
 
-	<flexUnitUIRunner:TestRunnerBase id="uiListener" width="100%" height="100%" />		
+	<!--<flexUnitUIRunner:TestRunnerBase id="uiListener" width="100%" height="100%" />-->		
 </s:Application>
 

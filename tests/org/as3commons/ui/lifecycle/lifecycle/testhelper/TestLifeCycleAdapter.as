@@ -59,11 +59,11 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 		}
 
 		public function get calculatedCount() : uint {
-			return _counts[LifeCycle.PHASE_CALCULATE_DEFAULTS];
+			return _counts[LifeCycle.PHASE_MEASURE];
 		}
 
 		public function get renderCount() : uint {
-			return _counts[LifeCycle.PHASE_RENDER];
+			return _counts[LifeCycle.PHASE_UPDATE];
 		}
 
 		public function get addedToStageCount() : uint {
@@ -93,26 +93,26 @@ package org.as3commons.ui.lifecycle.lifecycle.testhelper {
 			_counts[LifeCycle.PHASE_VALIDATE]++;
 		}
 		
-		override protected function onCalculateDefaults() : void {
+		override protected function onMeasure() : void {
 			// cache display object, it may be removed during validateFunction on unregister.
 			var theDisplayObject : DisplayObject = displayObject;
 			
 			if (_calculateFunction != null) _calculateFunction();
 
 			_watcher.logCalculate(theDisplayObject);
-			if (!_counts[LifeCycle.PHASE_CALCULATE_DEFAULTS]) _counts[LifeCycle.PHASE_CALCULATE_DEFAULTS] = 0;
-			_counts[LifeCycle.PHASE_CALCULATE_DEFAULTS]++;
+			if (!_counts[LifeCycle.PHASE_MEASURE]) _counts[LifeCycle.PHASE_MEASURE] = 0;
+			_counts[LifeCycle.PHASE_MEASURE]++;
 		}
 		
-		override protected function onRender() : void {
+		override protected function onUpdate() : void {
 			// cache display object, it may be removed during validateFunction on unregister.
 			var theDisplayObject : DisplayObject = displayObject;
 			
 			if (_renderFunction != null) _renderFunction();
 
 			_watcher.logRender(theDisplayObject);
-			if (!_counts[LifeCycle.PHASE_RENDER]) _counts[LifeCycle.PHASE_RENDER] = 0;
-			_counts[LifeCycle.PHASE_RENDER]++;
+			if (!_counts[LifeCycle.PHASE_UPDATE]) _counts[LifeCycle.PHASE_UPDATE] = 0;
+			_counts[LifeCycle.PHASE_UPDATE]++;
 		}
 		
 		override protected function onAddedToStage() : void {
