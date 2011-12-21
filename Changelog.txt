@@ -1,5 +1,15 @@
-Version 0.3.5-snapshot - 2011-10-20
+Version 0.3.5-snapshot - 2011-12-21
 ----------------------------------------------------------
+
+- [LifeCycle][Dev] Simplification - Renamed "calculateDefaults" to "measure". Removed possibility to pass properties to requestMeasurement (formerly invalidateDefaults).
+
+- [LifeCycle][Dev] Simplification - Renamed "scheduleRendering/render" to "scheduleUpdate/update".
+
+- [LifeCycle][Bug] Enabled possibility to invalidate components from everywhere and also within any validation phase (measure, update).
+
+- [Invalidation][Dev] Improved handling of nested invalidations. Invalidating an object during a validation now reschedules the object only if the property to be invalidated is currently not invalid.
+
+- [Invalidation][Dev] Added convenient method to retrieve a list of all invalid properties - II10NAdapter::invalidPropertiesToArray(phaseName).
 
 - [LifeCycle][Dev] Removed the unnecessary AbstractUIService dependency of LifeCycle (memory & performance optimization)
 
