@@ -259,6 +259,33 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 				var log : Array = _watcher.validateLog;
 				assertTrue(ArrayUtils.arraysEqual([
 					s, "phase1",
+					s, "phase2"
+				], log));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_inValidation_currentPhase2() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestI10NAdapter = new TestI10NAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_i10n.registerDisplayObject(s, adapter);
+			adapter.invalidate("phase1", "a");
+			adapter.invalidate("phase2", "b");
+			
+			setUpCompleteTimer(complete);
+			
+			function validate(phaseName : String) : void {
+				if (!adapter.validateCountForPhase(phaseName)) {
+					adapter.invalidate(phaseName, "c");
+				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				var log : Array = _watcher.validateLog;
+				assertTrue(ArrayUtils.arraysEqual([
+					s, "phase1",
 					s, "phase1",
 					s, "phase2",
 					s, "phase2"
@@ -267,7 +294,7 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 		}
 
 		[Test(async)]
-		public function test_invalidate_inValidation_currentPhase2() : void {
+		public function test_invalidate_inValidation_currentPhase3() : void {
 			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
 			var adapter : TestI10NAdapter = new TestI10NAdapter(_watcher);
 			adapter.validateFunction = validate;
@@ -283,6 +310,39 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 					adapter.invalidate("phase1");
 					adapter.invalidate("phase2");
 				}
+			}
+
+			function complete(event : Event, data : * = null) : void {
+				var log : Array = _watcher.validateLog;
+				assertTrue(ArrayUtils.arraysEqual([
+					s, "phase1",
+					s, "phase2",
+					s, "phase1"
+				], log));
+			}
+		}
+
+		[Test(async)]
+		public function test_invalidate_inValidation_currentPhase4() : void {
+			var s : DisplayObject = StageProxy.root.addChild(new TestDisplayObject("s"));
+			var adapter : TestI10NAdapter = new TestI10NAdapter(_watcher);
+			adapter.validateFunction = validate;
+
+			_i10n.registerDisplayObject(s, adapter);
+			
+			var counter : uint;
+			invalidateObjects();
+			setUpCompleteTimer(complete);
+			
+			function validate(phaseName : String) : void {
+				if (!adapter.validateCountForPhase(phaseName)) {
+					invalidateObjects();
+				}
+			}
+			
+			function invalidateObjects() : void {
+				adapter.invalidate("phase1", "prop" + ++counter);
+				adapter.invalidate("phase2", "prop" + ++counter);
 			}
 
 			function complete(event : Event, data : * = null) : void {
@@ -339,7 +399,7 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 			}
 			
 			function complete(event : Event, data : * = null) : void {
-				assertTrue(ArrayUtils.arraysEqual([
+				assertTrue(results, ArrayUtils.arraysEqual([
 					// immediately phase1
 					true, true, true, false, false,
 					// immediately phase2
@@ -348,18 +408,16 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 					// phase1 first run1
 					true, true, true, false, false,
 					// phase1 first run2
+					true, true, true, false, false,
+					// phase1 second
 					true, true, true, true, true,
 
 					// phase 2 first run1
 					true, true, true, true, true,
 					// phase 2 first run2
-					true, true, true, true, true,
-
-					// phase1 second
-					true, true, true, true, true,
-					// phase2 second
-					true, true, true, false, false
+					true, true, true, true, true
 				], results));
+
 			}
 		}
 
@@ -830,8 +888,7 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 				assertTrue(ArrayUtils.arraysEqual([
 					s, "phase1",
 					s, "phase2",
-					s, "phase1",
-					s, "phase2"
+					s, "phase1"
 				], log));
 
 				assertTrue(ArrayUtils.arraysEqual([
@@ -849,12 +906,7 @@ package org.as3commons.ui.lifecycle.i10n.tests {
 					true,
 					true,
 					true,
-					true,
-					// from phase 2 - second run
-					true,
-					false,
-					false,
-					false
+					true
 				], results));
 			}
 		}
